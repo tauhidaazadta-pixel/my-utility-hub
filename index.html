@@ -1,417 +1,1140 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Utility Hub</title>
-    <!-- Nepali Date Converter Library -->
-    <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@2.0.1/dist/nepali-date-converter.umd.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        header .web-tools-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-        .container {
-            padding: 20px;
-            max-width: 600px;
-            margin: auto;
-        }
-        /* ग्रिड लेआउट होमपेज के लिए */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        .card {
-            background: white;
-            padding: 15px 10px;
-            text-align: center;
-            border-radius: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            cursor: pointer;
-            font-weight: bold;
-            color: #333;
-            transition: 0.2s;
-            font-size: 0.9rem;
-        }
-        .card:hover {
-            background-color: #f1f1f1;
-        }
-        .card-icon {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-            display: block;
-        }
-        /* टूल पेज का स्टाइल */
-        .tool-page {
-            display: none;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .back-btn {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-        input, select, button:not(.back-btn):not(.web-tools-btn) {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .action-btn {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .result {
-            margin-top: 15px;
-            padding: 10px;
-            background: #e9ecef;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        /* डिटेल बॉक्स */
-        .date-box {
-            background: #f8f9fa;
-            border-left: 4px solid #007bff;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 6px;
-        }
-        .date-box h4 {
-            margin: 0 0 8px 0;
-            color: #007bff;
-            font-size: 1rem;
-        }
-        .date-row {
-            font-size: 0.9rem;
-            margin: 4px 0;
-            color: #333;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-            font-size: 0.85rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#007bff">
+<title>🛠️ Utility Hub</title>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#f4f6f9;
+    color:#1f2d3d;
+    font-family:'Segoe UI','Noto Sans Devanagari',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
+    min-height:100vh;
+    padding-bottom:50px;
+  }
+
+  /* ---------- HEADER ---------- */
+  .app-header{
+    background:#007bff;
+    color:#fff;
+    position:sticky;
+    top:0;
+    z-index:50;
+    box-shadow:0 2px 12px rgba(0,123,255,.35);
+  }
+  .header-inner{
+    max-width:600px;
+    margin:0 auto;
+    padding:12px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .brand{font-size:19px;font-weight:700;letter-spacing:.3px;white-space:nowrap;}
+  .badge{
+    background:rgba(255,255,255,.18);
+    color:#fff;
+    border:1px solid rgba(255,255,255,.65);
+    padding:6px 13px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:inherit;
+    transition:background .2s;
+    white-space:nowrap;
+  }
+  .badge:hover{background:rgba(255,255,255,.34);}
+
+  /* ---------- LAYOUT ---------- */
+  .container{max-width:600px;margin:0 auto;padding:16px;}
+  .view{display:none;}
+  .view.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  /* ---------- DASHBOARD GRID ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .card{
+    aspect-ratio:1/1;
+    background:#fff;
+    border:1px solid #e4e9f0;
+    border-radius:16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:8px;
+    cursor:pointer;
+    font-family:inherit;
+    width:100%;
+    box-shadow:0 2px 8px rgba(16,42,74,.07);
+    transition:transform .15s,box-shadow .15s;
+  }
+  .card:hover{box-shadow:0 6px 16px rgba(16,42,74,.13);}
+  .card:active{transform:scale(.95);}
+  .card .emoji{font-size:32px;line-height:1;}
+  .card .title{
+    font-size:11.5px;
+    font-weight:700;
+    color:#243b53;
+    text-align:center;
+    line-height:1.3;
+  }
+  .hint{
+    text-align:center;
+    font-size:12.5px;
+    color:#8496ab;
+    margin:16px 0 0;
+  }
+
+  /* ---------- COMMON UI ---------- */
+  .back-btn{
+    width:100%;
+    background:#007bff;
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:12px 16px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:inherit;
+    margin-bottom:14px;
+    box-shadow:0 3px 10px rgba(0,123,255,.3);
+    transition:background .2s;
+  }
+  .back-btn:hover{background:#0069d9;}
+  .back-btn:active{transform:scale(.98);}
+
+  .view-title{
+    font-size:18px;
+    font-weight:800;
+    margin:0 0 14px;
+    color:#0b3d91;
+  }
+  .panel{
+    background:#fff;
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:14px;
+    border:1px solid #e8eef6;
+    box-shadow:0 2px 10px rgba(16,42,74,.07);
+  }
+  .muted{font-size:13px;color:#6b7c93;margin:0 0 12px;line-height:1.55;}
+  .lbl{display:block;font-size:13px;font-weight:700;color:#4a5b6e;margin:0 0 6px;}
+  .input{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #cfd9e6;
+    border-radius:10px;
+    font-size:15px;
+    font-family:inherit;
+    background:#fff;
+    color:#1f2d3d;
+    outline:none;
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .input:focus{border-color:#007bff;box-shadow:0 0 0 3px rgba(0,123,255,.15);}
+  .input-group{margin-top:12px;}
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+  .primary-btn{
+    width:100%;
+    background:#007bff;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    padding:13px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:inherit;
+    margin-top:14px;
+    transition:background .2s;
+  }
+  .primary-btn:hover{background:#0069d9;}
+  .primary-btn:active{transform:scale(.99);}
+  a.primary-btn{display:block;text-align:center;text-decoration:none;}
+  .secondary-btn{
+    width:100%;
+    background:#eaf2ff;
+    color:#0069d9;
+    border:1px solid #b9d6ff;
+    border-radius:10px;
+    padding:12px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:inherit;
+    margin-top:10px;
+    transition:background .2s;
+  }
+  .secondary-btn:hover{background:#dbe9ff;}
+  .err{color:#d9534f;font-size:14px;font-weight:700;}
+
+  /* ---------- DATE CARDS ---------- */
+  .date-card{padding:14px 16px;}
+  .dc-head{
+    font-size:12.5px;
+    font-weight:800;
+    color:#007bff;
+    letter-spacing:.4px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+  }
+  .dc-sub{font-weight:600;color:#9aaabd;font-size:10.5px;letter-spacing:.5px;}
+  .dc-body{display:flex;align-items:center;gap:14px;}
+  .dc-num{
+    font-size:38px;
+    font-weight:800;
+    color:#0b3d91;
+    line-height:1;
+    min-width:64px;
+    text-align:center;
+    background:#eef4ff;
+    border-radius:12px;
+    padding:10px 4px;
+    flex-shrink:0;
+  }
+  .dc-info{flex:1;min-width:0;}
+  .dc-day{font-size:17px;font-weight:800;color:#1f2d3d;margin-bottom:5px;word-break:break-word;}
+  .dc-line{font-size:13px;color:#5b6b7d;line-height:1.7;}
+  .dc-line b{color:#1f2d3d;}
+
+  /* ---------- AGE CARD ---------- */
+  .age-card{
+    background:linear-gradient(135deg,#007bff,#00a2ff);
+    color:#fff;
+    border:none;
+    box-shadow:0 6px 18px rgba(0,123,255,.32);
+  }
+  .age-title{font-size:13px;font-weight:700;opacity:.95;margin-bottom:8px;letter-spacing:.3px;}
+  .age-big{font-size:18px;font-weight:700;line-height:1.6;}
+  .age-big b{font-size:24px;font-weight:800;}
+  .age-sub{font-size:12.5px;opacity:.92;margin-top:6px;}
+
+  /* ---------- PASSWORD ---------- */
+  .pass-box{
+    background:#f1f5fb;
+    border:1px dashed #b9cde6;
+    border-radius:12px;
+    padding:18px 12px;
+    font-family:'Courier New',Consolas,monospace;
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    text-align:center;
+    color:#0b3d91;
+    word-break:break-all;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  /* ---------- CALCULATOR ---------- */
+  .calc-display{
+    background:#0f172a;
+    color:#fff;
+    border-radius:12px;
+    padding:16px;
+    font-size:26px;
+    font-weight:700;
+    text-align:right;
+    min-height:66px;
+    overflow-x:auto;
+    white-space:nowrap;
+    margin-bottom:12px;
+    font-family:'Segoe UI',system-ui,sans-serif;
+  }
+  .calc-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .ck{
+    background:#f1f5fb;
+    border:1px solid #e0e8f3;
+    border-radius:12px;
+    padding:15px 0;
+    font-size:18px;
+    font-weight:700;
+    color:#1f2d3d;
+    cursor:pointer;
+    font-family:inherit;
+    transition:background .15s,transform .1s;
+  }
+  .ck:hover{background:#e7eef9;}
+  .ck:active{transform:scale(.94);}
+  .ck.op{background:#e3efff;color:#0069d9;}
+  .ck.fn{background:#ffe9e6;color:#d9534f;}
+  .ck.eq{background:#007bff;color:#fff;border-color:#007bff;}
+  .ck.eq:hover{background:#0069d9;}
+
+  /* ---------- WEIGHT ---------- */
+  .result-box{
+    background:#e9f7ef;
+    border:1px solid #b7e4c7;
+    border-radius:12px;
+    padding:16px;
+    text-align:center;
+    font-size:22px;
+    font-weight:800;
+    color:#1b7a43;
+    margin-top:14px;
+    word-break:break-word;
+  }
+  .result-sub{
+    text-align:center;
+    font-size:12.5px;
+    color:#5b6b7d;
+    margin-top:8px;
+    line-height:1.6;
+  }
+
+  /* ---------- QR ---------- */
+  .qr-box{
+    margin-top:14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:40px;
+    text-align:center;
+  }
+  .qr-box img{
+    width:200px;
+    height:200px;
+    border:1px solid #e0e8f3;
+    border-radius:12px;
+    background:#fff;
+    padding:6px;
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <span>🛠️ Utility Hub</span>
-        <button class="web-tools-btn" onclick="showHome()">Web Tools</button>
-    </header>
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand">🛠️ Utility Hub</div>
+    <button class="badge" id="badgeBtn">Web Tools</button>
+  </div>
+</header>
 
-    <div class="container">
-        
-        <!-- 1. होमपेज (डैशबोर्ड - सभी कार्ड्स) -->
-        <div id="home-view" class="grid-container">
-            <div class="card" onclick="showTool('today-date-tool')">
-                <span class="card-icon">📅</span>आज की तारीख
-            </div>
-            <div class="card" onclick="showTool('age-tool')">
-                <span class="card-icon">🎂</span>एज कैलकुलेटर
-            </div>
-            <div class="card" onclick="showTool('password-tool')">
-                <span class="card-icon">🔒</span>पासवर्ड
-            </div>
-            <div class="card" onclick="showTool('calc-tool')">
-                <span class="card-icon">🧮</span>कैलकुलेटर
-            </div>
-            <div class="card" onclick="showTool('unit-tool')">
-                <span class="card-icon">⚖️</span>वजन कन्वर्टर
-            </div>
-            <div class="card" onclick="showTool('qr-tool')">
-                <span class="card-icon">📱</span>QR कोड
-            </div>
+<main class="container">
+
+  <!-- ================= DASHBOARD ================= -->
+  <section id="view-dashboard" class="view active">
+    <div class="grid">
+      <button class="card" data-tool="date">
+        <span class="emoji">📅</span>
+        <span class="title">आज की तारीख</span>
+      </button>
+      <button class="card" data-tool="age">
+        <span class="emoji">🎂</span>
+        <span class="title">एज एवं कैलेंडर कन्वर्टर</span>
+      </button>
+      <button class="card" data-tool="pass">
+        <span class="emoji">🔒</span>
+        <span class="title">पासवर्ड जनरेटर</span>
+      </button>
+      <button class="card" data-tool="calc">
+        <span class="emoji">🧮</span>
+        <span class="title">कैलकुलेटर</span>
+      </button>
+      <button class="card" data-tool="weight">
+        <span class="emoji">⚖️</span>
+        <span class="title">वजन कन्वर्टर</span>
+      </button>
+      <button class="card" data-tool="qr">
+        <span class="emoji">📱</span>
+        <span class="title">QR कोड जनरेटर</span>
+      </button>
+    </div>
+    <p class="hint">किसी भी टूल पर टैप करें</p>
+  </section>
+
+  <!-- ================= TOOL 1 : TODAY'S DATE ================= -->
+  <section id="view-date" class="view">
+    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <h2 class="view-title">📅 आज की तारीख</h2>
+    <div id="todayContent"></div>
+  </section>
+
+  <!-- ================= TOOL 2 : AGE & CALENDAR CONVERTER ================= -->
+  <section id="view-age" class="view">
+    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <h2 class="view-title">🎂 एज एवं कैलेंडर कन्वर्टर</h2>
+
+    <div class="panel">
+      <label class="lbl" for="calType">कैलेंडर प्रकार चुनें</label>
+      <select id="calType" class="input">
+        <option value="AD">अंग्रेज़ी (AD)</option>
+        <option value="BS">नेपाली (BS)</option>
+        <option value="AH">उर्दू / हिजरी (AH)</option>
+      </select>
+
+      <div id="adInputs" class="input-group">
+        <label class="lbl" for="adDate">तारीख चुनें</label>
+        <input type="date" id="adDate" class="input">
+      </div>
+
+      <div id="bsInputs" class="input-group" style="display:none;">
+        <div class="three">
+          <div>
+            <label class="lbl" for="bsYear">वर्ष (BS)</label>
+            <input type="number" id="bsYear" class="input" value="2082" min="2000" max="2090">
+          </div>
+          <div>
+            <label class="lbl" for="bsMonth">महीना</label>
+            <select id="bsMonth" class="input"></select>
+          </div>
+          <div>
+            <label class="lbl" for="bsDay">गते</label>
+            <input type="number" id="bsDay" class="input" value="1" min="1" max="32">
+          </div>
         </div>
+      </div>
 
-        <!-- 2. टूल: आज की तारीख (Detailed Live Date) -->
-        <div id="today-date-tool" class="tool-page">
-            <button class="back-btn" onclick="showHome()">⬅ होम पर जाएं</button>
-            <h2>📅 आज की लाइव तारीख (Detailed Live Date)</h2>
-            
-            <!-- इंग्लिश कार्ड -->
-            <div class="date-box" style="border-left-color: #0d6efd;">
-                <h4>🇬🇧 इंग्लिश / ईस्वी (English - AD)</h4>
-                <div class="date-row" id="en-day">दिन: लोड हो रहा है...</div>
-                <div class="date-row" id="en-date">तारीख: लोड हो रहा है...</div>
-                <div class="date-row" id="en-month">महीना: लोड हो रहा है...</div>
-                <div class="date-row" id="en-year">साल: लोड हो रहा है...</div>
-            </div>
-
-            <!-- नेपाली कार्ड -->
-            <div class="date-box" style="border-left-color: #dc3545;">
-                <h4>🇳🇵 नेपाली / विक्रम संवत (Nepali - BS)</h4>
-                <div class="date-row" id="np-day">बार: लोड हो रहा है...</div>
-                <div class="date-row" id="np-date">गते: लोड हो रहा है...</div>
-                <div class="date-row" id="np-month">महिना: लोड हो रहा है...</div>
-                <div class="date-row" id="np-year">वर्ष: लोड हो रहा है...</div>
-            </div>
-
-            <!-- उर्दू कार्ड -->
-            <div class="date-box" style="border-left-color: #198754;">
-                <h4>🇵🇰 उर्दू / हिजरी (Urdu - AH)</h4>
-                <div class="date-row" id="ur-day">दिन: लोड हो रहा है...</div>
-                <div class="date-row" id="ur-date">तारीख: लोड हो रहा है...</div>
-                <div class="date-row" id="ur-month">महीना: लोड हो रहा है...</div>
-                <div class="date-row" id="ur-year">साल: लोड हो रहा है...</div>
-            </div>
+      <div id="ahInputs" class="input-group" style="display:none;">
+        <div class="three">
+          <div>
+            <label class="lbl" for="ahYear">वर्ष (AH)</label>
+            <input type="number" id="ahYear" class="input" value="1447" min="1300" max="1500">
+          </div>
+          <div>
+            <label class="lbl" for="ahMonth">महीना</label>
+            <select id="ahMonth" class="input"></select>
+          </div>
+          <div>
+            <label class="lbl" for="ahDay">दिन</label>
+            <input type="number" id="ahDay" class="input" value="1" min="1" max="30">
+          </div>
         </div>
+      </div>
 
-        <!-- 3. टूल: एज एवं डेट कन्वर्टर -->
-        <div id="age-tool" class="tool-page">
-            <button class="back-btn" onclick="showHome()">⬅ होम पर जाएं</button>
-            <h2>🎂 एज कैलकुलेटर एवं कन्वर्टर</h2>
-            <label for="calendarType">कैलेंडर चुनें:</label>
-            <select id="calendarType" onchange="toggleInputs()">
-                <option value="AD">इंग्लिश / ईस्वी (AD)</option>
-                <option value="BS">नेपाली (BS - विक्रम संवत)</option>
-                <option value="AH">उर्दू / हिजरी (AH)</option>
-            </select>
-
-            <div id="input-AD">
-                <label>जन्म तिथि (AD):</label>
-                <input type="date" id="adDate">
-            </div>
-
-            <div id="input-BS" style="display: none;">
-                <label>नेपाली तिथि (वर्ष / महीना / गते):</label>
-                <div style="display: flex; gap: 5px;">
-                    <input type="number" id="bsYear" placeholder="2081">
-                    <input type="number" id="bsMonth" placeholder="महिना (1-12)">
-                    <input type="number" id="bsDay" placeholder="गते (1-32)">
-                </div>
-            </div>
-
-            <div id="input-AH" style="display: none;">
-                <label>हिजरी तिथि (वर्ष / महीना / तारीख):</label>
-                <div style="display: flex; gap: 5px;">
-                    <input type="number" id="ahYear" placeholder="1446">
-                    <input type="number" id="ahMonth" placeholder="महिना (1-12)">
-                    <input type="number" id="ahDay" placeholder="तारीख (1-30)">
-                </div>
-            </div>
-
-            <button class="action-btn" onclick="processConversion()">उम्र और डिटेल देखें</button>
-            <div class="result" id="ageResultContainer" style="display: none;">
-                <div id="calculatedAgeText"></div>
-                <hr>
-                <div id="convertedDetailsText"></div>
-            </div>
-        </div>
-
-        <!-- 4. टूल: पासवर्ड जनरेटर -->
-        <div id="password-tool" class="tool-page">
-            <button class="back-btn" onclick="showHome()">⬅ होम पर जाएं</button>
-            <h2>🔒 पासवर्ड जनरेटर</h2>
-            <button class="action-btn" onclick="generatePassword()">नया पासवर्ड बनाएं</button>
-            <div class="result" id="passwordResult">यहाँ पासवर्ड दिखेगा</div>
-        </div>
-
-        <!-- 5. टूल: कैलकुलेटर -->
-        <div id="calc-tool" class="tool-page">
-            <button class="back-btn" onclick="showHome()">⬅ होम पर जाएं</button>
-            <h2>🧮 कैलकुलेटर</h2>
-            <input type="text" id="calcDisplay" readonly style="background:#fff; text-align:right; font-size:1.2rem;">
-            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-top:10px;">
-                <button onclick="appendToCalc('7')">7</button><button onclick="appendToCalc('8')">8</button><button onclick="appendToCalc('9')">9</button><button onclick="appendToCalc('/')">/</button>
-                <button onclick="appendToCalc('4')">4</button><button onclick="appendToCalc('5')">5</button><button onclick="appendToCalc('6')">6</button><button onclick="appendToCalc('*')">*</button>
-                <button onclick="appendToCalc('1')">1</button><button onclick="appendToCalc('2')">2</button><button onclick="appendToCalc('3')">3</button><button onclick="appendToCalc('-')">-</button>
-                <button onclick="appendToCalc('0')">0</button><button onclick="clearCalc()">C</button><button onclick="calculateResult()">=</button><button onclick="appendToCalc('+')">+</button>
-            </div>
-        </div>
-
-        <!-- 6. टूल: वजन कन्वर्टर -->
-        <div id="unit-tool" class="tool-page">
-            <button class="back-btn" onclick="showHome()">⬅ होम पर जाएं</button>
-            <h2>⚖️ वजन कन्वर्टर (KG से Gram)</h2>
-            <input type="number" id="kgInput" placeholder="किलोग्राम (KG) डालें">
-            <button class="action-btn" onclick="convertKg()">कन्वर्ट करें</button>
-            <div class="result" id="gramResult">ग्राम में मान</div>
-        </div>
-
-        <!-- 7. टूल: QR कोड -->
-        <div id="qr-tool" class="tool-page">
-            <button class="back-btn" onclick="showHome()">⬅ होम पर जाएं</button>
-            <h2>📱 QR कोड जनरेटर</h2>
-            <input type="text" id="qrText" placeholder="लिंक या टेक्स्ट यहाँ डालें">
-            <button class="action-btn" onclick="generateQR()">QR कोड बनाएं</button>
-            <div class="result" id="qrResultArea" style="text-align:center;">QR कोड यहाँ दिखेगा</div>
-        </div>
-
+      <button class="primary-btn" id="convertBtn">कन्वर्ट करें</button>
     </div>
 
-    <footer>
-        © Utility Hub • Web Tools Collection
-    </footer>
+    <div id="ageResult"></div>
+  </section>
 
-    <script>
-        // SPA नेविगेशन
-        function showTool(toolId) {
-            document.getElementById('home-view').style.display = 'none';
-            const tools = document.querySelectorAll('.tool-page');
-            tools.forEach(t => t.style.display = 'none');
-            document.getElementById(toolId).style.display = 'block';
+  <!-- ================= TOOL 3 : PASSWORD ================= -->
+  <section id="view-pass" class="view">
+    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <h2 class="view-title">🔒 पासवर्ड जनरेटर</h2>
+    <div class="panel">
+      <p class="muted">10 अक्षरों का सुरक्षित पासवर्ड — बड़े अक्षर, छोटे अक्षर, अंक और विशेष चिह्न शामिल हैं।</p>
+      <div class="pass-box" id="passBox">—</div>
+      <button class="primary-btn" id="genPassBtn">🔒 नया पासवर्ड बनाएं</button>
+      <button class="secondary-btn" id="copyPassBtn">📋 कॉपी करें</button>
+    </div>
+  </section>
 
-            if (toolId === 'today-date-tool') {
-                loadLiveDetailedDates();
-            }
-        }
+  <!-- ================= TOOL 4 : CALCULATOR ================= -->
+  <section id="view-calc" class="view">
+    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <h2 class="view-title">🧮 कैलकुलेटर</h2>
+    <div class="panel">
+      <div id="calcDisplay" class="calc-display">0</div>
+      <div class="calc-keys" id="calcKeys">
+        <button class="ck fn" data-k="C">C</button>
+        <button class="ck fn" data-k="(">(</button>
+        <button class="ck fn" data-k=")">)</button>
+        <button class="ck op" data-k="/">÷</button>
 
-        function showHome() {
-            const tools = document.querySelectorAll('.tool-page');
-            tools.forEach(t => t.style.display = 'none');
-            document.getElementById('home-view').style.display = 'grid';
-        }
+        <button class="ck" data-k="7">7</button>
+        <button class="ck" data-k="8">8</button>
+        <button class="ck" data-k="9">9</button>
+        <button class="ck op" data-k="*">×</button>
 
-        // आज की लाइव विस्तृत तारीख लोड करना
-        function loadLiveDetailedDates() {
-            const today = new Date();
-            
-            // 1. English Details
-            const daysArr = ["रविवार (Sunday)", "सोमवार (Monday)", "मंगलवार (Tuesday)", "बुधवार (Wednesday)", "बृहस्पतिवार (Thursday)", "शुक्रवार (Friday)", "शनिवार (Saturday)"];
-            const monthsArr = ["जनवरी", "फरवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"];
-            
-            document.getElementById('en-day').innerText = `दिन (Day): ${daysArr[today.getDay()]}`;
-            document.getElementById('en-date').innerText = `तारीख (Date): ${today.getDate()}`;
-            document.getElementById('en-month').innerText = `महीना (Month): ${monthsArr[today.getMonth()]} (नंबर: ${today.getMonth() + 1})`;
-            document.getElementById('en-year').innerText = `साल (Year): ${today.getFullYear()} AD`;
+        <button class="ck" data-k="4">4</button>
+        <button class="ck" data-k="5">5</button>
+        <button class="ck" data-k="6">6</button>
+        <button class="ck op" data-k="-">−</button>
 
-            // 2. Nepali Details
-            try {
-                const nepDate = new NepaliDate(today);
-                const nepDays = ["आइतबार", "सोमबार", "मङ्गलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
-                const nepMonths = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"];
-                
-                document.getElementById('np-day').innerText = `बार (Day): ${nepDays[nepDate.getDay()]}`;
-                document.getElementById('np-date').innerText = `गते (Date): ${nepDate.getDate()}`;
-                document.getElementById('np-month').innerText = `महिना (Month): ${nepMonths[nepDate.getMonth()]} (नंबर: ${nepDate.getMonth() + 1})`;
-                document.getElementById('np-year').innerText = `वर्ष (Year): ${nepDate.getYear()} BS`;
-            } catch(e) {
-                document.getElementById('np-day').innerText = `बार: लोड नहीं हो सका`;
-            }
+        <button class="ck" data-k="1">1</button>
+        <button class="ck" data-k="2">2</button>
+        <button class="ck" data-k="3">3</button>
+        <button class="ck op" data-k="+">+</button>
 
-            // 3. Urdu/Hijri Details (Estimation)
-            try {
-                const hijriInfo = gregorianToHijriDetails(today);
-                document.getElementById('ur-day').innerText = `दिन (Day): ${hijriInfo.dayName}`;
-                document.getElementById('ur-date').innerText = `तारीख (Date): ${hijriInfo.day}`;
-                document.getElementById('ur-month').innerText = `महीना (Month): ${hijriInfo.monthName} (नंबर: ${hijriInfo.monthNum})`;
-                document.getElementById('ur-year').innerText = `साल (Year): ${hijriInfo.year} AH`;
-            } catch(e) {
-                document.getElementById('ur-day').innerText = `दिन: उपलब्ध नहीं`;
-            }
-        }
+        <button class="ck" data-k="0" style="grid-column:span 2;">0</button>
+        <button class="ck" data-k=".">.</button>
+        <button class="ck eq" data-k="=">=</button>
+      </div>
+    </div>
+  </section>
 
-        // हिजरी गणना सहायक फंक्शन
-        function gregorianToHijriDetails(gDate) {
-            const day = gDate.getDate();
-            const month = gDate.getMonth() + 1;
-            const year = gDate.getFullYear();
-            let m = month, y = year;
-            if (m < 3) { y -= 1; m += 12; }
-            let a = Math.floor(y / 100);
-            let b = 2 - a + Math.floor(a / 4);
-            let jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + day + b - 1524.5;
-            let z = jd - 1948440 + 10632;
-            let n = Math.floor((z - 1) / 10631);
-            z = z - 10631 * n + 354;
-            let j = Math.floor((10985 - z) / 5316) * Math.floor((50 * z) / 17719) + Math.floor(z / 5670) * Math.floor((43 * z) / 15238);
-            z = z - Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) - Math.floor(j / 16) * Math.floor((15238 * j) / 43) + 29;
-            let hMonth = Math.floor((24 * z) / 709);
-            let hDay = z - Math.floor((709 * hMonth) / 24);
-            let hYear = 30 * n + j - 30;
+  <!-- ================= TOOL 5 : WEIGHT ================= -->
+  <section id="view-weight" class="view">
+    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <h2 class="view-title">⚖️ वजन कन्वर्टर</h2>
+    <div class="panel">
+      <label class="lbl" for="kgInput">वजन (किलोग्राम — KG)</label>
+      <input type="number" id="kgInput" class="input" placeholder="जैसे: 5" step="any" inputmode="decimal">
+      <button class="primary-btn" id="kgBtn">ग्राम में बदलें</button>
+      <div class="result-box"><span id="gramResult">0</span> ग्राम</div>
+      <div class="result-sub" id="extraWeight"></div>
+    </div>
+  </section>
 
-            const urduMonths = ["मुहर्रम", "सफ़र", "रबी उल-अव्वल", "रबी अल-थानी", "जुमादा अल-अव्वल", "जुमादा अल-थानी", "रजब", "शबान", "रमजान", "शव्वाल", "जुल क़ादा", "जुल हिज्जा"];
-            const urduDays = ["अद-अहद (रविवार)", "अल-इसनैन (सोमवार)", "अद-सलासा (मंगलवार)", "अल-अरबा' (बुधवार)", "अल-खमीस (बृहस्पतिवार)", "अल-जुमुआ (शुक्रवार)", "अस-सब्त (शनिवार)"];
+  <!-- ================= TOOL 6 : QR ================= -->
+  <section id="view-qr" class="view">
+    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <h2 class="view-title">📱 QR कोड जनरेटर</h2>
+    <div class="panel">
+      <label class="lbl" for="qrText">टेक्स्ट या URL डालें</label>
+      <input type="text" id="qrText" class="input" placeholder="https://example.com">
+      <button class="primary-btn" id="qrBtn">QR कोड बनाएं</button>
+      <div class="qr-box" id="qrBox"></div>
+      <a href="#" class="primary-btn" id="qrDownload" style="display:none;">⬇ QR कोड डाउनलोड करें</a>
+    </div>
+  </section>
 
-            return {
-                dayName: urduDays[gDate.getDay()],
-                day: hDay,
-                monthName: urduMonths[hMonth - 1] || "माह",
-                monthNum: hMonth,
-                year: hYear
-            };
-        }
+</main>
 
-        function toggleInputs() {
-            const type = document.getElementById('calendarType').value;
-            document.getElementById('input-AD').style.display = (type === 'AD') ? 'block' : 'none';
-            document.getElementById('input-BS').style.display = (type === 'BS') ? 'block' : 'none';
-            document.getElementById('input-AH').style.display = (type === 'AH') ? 'block' : 'none';
-        }
+<!-- Nepali Date Converter Library -->
+<script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@2.0.1/dist/nepali-date-converter.umd.min.js"></script>
 
-        function processConversion() {
-            alert("कैलेंडर कन्वर्टर एक्टिव है।");
-        }
+<script>
+(function () {
+  'use strict';
 
-        // पासवर्ड जनरेटर
-        function generatePassword() {
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%!";
-            let password = "";
-            for (let i = 0; i < 10; i++) {
-                password += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            document.getElementById("passwordResult").innerText = "नया पासवर्ड: " + password;
-        }
+  /* =========================================================
+     CONSTANTS
+     ========================================================= */
+  var EN_DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var EN_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-        // कैलकुलेटर लॉजिक
-        function appendToCalc(val) { document.getElementById('calcDisplay').value += val; }
-        function clearCalc() { document.getElementById('calcDisplay').value = ''; }
-        function calculateResult() {
-            try { document.getElementById('calcDisplay').value = eval(document.getElementById('calcDisplay').value); }
-            catch(e) { alert('अमान्य गणना'); }
-        }
+  var NP_DAYS   = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहीबार','शुक्रबार','शनिबार'];
+  var NP_MONTHS = ['बैशाख','जेठ','असार','श्रावण','भाद्र','आश्विन','कार्तिक','मंसिर','पुष','माघ','फाल्गुन','चैत्र'];
 
-        // वजन कन्वर्टर
-        function convertKg() {
-            const kg = document.getElementById("kgInput").value;
-            if (kg === "") { alert("कृपया मान डालें!"); return; }
-            document.getElementById("gramResult").innerText = `${kg} KG = ${kg * 1000} Gram`;
-        }
+  var UR_DAYS   = ['अल-अहद','अल-इस्नैन','अल-सलासा',"अल-अरबा'",'अल-खमीस','अल-जुमा','अस-सब्त'];
+  var UR_MONTHS = ['मुहर्रम','सफ़र','रबी उल अव्वल','रबी उस सानी','जुमादा अल-अव्वल','जुमादा अस-सानी',
+                   'रजब','शाबान','रमज़ान','शव्वाल','ज़िलक़ाद','ज़िलहिज्जा'];
 
-        // QR कोड जनरेटर
-        function generateQR() {
-            const text = document.getElementById('qrText').value;
-            if(!text) { alert("कृपया टेक्स्ट या लिंक डालें!"); return; }
-            document.getElementById('qrResultArea').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(text)}" alt="QR Code">`;
-        }
-    </script>
+  /* =========================================================
+     SMALL HELPERS
+     ========================================================= */
+  function pad2(n){ return (n < 10 ? '0' : '') + n; }
+  function isoOf(d){ return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+  function noon(y, m, d){ return new Date(y, m, d, 12, 0, 0, 0); }
+  function fmtNum(n){
+    if (!isFinite(n)) return '—';
+    var r = Math.round(n * 1e6) / 1e6;
+    return r.toLocaleString('en-IN', { maximumFractionDigits: 6 });
+  }
+
+  /* =========================================================
+     NEPALI DATE LIBRARY ACCESS
+     ========================================================= */
+  function getNepaliClass(){
+    var g = window.NepaliDateConverter || window.NepaliDate || window.nepaliDateConverter;
+    if (!g) return null;
+    var C = g.default || g;
+    return (typeof C === 'function') ? C : null;
+  }
+
+  /* =========================================================
+     HIJRI (ISLAMIC) CALENDAR via Intl
+     ========================================================= */
+  var hijriFmt = null;
+  (function initHijri(){
+    try {
+      hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura',
+        { day: 'numeric', month: 'numeric', year: 'numeric' });
+      hijriFmt.format(new Date());
+    } catch (e1) {
+      hijriFmt = null;
+      try {
+        hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic',
+          { day: 'numeric', month: 'numeric', year: 'numeric' });
+        hijriFmt.format(new Date());
+      } catch (e2) { hijriFmt = null; }
+    }
+  })();
+
+  function hijriParts(date){
+    if (!hijriFmt) return null;
+    try {
+      var parts = hijriFmt.formatToParts(date);
+      var y = 0, m = 0, d = 0;
+      for (var i = 0; i < parts.length; i++){
+        var p = parts[i];
+        var v = parseInt(String(p.value).replace(/[^0-9]/g, ''), 10);
+        if (isNaN(v)) continue;
+        if (p.type === 'year') y = v;
+        else if (p.type === 'month') m = v;
+        else if (p.type === 'day') d = v;
+      }
+      if (!y || !m || !d) return null;
+      return { year: y, month: m, day: d };
+    } catch (e) { return null; }
+  }
+
+  /* Hijri -> Gregorian : estimate then search with Intl for exact match */
+  function hijriToGregorian(hy, hm, hd){
+    var epochUTC = Date.UTC(622, 6, 19); // approx 1 Muharram 1 AH (proleptic Gregorian)
+    var approxDays = (hy - 1) * 354.36707 + (hm - 1) * 29.53059 + (hd - 1);
+    var estUTC = new Date(epochUTC + Math.round(approxDays) * 86400000);
+    var base = noon(estUTC.getUTCFullYear(), estUTC.getUTCMonth(), estUTC.getUTCDate());
+
+    var off, cand, p;
+    for (off = -8; off <= 8; off++){
+      cand = new Date(base.getFullYear(), base.getMonth(), base.getDate() + off, 12, 0, 0, 0);
+      p = hijriParts(cand);
+      if (p && p.year === hy && p.month === hm && p.day === hd) return cand;
+    }
+    // fallback : closest match
+    var best = null, bestDiff = Infinity;
+    for (off = -15; off <= 15; off++){
+      cand = new Date(base.getFullYear(), base.getMonth(), base.getDate() + off, 12, 0, 0, 0);
+      p = hijriParts(cand);
+      if (!p) continue;
+      var diff = Math.abs((p.year - hy) * 354.367 + (p.month - hm) * 29.53 + (p.day - hd));
+      if (diff < bestDiff){ bestDiff = diff; best = cand; }
+    }
+    return best;
+  }
+
+  /* =========================================================
+     BREAKDOWN BUILDERS
+     ========================================================= */
+  function adBreakdown(date){
+    return {
+      dayName: EN_DAYS[date.getDay()],
+      date: date.getDate(),
+      monthName: EN_MONTHS[date.getMonth()],
+      monthNum: date.getMonth() + 1,
+      year: date.getFullYear()
+    };
+  }
+
+  function bsBreakdown(date){
+    var C = getNepaliClass();
+    if (!C) return null;
+    try {
+      var nd = new C(date);
+      var mIdx = nd.getMonth();
+      return {
+        dayName: NP_DAYS[date.getDay()],
+        date: nd.getDate(),
+        monthName: NP_MONTHS[mIdx] || ('महीना ' + (mIdx + 1)),
+        monthNum: mIdx + 1,
+        year: nd.getYear()
+      };
+    } catch (e) { return null; }
+  }
+
+  function ahBreakdown(date){
+    var p = hijriParts(date);
+    if (!p) return null;
+    return {
+      dayName: UR_DAYS[date.getDay()],
+      date: p.day,
+      monthName: UR_MONTHS[p.month - 1] || ('महीना ' + p.month),
+      monthNum: p.month,
+      year: p.year
+    };
+  }
+
+  /* =========================================================
+     DATE CARD RENDERER
+     ========================================================= */
+  function dateCard(title, subtitle, b){
+    if (!b){
+      return '<div class="panel date-card">' +
+               '<div class="dc-head">' + title + '</div>' +
+               '<div class="err">यह कैलेंडर इस डिवाइस पर उपलब्ध नहीं है।</div>' +
+             '</div>';
+    }
+    return '<div class="panel date-card">' +
+             '<div class="dc-head"><span>' + title + '</span>' +
+               (subtitle ? '<span class="dc-sub">' + subtitle + '</span>' : '') +
+             '</div>' +
+             '<div class="dc-body">' +
+               '<div class="dc-num">' + b.date + '</div>' +
+               '<div class="dc-info">' +
+                 '<div class="dc-day">' + b.dayName + '</div>' +
+                 '<div class="dc-line">महीना: <b>' + b.monthName + '</b> (' + pad2(b.monthNum) + ')</div>' +
+                 '<div class="dc-line">वर्ष: <b>' + b.year + '</b></div>' +
+               '</div>' +
+             '</div>' +
+           '</div>';
+  }
+
+  /* =========================================================
+     TOOL 1 : TODAY'S LIVE DATE
+     ========================================================= */
+  function renderToday(){
+    var box = document.getElementById('todayContent');
+    if (!box) return;
+    var now = new Date();
+
+    var html = '';
+    html += dateCard('अंग्रेज़ी (AD)', 'ENGLISH', adBreakdown(now));
+    html += dateCard('नेपाली (BS)', 'NEPALI', bsBreakdown(now));
+    html += dateCard('उर्दू / हिजरी (AH)', 'HIJRI', ahBreakdown(now));
+
+    box.innerHTML = html;
+  }
+
+  /* =========================================================
+     TOOL 2 : AGE & CROSS-CALENDAR CONVERTER
+     ========================================================= */
+  function fillSelects(){
+    var bsSel = document.getElementById('bsMonth');
+    var ahSel = document.getElementById('ahMonth');
+    var i, o;
+
+    bsSel.innerHTML = '';
+    for (i = 0; i < NP_MONTHS.length; i++){
+      o = document.createElement('option');
+      o.value = String(i + 1);
+      o.textContent = (i + 1) + ' - ' + NP_MONTHS[i];
+      bsSel.appendChild(o);
+    }
+
+    ahSel.innerHTML = '';
+    for (i = 0; i < UR_MONTHS.length; i++){
+      o = document.createElement('option');
+      o.value = String(i + 1);
+      o.textContent = (i + 1) + ' - ' + UR_MONTHS[i];
+      ahSel.appendChild(o);
+    }
+  }
+
+  function initAgeDefaults(){
+    var now = new Date();
+    document.getElementById('adDate').value = isoOf(now);
+
+    var C = getNepaliClass();
+    if (C){
+      try {
+        var nd = new C(now);
+        document.getElementById('bsYear').value = nd.getYear();
+        document.getElementById('bsMonth').value = String(nd.getMonth() + 1);
+        document.getElementById('bsDay').value = nd.getDate();
+      } catch (e) { /* ignore */ }
+    }
+
+    var p = hijriParts(now);
+    if (p){
+      document.getElementById('ahYear').value = p.year;
+      document.getElementById('ahMonth').value = String(p.month);
+      document.getElementById('ahDay').value = p.day;
+    }
+  }
+
+  function calcAge(from, to){
+    var y = to.getFullYear() - from.getFullYear();
+    var m = to.getMonth() - from.getMonth();
+    var d = to.getDate() - from.getDate();
+    if (d < 0){
+      m--;
+      var prevMonthDays = new Date(to.getFullYear(), to.getMonth(), 0).getDate();
+      d += prevMonthDays;
+    }
+    if (m < 0){ y--; m += 12; }
+    return { y: y, m: m, d: d };
+  }
+
+  function doConvert(){
+    var out = document.getElementById('ageResult');
+    var type = document.getElementById('calType').value;
+    var date = null;
+
+    try {
+      if (type === 'AD'){
+        var v = document.getElementById('adDate').value;
+        if (!v){ out.innerHTML = '<div class="panel"><span class="err">कृपया तारीख चुनें।</span></div>'; return; }
+        var pr = v.split('-');
+        date = noon(parseInt(pr[0], 10), parseInt(pr[1], 10) - 1, parseInt(pr[2], 10));
+        if (isNaN(date.getTime())) throw new Error('तारीख सही नहीं है');
+      }
+      else if (type === 'BS'){
+        var by = parseInt(document.getElementById('bsYear').value, 10);
+        var bm = parseInt(document.getElementById('bsMonth').value, 10);
+        var bd = parseInt(document.getElementById('bsDay').value, 10);
+        if (!by || !bm || !bd) throw new Error('कृपया वर्ष, महीना और गते भरें');
+        if (by < 2000 || by > 2090) throw new Error('नेपाली वर्ष 2000 से 2090 के बीच होना चाहिए');
+        if (bd < 1 || bd > 32) throw new Error('गते 1 से 32 के बीच होनी चाहिए');
+        var C = getNepaliClass();
+        if (!C) throw new Error('नेपाली कैलेंडर लाइब्रेरी लोड नहीं हुई — इंटरनेट जांचें');
+        var nd = new C(by, bm - 1, bd);
+        var js = nd.toJsDate();
+        date = noon(js.getFullYear(), js.getMonth(), js.getDate());
+      }
+      else {
+        var ay = parseInt(document.getElementById('ahYear').value, 10);
+        var am = parseInt(document.getElementById('ahMonth').value, 10);
+        var ad = parseInt(document.getElementById('ahDay').value, 10);
+        if (!ay || !am || !ad) throw new Error('कृपया वर्ष, महीना और दिन भरें');
+        if (ay < 1300 || ay > 1500) throw new Error('हिजरी वर्ष 1300 से 1500 के बीच होना चाहिए');
+        if (ad < 1 || ad > 30) throw new Error('दिन 1 से 30 के बीच होना चाहिए');
+        date = hijriToGregorian(ay, am, ad);
+        if (!date) throw new Error('हिजरी तारीख नहीं मिल सकी');
+      }
+    } catch (err){
+      out.innerHTML = '<div class="panel"><span class="err">त्रुटि: ' + err.message + '</span></div>';
+      return;
+    }
+
+    /* --- Age --- */
+    var today = new Date();
+    var todayNoon = noon(today.getFullYear(), today.getMonth(), today.getDate());
+
+    var ageHTML = '';
+    if (date.getTime() > todayNoon.getTime()){
+      ageHTML = '<div class="panel age-card">' +
+                  '<div class="age-title">🎂 उम्र</div>' +
+                  '<div class="age-big">चुनी गई तारीख भविष्य की है</div>' +
+                '</div>';
+    } else {
+      var a = calcAge(date, todayNoon);
+      var totalDays = Math.round((todayNoon.getTime() - date.getTime()) / 86400000);
+      ageHTML = '<div class="panel age-card">' +
+                  '<div class="age-title">🎂 आपकी उम्र</div>' +
+                  '<div class="age-big"><b>' + a.y + '</b> वर्ष <b>' + a.m + '</b> महीने <b>' + a.d + '</b> दिन</div>' +
+                  '<div class="age-sub">कुल दिन: ' + totalDays.toLocaleString('en-IN') + '</div>' +
+                '</div>';
+    }
+
+    /* --- Full cross conversion --- */
+    var cards = '';
+    cards += dateCard('अंग्रेज़ी (AD)', 'ENGLISH', adBreakdown(date));
+    cards += dateCard('नेपाली (BS)', 'NEPALI', bsBreakdown(date));
+    cards += dateCard('उर्दू / हिजरी (AH)', 'HIJRI', ahBreakdown(date));
+
+    out.innerHTML = ageHTML + cards;
+  }
+
+  /* =========================================================
+     TOOL 3 : PASSWORD GENERATOR
+     ========================================================= */
+  var PASS_UPPER = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+  var PASS_LOWER = 'abcdefghijkmnopqrstuvwxyz';
+  var PASS_NUM   = '23456789';
+  var PASS_SPEC  = '!@#$%^&*()-_=+?';
+
+  function randInt(max){
+    if (window.crypto && window.crypto.getRandomValues){
+      var arr = new Uint32Array(1);
+      var limit = Math.floor(0xFFFFFFFF / max) * max;
+      var v;
+      do { window.crypto.getRandomValues(arr); v = arr[0]; } while (v >= limit);
+      return v % max;
+    }
+    return Math.floor(Math.random() * max);
+  }
+
+  function makePassword(len){
+    len = len || 10;
+    var all = PASS_UPPER + PASS_LOWER + PASS_NUM + PASS_SPEC;
+    var chars = [
+      PASS_UPPER.charAt(randInt(PASS_UPPER.length)),
+      PASS_LOWER.charAt(randInt(PASS_LOWER.length)),
+      PASS_NUM.charAt(randInt(PASS_NUM.length)),
+      PASS_SPEC.charAt(randInt(PASS_SPEC.length))
+    ];
+    while (chars.length < len){
+      chars.push(all.charAt(randInt(all.length)));
+    }
+    // Fisher-Yates shuffle
+    for (var i = chars.length - 1; i > 0; i--){
+      var j = randInt(i + 1);
+      var t = chars[i]; chars[i] = chars[j]; chars[j] = t;
+    }
+    return chars.join('');
+  }
+
+  function generatePassword(){
+    var p = makePassword(10);
+    document.getElementById('passBox').textContent = p;
+  }
+
+  function copyPassword(){
+    var txt = document.getElementById('passBox').textContent;
+    if (!txt || txt === '—') return;
+    var btn = document.getElementById('copyPassBtn');
+    var done = function (){
+      btn.textContent = '✅ कॉपी हो गया!';
+      setTimeout(function (){ btn.textContent = '📋 कॉपी करें'; }, 1500);
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done).catch(function (){ legacyCopy(txt, done); });
+    } else {
+      legacyCopy(txt, done);
+    }
+  }
+
+  function legacyCopy(txt, cb){
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = txt;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (cb) cb();
+    } catch (e) {
+      alert('कॉपी नहीं हो सका, कृपया मैन्युअली कॉपी करें।');
+    }
+  }
+
+  /* =========================================================
+     TOOL 4 : CALCULATOR
+     ========================================================= */
+  var calcExpr = '';
+  var calcDone = false;
+
+  function calcRender(){
+    var d = document.getElementById('calcDisplay');
+    d.textContent = calcExpr === '' ? '0' : calcExpr.replace(/\*/g, '×').replace(/\//g, '÷');
+  }
+
+  function calcPress(k){
+    var d = document.getElementById('calcDisplay');
+
+    if (k === 'C'){
+      calcExpr = '';
+      calcDone = false;
+      calcRender();
+      return;
+    }
+
+    if (k === '='){
+      if (!calcExpr) return;
+      var res;
+      try {
+        if (!/^[0-9+\-*/.() ]+$/.test(calcExpr)) throw new Error('bad');
+        res = Function('"use strict"; return (' + calcExpr + ');')();
+      } catch (e) {
+        d.textContent = 'त्रुटि';
+        calcExpr = '';
+        calcDone = true;
+        return;
+      }
+      if (typeof res !== 'number' || !isFinite(res)){
+        d.textContent = 'त्रुटि';
+        calcExpr = '';
+        calcDone = true;
+        return;
+      }
+      res = Math.round(res * 1e10) / 1e10;
+      calcExpr = String(res);
+      calcDone = true;
+      d.textContent = calcExpr.replace(/\*/g, '×').replace(/\//g, '÷');
+      return;
+    }
+
+    if (calcDone){
+      if (/[0-9.]/.test(k)) calcExpr = '';
+      calcDone = false;
+    }
+
+    // stop double operators
+    if (/[+\-*/]/.test(k) && /[+\-*/]$/.test(calcExpr)){
+      calcExpr = calcExpr.slice(0, -1);
+    }
+
+    if (k === '.'){
+      var parts = calcExpr.split(/[+\-*/()]/);
+      var last = parts[parts.length - 1];
+      if (last.indexOf('.') !== -1) return;
+      if (last === '') calcExpr += '0';
+    }
+
+    if (calcExpr.length > 40) return;
+
+    calcExpr += k;
+    calcRender();
+  }
+
+  /* =========================================================
+     TOOL 5 : WEIGHT CONVERTER
+     ========================================================= */
+  function convertWeight(){
+    var raw = document.getElementById('kgInput').value;
+    var kg = parseFloat(raw);
+    var out = document.getElementById('gramResult');
+    var sub = document.getElementById('extraWeight');
+
+    if (isNaN(kg)){
+      out.textContent = '0';
+      sub.textContent = '';
+      return;
+    }
+    var grams = kg * 1000;
+    out.textContent = fmtNum(grams);
+    sub.textContent = fmtNum(kg * 1000000) + ' मिलीग्राम  ·  ' + fmtNum(kg / 1000) + ' टन';
+  }
+
+  /* =========================================================
+     TOOL 6 : QR GENERATOR
+     ========================================================= */
+  var currentQR = '';
+
+  function makeQR(){
+    var txt = document.getElementById('qrText').value.trim();
+    var box = document.getElementById('qrBox');
+    var dl = document.getElementById('qrDownload');
+
+    if (!txt){
+      box.innerHTML = '<span class="err">कृपया कुछ टेक्स्ट या URL डालें।</span>';
+      dl.style.display = 'none';
+      currentQR = '';
+      return;
+    }
+
+    var url = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(txt);
+    currentQR = url;
+    box.innerHTML = '<img src="' + url + '" alt="QR Code" id="qrImg">';
+    dl.style.display = 'block';
+    dl.href = url;
+    dl.setAttribute('target', '_blank');
+    dl.setAttribute('rel', 'noopener');
+  }
+
+  function downloadQR(e){
+    if (!currentQR) return;
+    if (e) e.preventDefault();
+
+    var url = currentQR;
+    fetch(url, { mode: 'cors' })
+      .then(function (res){
+        if (!res.ok) throw new Error('fail');
+        return res.blob();
+      })
+      .then(function (blob){
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'qr-code.png';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function (){
+          URL.revokeObjectURL(a.href);
+          if (a.parentNode) a.parentNode.removeChild(a);
+        }, 1500);
+      })
+      .catch(function (){
+        window.open(url, '_blank');
+      });
+  }
+
+  /* =========================================================
+     NAVIGATION
+     ========================================================= */
+  function showView(name){
+    var views = document.querySelectorAll('.view');
+    for (var i = 0; i < views.length; i++){
+      views[i].classList.toggle('active', views[i].id === 'view-' + name);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (name === 'date') renderToday();
+    if (name === 'pass' && document.getElementById('passBox').textContent === '—'){
+      generatePassword();
+    }
+  }
+
+  /* =========================================================
+     WIRE UP
+     ========================================================= */
+  function init(){
+    // Dashboard cards
+    var cards = document.querySelectorAll('.card[data-tool]');
+    for (var i = 0; i < cards.length; i++){
+      (function (c){
+        c.addEventListener('click', function (){ showView(c.getAttribute('data-tool')); });
+      })(cards[i]);
+    }
+
+    // Back buttons
+    var backs = document.querySelectorAll('[data-home]');
+    for (var j = 0; j < backs.length; j++){
+      backs[j].addEventListener('click', function (){ showView('dashboard'); });
+    }
+
+    // Badge
+    document.getElementById('badgeBtn').addEventListener('click', function (){ showView('dashboard'); });
+
+    /* --- Tool 2 wiring --- */
+    fillSelects();
+    initAgeDefaults();
+
+    document.getElementById('calType').addEventListener('change', function (){
+      var v = this.value;
+      document.getElementById('adInputs').style.display = (v === 'AD') ? 'block' : 'none';
+      document.getElementById('bsInputs').style.display = (v === 'BS') ? 'block' : 'none';
+      document.getElementById('ahInputs').style.display = (v === 'AH') ? 'block' : 'none';
+    });
+
+    document.getElementById('convertBtn').addEventListener('click', doConvert);
+
+    /* --- Tool 3 wiring --- */
+    document.getElementById('genPassBtn').addEventListener('click', generatePassword);
+    document.getElementById('copyPassBtn').addEventListener('click', copyPassword);
+
+    /* --- Tool 4 wiring --- */
+    document.getElementById('calcKeys').addEventListener('click', function (e){
+      var t = e.target;
+      if (t && t.classList.contains('ck') && t.hasAttribute('data-k')){
+        calcPress(t.getAttribute('data-k'));
+      }
+    });
+    document.addEventListener('keydown', function (e){
+      if (!document.getElementById('view-calc').classList.contains('active')) return;
+      var k = e.key;
+      if (/^[0-9]$/.test(k) || k === '.' || k === '+' || k === '-' || k === '*' || k === '/' ||
+          k === '(' || k === ')'){
+        calcPress(k);
+      } else if (k === 'Enter' || k === '='){
+        e.preventDefault();
+        calcPress('=');
+      } else if (k === 'Escape' || k === 'c' || k === 'C'){
+        calcPress('C');
+      } else if (k === 'Backspace'){
+        e.preventDefault();
+        calcExpr = calcExpr.slice(0, -1);
+        calcRender();
+      }
+    });
+
+    /* --- Tool 5 wiring --- */
+    document.getElementById('kgInput').addEventListener('input', convertWeight);
+    document.getElementById('kgBtn').addEventListener('click', convertWeight);
+
+    /* --- Tool 6 wiring --- */
+    document.getElementById('qrBtn').addEventListener('click', makeQR);
+    document.getElementById('qrText').addEventListener('keydown', function (e){
+      if (e.key === 'Enter') makeQR();
+    });
+    document.getElementById('qrDownload').addEventListener('click', downloadQR);
+
+    /* --- initial render --- */
+    renderToday();
+    generatePassword();
+
+    // keep "today" fresh
+    setInterval(function (){
+      if (document.getElementById('view-date').classList.contains('active')) renderToday();
+    }, 60000);
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
 </body>
 </html>
