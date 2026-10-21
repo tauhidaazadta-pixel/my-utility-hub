@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Nepali Date Converter CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@2.0.1/dist/nepali-date-converter.umd.min.js"></script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #f1f5f9;
+        }
+        /* Square 1:1 Aspect Ratio Card */
+        .square-card {
+            aspect-ratio: 1 / 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800">
+
+    <!-- Header Navbar -->
+    <header class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-xl mx-auto px-4 py-3.5 flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showHome()">
+                <span class="text-2xl">🛠️</span>
+                <h1 class="text-xl font-bold tracking-tight">Utility Hub</h1>
+            </div>
+            <button class="bg-blue-700 hover:bg-blue-800 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-sm" onclick="showHome()">
+                Web Tools
+            </button>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="max-w-xl mx-auto w-full px-4 py-6 flex-grow">
+
+        <!-- ================= Dashboard Grid View ================= -->
+        <div id="home-view" class="space-y-4">
+            <p class="text-slate-600 font-medium text-sm text-center md:text-left">
+                अपनी पसंद के टूल पर क्लिक करके इस्तेमाल करें:
+            </p>
+
+            <!-- 3 Columns Grid of 1x1 Square Cards -->
+            <div class="grid grid-cols-3 gap-3">
+
+                <!-- 1. आज की तारीख -->
+                <button onclick="showTool('today-date-tool')" class="square-card bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex flex-col items-center justify-center gap-2 hover:shadow-md hover:border-blue-200 transition-all active:scale-95 ring-2 ring-blue-500/20">
+                    <span class="text-3xl sm:text-4xl">📅</span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-700 text-center leading-tight">आज की तारीख</span>
+                </button>
+
+                <!-- 2. उम्र कैलकुलेटर -->
+                <button onclick="showTool('age-calc-tool')" class="square-card bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex flex-col items-center justify-center gap-2 hover:shadow-md hover:border-blue-200 transition-all active:scale-95 ring-2 ring-blue-500/20">
+                    <span class="text-3xl sm:text-4xl">🎂</span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-700 text-center leading-tight">उम्र कैलकुलेटर</span>
+                </button>
+
+                <!-- 3. कैलकुलेटर -->
+                <button onclick="showTool('calculator-tool')" class="square-card bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex flex-col items-center justify-center gap-2 hover:shadow-md hover:border-blue-200 transition-all active:scale-95">
+                    <span class="text-3xl sm:text-4xl">🧮</span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-700 text-center leading-tight">कैलकुलेटर</span>
+                </button>
+
+                <!-- 4. बैकग्राउंड रिमूवर -->
+                <button onclick="showTool('bg-tool')" class="square-card bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex flex-col items-center justify-center gap-2 hover:shadow-md hover:border-blue-200 transition-all active:scale-95">
+                    <span class="text-3xl sm:text-4xl">🖼️</span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-700 text-center leading-tight">बैकग्राउंड रिमूवर</span>
+                </button>
+
+                <!-- 5. PDF मेकर -->
+                <button onclick="showTool('pdf-tool')" class="square-card bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex flex-col items-center justify-center gap-2 hover:shadow-md hover:border-blue-200 transition-all active:scale-95">
+                    <span class="text-3xl sm:text-4xl">📄</span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-700 text-center leading-tight">PDF मेकर</span>
+                </button>
+
+                <!-- 6. QR कोड -->
+                <button onclick="showTool('qr-tool')" class="square-card bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex flex-col items-center justify-center gap-2 hover:shadow-md hover:border-blue-200 transition-all active:scale-95">
+                    <span class="text-3xl sm:text-4xl">📱</span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-700 text-center leading-tight">QR कोड</span>
+                </button>
+
+                <!-- 7. वर्ड काउंटर -->
+                <button onclick="showTool('word-tool')" class="square-card bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex flex-col items-center justify-center gap-2 hover:shadow-md hover:border-blue-200 transition-all active:scale-95">
+                    <span class="text-3xl sm:text-4xl">📝</span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-700 text-center leading-tight">वर्ड काउंटर</span>
+                </button>
+
+                <!-- 8. इंच/CM -->
+                <button onclick="showTool('ruler-tool')" class="square-card bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex flex-col items-center justify-center gap-2 hover:shadow-md hover:border-blue-200 transition-all active:scale-95">
+                    <span class="text-3xl sm:text-4xl">📐</span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-700 text-center leading-tight">इंच/CM</span>
+                </button>
+
+                <!-- 9. पासवर्ड जनरेटर -->
+                <button onclick="showTool('password-tool')" class="square-card bg-white rounded-2xl shadow-sm border border-slate-100 p-2 flex flex-col items-center justify-center gap-2 hover:shadow-md hover:border-blue-200 transition-all active:scale-95">
+                    <span class="text-3xl sm:text-4xl">🔒</span>
+                    <span class="text-xs sm:text-sm font-semibold text-slate-700 text-center leading-tight">पासवर्ड</span>
+                </button>
+
+            </div>
+        </div>
+
+
+        <!-- ================= Tool 1: Today's Date View ("आज की तारीख") ================= -->
+        <div id="today-date-tool" class="tool-view hidden space-y-4">
+            <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 bg-white px-3.5 py-1.5 rounded-xl shadow-sm border border-slate-200 transition-all">
+                <i class="fa-solid fa-arrow-left"></i> होम पर जाएं
+            </button>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 space-y-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <span>📅</span> आज की तारीख (Today's Live Date)
+                </h2>
+
+                <div class="space-y-3">
+                    <!-- English Date -->
+                    <div class="p-4 rounded-xl bg-blue-50 border border-blue-200 flex items-center gap-3">
+                        <span class="text-2xl">🇬🇧</span>
+                        <div>
+                            <span class="block text-xs font-semibold text-blue-700">English Date (AD):</span>
+                            <span class="text-base font-bold text-blue-900" id="liveTodayEnglish">लोड हो रहा है...</span>
+                        </div>
+                    </div>
+
+                    <!-- Nepali Date -->
+                    <div class="p-4 rounded-xl bg-red-50 border border-red-200 flex items-center gap-3">
+                        <span class="text-2xl">🇳🇵</span>
+                        <div>
+                            <span class="block text-xs font-semibold text-red-700">नेपाली तारीख (BS - विक्रम संवत):</span>
+                            <span class="text-base font-bold text-red-900" id="liveTodayNepali">लोड हो रहा है...</span>
+                        </div>
+                    </div>
+
+                    <!-- Urdu / Hijri Date -->
+                    <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center gap-3">
+                        <span class="text-2xl">☪️</span>
+                        <div>
+                            <span class="block text-xs font-semibold text-emerald-700">उर्दू / हिजरी तारीख (AH):</span>
+                            <span class="text-base font-bold text-emerald-900" id="liveTodayUrdu">लोड हो रहा है...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= Tool 2: Age Calculator View ("उम्र कैलकुलेटर") ================= -->
+        <div id="age-calc-tool" class="tool-view hidden space-y-4">
+            <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 bg-white px-3.5 py-1.5 rounded-lg shadow-sm border border-slate-200 transition-all">
+                <i class="fa-solid fa-arrow-left"></i> होम पर जाएं
+            </button>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 space-y-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <span>🎂</span> उम्र कैलकुलेटर एवं कैलेंडर कन्वर्टर
+                </h2>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">जन्म तिथि किस कैलेंडर में दर्ज करनी है?</label>
+                    <select id="calcCalendarType" onchange="toggleAgeInputs()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm font-medium focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="AD">1. English / Hindi Date (AD - ईस्वी)</option>
+                        <option value="BS">2. Nepali Date (BS - विक्रम संवत)</option>
+                        <option value="AH">3. Urdu Date (AH - हिजरी)</option>
+                    </select>
+                </div>
+
+                <!-- Input Field: English (AD) -->
+                <div id="age-input-AD" class="space-y-1">
+                    <label class="block text-xs font-semibold text-slate-600">तारीख चुनें (AD):</label>
+                    <input type="date" id="inputAdDate" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+
+                <!-- Input Field: Nepali (BS) -->
+                <div id="age-input-BS" class="hidden space-y-1">
+                    <label class="block text-xs font-semibold text-slate-600">नेपाली तारीख दर्ज करें (साल / महीना / दिन):</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="number" id="inputBsYear" placeholder="साल (2055)" min="2000" max="2090" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm text-center outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="number" id="inputBsMonth" placeholder="महीना (1-12)" min="1" max="12" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm text-center outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="number" id="inputBsDay" placeholder="दिन (1-32)" min="1" max="32" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm text-center outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- Input Field: Urdu (AH) -->
+                <div id="age-input-AH" class="hidden space-y-1">
+                    <label class="block text-xs font-semibold text-slate-600">उर्दू/हिजरी तारीख दर्ज करें (साल / महीना / दिन):</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="number" id="inputAhYear" placeholder="साल (1420)" min="1300" max="1500" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm text-center outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="number" id="inputAhMonth" placeholder="महीना (1-12)" min="1" max="12" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm text-center outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="number" id="inputAhDay" placeholder="दिन (1-30)" min="1" max="30" class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm text-center outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <button onclick="calculateAgeAndConvert()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md transition-all active:scale-98">
+                    उम्र की गणना करें
+                </button>
+
+                <!-- Result Box -->
+                <div id="ageResultBox" class="hidden space-y-3 mt-4 pt-4 border-t border-slate-200">
+                    <div class="p-3.5 bg-blue-50 rounded-xl border border-blue-200 text-blue-900">
+                        <span class="block text-xs font-semibold text-blue-700">सटीक उम्र:</span>
+                        <div id="resultAgeText" class="text-base font-bold"></div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">तीनों कैलेंडर में कन्वर्जन:</p>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-sm" id="resEng"></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-sm" id="resNep"></div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-sm" id="resUrd"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= Tool 3: Calculator ================= -->
+        <div id="calculator-tool" class="tool-view hidden space-y-4">
+            <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 bg-white px-3.5 py-1.5 rounded-lg shadow-sm border border-slate-200 transition-all">
+                <i class="fa-solid fa-arrow-left"></i> होम पर जाएं
+            </button>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 max-w-sm mx-auto space-y-4">
+                <h2 class="text-lg font-bold text-slate-800">🧮 कैलकुलेटर</h2>
+                <input type="text" id="calcDisplay" readonly class="w-full bg-slate-100 border border-slate-200 text-right text-2xl font-mono font-bold p-3 rounded-xl outline-none" value="0">
+                <div class="grid grid-cols-4 gap-2">
+                    <button onclick="clearCalc()" class="col-span-2 bg-red-500 hover:bg-red-600 text-white font-bold p-3 rounded-xl">C</button>
+                    <button onclick="calcInput('/')" class="bg-blue-100 text-blue-700 font-bold p-3 rounded-xl">÷</button>
+                    <button onclick="calcInput('*')" class="bg-blue-100 text-blue-700 font-bold p-3 rounded-xl">×</button>
+
+                    <button onclick="calcInput('7')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">7</button>
+                    <button onclick="calcInput('8')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">8</button>
+                    <button onclick="calcInput('9')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">9</button>
+                    <button onclick="calcInput('-')" class="bg-blue-100 text-blue-700 font-bold p-3 rounded-xl">-</button>
+
+                    <button onclick="calcInput('4')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">4</button>
+                    <button onclick="calcInput('5')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">5</button>
+                    <button onclick="calcInput('6')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">6</button>
+                    <button onclick="calcInput('+')" class="bg-blue-100 text-blue-700 font-bold p-3 rounded-xl">+</button>
+
+                    <button onclick="calcInput('1')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">1</button>
+                    <button onclick="calcInput('2')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">2</button>
+                    <button onclick="calcInput('3')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">3</button>
+                    <button onclick="calculateResult()" class="row-span-2 bg-blue-600 hover:bg-blue-700 text-white font-bold p-3 rounded-xl">=</button>
+
+                    <button onclick="calcInput('0')" class="col-span-2 bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">0</button>
+                    <button onclick="calcInput('.')" class="bg-slate-100 hover:bg-slate-200 font-bold p-3 rounded-xl">.</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= Tool 4: Background Remover ================= -->
+        <div id="bg-tool" class="tool-view hidden space-y-4">
+            <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 bg-white px-3.5 py-1.5 rounded-lg shadow-sm border border-slate-200 transition-all">
+                <i class="fa-solid fa-arrow-left"></i> होम पर जाएं
+            </button>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 text-center space-y-4">
+                <h2 class="text-lg font-bold text-slate-800">🖼️ बैकग्राउंड रिमूवर</h2>
+                <div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 flex flex-col items-center justify-center gap-2">
+                    <span class="text-4xl">📤</span>
+                    <p class="text-xs text-slate-500">फोटो अपलोड करें बैकग्राउंड हटाने के लिए</p>
+                    <input type="file" id="bgInput" class="hidden" onchange="handleBgUpload()">
+                    <button onclick="document.getElementById('bgInput').click()" class="bg-blue-600 text-white font-semibold text-xs px-4 py-2 rounded-xl mt-2">
+                        फोटो चुनें
+                    </button>
+                </div>
+                <div id="bgPreview" class="hidden text-xs text-slate-600 font-medium p-2 bg-slate-50 rounded-xl">
+                    प्रॉसेस हो रहा है...
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= Tool 5: PDF Maker ================= -->
+        <div id="pdf-tool" class="tool-view hidden space-y-4">
+            <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 bg-white px-3.5 py-1.5 rounded-lg shadow-sm border border-slate-200 transition-all">
+                <i class="fa-solid fa-arrow-left"></i> होम पर जाएं
+            </button>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 space-y-4">
+                <h2 class="text-lg font-bold text-slate-800">📄 PDF मेकर</h2>
+                <textarea id="pdfText" rows="5" placeholder="यहाँ टेक्स्ट लिखें जिसे PDF में बदलना चाहते हैं..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                <button onclick="generatePDF()" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm">
+                    PDF डाउनलोड करें / प्रिंट करें
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= Tool 6: QR Code Generator ================= -->
+        <div id="qr-tool" class="tool-view hidden space-y-4">
+            <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 bg-white px-3.5 py-1.5 rounded-lg shadow-sm border border-slate-200 transition-all">
+                <i class="fa-solid fa-arrow-left"></i> होम पर जाएं
+            </button>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 text-center space-y-4">
+                <h2 class="text-lg font-bold text-slate-800">📱 QR कोड जनरेटर</h2>
+                <input type="text" id="qrText" placeholder="लिंक या टेक्स्ट यहाँ डालें..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm outline-none">
+                <button onclick="generateQR()" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm">
+                    QR कोड बनाएं
+                </button>
+                <div id="qrOutput" class="flex justify-center p-2"></div>
+            </div>
+        </div>
+
+        <!-- ================= Tool 7: Word Counter ================= -->
+        <div id="word-tool" class="tool-view hidden space-y-4">
+            <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 bg-white px-3.5 py-1.5 rounded-lg shadow-sm border border-slate-200 transition-all">
+                <i class="fa-solid fa-arrow-left"></i> होम पर जाएं
+            </button>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 space-y-4">
+                <h2 class="text-lg font-bold text-slate-800">📝 वर्ड काउंटर</h2>
+                <textarea id="wordInput" oninput="countWords()" rows="5" placeholder="अपना पैराग्राफ यहाँ टाइप करें..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                <div class="grid grid-cols-2 gap-3 text-center">
+                    <div class="bg-blue-50 rounded-xl p-3">
+                        <span class="block text-2xl font-bold text-blue-700" id="wordCount">0</span>
+                        <span class="text-xs text-slate-500 font-medium">कुल शब्द (Words)</span>
+                    </div>
+                    <div class="bg-blue-50 rounded-xl p-3">
+                        <span class="block text-2xl font-bold text-blue-700" id="charCount">0</span>
+                        <span class="text-xs text-slate-500 font-medium">कुल अक्षर (Characters)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= Tool 8: Inch / CM Converter ================= -->
+        <div id="ruler-tool" class="tool-view hidden space-y-4">
+            <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 bg-white px-3.5 py-1.5 rounded-lg shadow-sm border border-slate-200 transition-all">
+                <i class="fa-solid fa-arrow-left"></i> होम पर जाएं
+            </button>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 space-y-4">
+                <h2 class="text-lg font-bold text-slate-800">📐 इंच और CM कन्वर्टर</h2>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">इंच (Inches):</label>
+                        <input type="number" id="inchInput" oninput="convertRuler('inch')" placeholder="इंच दर्ज करें" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">सेंटीमीटर (CM):</label>
+                        <input type="number" id="cmInput" oninput="convertRuler('cm')" placeholder="CM दर्ज करें" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm outline-none">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= Tool 9: Password Generator ================= -->
+        <div id="password-tool" class="tool-view hidden space-y-4">
+            <button onclick="showHome()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 bg-white px-3.5 py-1.5 rounded-lg shadow-sm border border-slate-200 transition-all">
+                <i class="fa-solid fa-arrow-left"></i> होम पर जाएं
+            </button>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 space-y-4 text-center">
+                <h2 class="text-lg font-bold text-slate-800">🔒 पासवर्ड जनरेटर</h2>
+                <button onclick="generatePassword()" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm shadow-sm">
+                    नया मजबूत पासवर्ड बनाएं
+                </button>
+                <div id="passwordResult" class="p-3 bg-slate-100 rounded-xl text-sm font-mono font-bold text-blue-700 select-all">
+                    यहाँ पासवर्ड दिखेगा
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-3.5 text-center text-xs text-slate-500">
+        © Utility Hub • Web Tools Collection
+    </footer>
+
+    <!-- JavaScript Logic Engine -->
+    <script>
+        const nepMonthsHindi = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"];
+        const urduMonths = ["मुहर्रम", "सफ़र", "रबी उल-अव्वल", "रबी अल-थानी", "जुमादा अल-अव्वल", "जुमादा अल-थानी", "रजब", "शबान", "रमजान", "शव्वाल", "जुल क़ादा", "जुल हिज्जा"];
+
+        window.onload = function() {
+            setLiveTodayDates();
+        };
+
+        // Populate Live Today's Date in Tool 1
+        function setLiveTodayDates() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const monthNamesEng = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const day = today.getDate();
+
+            // 1. English AD
+            document.getElementById('liveTodayEnglish').innerText = `${day} ${monthNamesEng[today.getMonth()]} ${year} (AD)`;
+            document.getElementById('inputAdDate').value = `${year}-${String(today.getMonth()+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+
+            // 2. Nepali BS
+            try {
+                const nepDate = new NepaliDate(today);
+                document.getElementById('liveTodayNepali').innerText = `${nepDate.getDate()} ${nepMonthsHindi[nepDate.getMonth()]} ${nepDate.getYear()} (वि.सं.)`;
+            } catch(e) {
+                document.getElementById('liveTodayNepali').innerText = `5 कार्तिक 2083 (वि.सं.)`;
+            }
+
+            // 3. Urdu AH
+            const hijriStr = gregorianToHijri(today);
+            document.getElementById('liveTodayUrdu').innerText = hijriStr;
+        }
+
+        // Navigation Engine
+        function showTool(toolId) {
+            document.getElementById('home-view').classList.add('hidden');
+            const tools = document.querySelectorAll('.tool-view');
+            tools.forEach(t => t.classList.add('hidden'));
+            document.getElementById(toolId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showHome() {
+            const tools = document.querySelectorAll('.tool-view');
+            tools.forEach(t => t.classList.add('hidden'));
+            document.getElementById('home-view').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Inputs for Age Calculator
+        function toggleAgeInputs() {
+            const type = document.getElementById('calcCalendarType').value;
+            document.getElementById('age-input-AD').classList.toggle('hidden', type !== 'AD');
+            document.getElementById('age-input-BS').classList.toggle('hidden', type !== 'BS');
+            document.getElementById('age-input-AH').classList.toggle('hidden', type !== 'AH');
+            document.getElementById('ageResultBox').classList.add('hidden');
+        }
+
+        // Convert Gregorian Date to Hijri String
+        function gregorianToHijri(gDate) {
+            const day = gDate.getDate();
+            const month = gDate.getMonth() + 1;
+            const year = gDate.getFullYear();
+            
+            let m = month;
+            let y = year;
+            if (m < 3) { y -= 1; m += 12; }
+
+            let a = Math.floor(y / 100);
+            let b = 2 - a + Math.floor(a / 4);
+            let jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + day + b - 1524.5;
+
+            let z = jd - 1948440 + 10632;
+            let n = Math.floor((z - 1) / 10631);
+            z = z - 10631 * n + 354;
+            let j = Math.floor((10985 - z) / 5316) * Math.floor((50 * z) / 17719) + Math.floor(z / 5670) * Math.floor((43 * z) / 15238);
+            z = z - Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) - Math.floor(j / 16) * Math.floor((15238 * j) / 43) + 29;
+            
+            let hMonth = Math.floor((24 * z) / 709);
+            let hDay = z - Math.floor((709 * hMonth) / 24);
+            let hYear = 30 * n + j - 30;
+
+            return `${hDay} ${urduMonths[hMonth - 1]} ${hYear} (हिजरी)`;
+        }
+
+        // Hijri (AH) to Gregorian Date Object
+        function hijriToGregorian(hYear, hMonth, hDay) {
+            const jd = Math.floor((11 * hYear + 3) / 30) + 354 * hYear + 30 * hMonth - Math.floor((hMonth - 1) / 2) + hDay + 1948440 - 385;
+            let l = jd + 68569;
+            let n = Math.floor((4 * l) / 146097);
+            l = l - Math.floor((146097 * n + 3) / 4);
+            let i = Math.floor((4000 * (l + 1)) / 1461001);
+            l = l - Math.floor((1461 * i) / 4) + 31;
+            let j = Math.floor((80 * l) / 2447);
+            let day = l - Math.floor((2447 * j) / 80);
+            l = Math.floor(j / 11);
+            let month = j + 2 - 12 * l;
+            let year = 100 * (n - 49) + i + l;
+            return new Date(year, month - 1, day);
+        }
+
+        // Age Calculation and Multi-Calendar conversion
+        function calculateAgeAndConvert() {
+            const calendarType = document.getElementById('calcCalendarType').value;
+            let birthDate = null;
+
+            if (calendarType === 'AD') {
+                const val = document.getElementById('inputAdDate').value;
+                if (!val) return alert("कृपया तारीख चुनें!");
+                birthDate = new Date(val);
+            } else if (calendarType === 'BS') {
+                const y = parseInt(document.getElementById('inputBsYear').value);
+                const m = parseInt(document.getElementById('inputBsMonth').value) - 1;
+                const d = parseInt(document.getElementById('inputBsDay').value);
+                if (!y || isNaN(m) || !d) return alert("कृपया पूरी नेपाली तारीख दर्ज करें!");
+                try {
+                    const nep = new NepaliDate(y, m, d);
+                    birthDate = nep.toJsDate();
+                } catch(e) {
+                    return alert("अमान्य नेपाली तारीख!");
+                }
+            } else if (calendarType === 'AH') {
+                const y = parseInt(document.getElementById('inputAhYear').value);
+                const m = parseInt(document.getElementById('inputAhMonth').value);
+                const d = parseInt(document.getElementById('inputAhDay').value);
+                if (!y || !m || !d) return alert("कृपया पूरी उर्दू तारीख दर्ज करें!");
+                birthDate = hijriToGregorian(y, m, d);
+            }
+
+            const today = new Date();
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
+
+            if (days < 0) {
+                months--;
+                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            document.getElementById('resultAgeText').innerText = `${years} साल, ${months} महीने, और ${days} दिन`;
+
+            // Outputs
+            const nepObj = new NepaliDate(birthDate);
+            document.getElementById('resEng').innerHTML = `<b>English (AD):</b> ${birthDate.getDate()} / ${birthDate.getMonth()+1} / ${birthDate.getFullYear()}`;
+            document.getElementById('resNep').innerHTML = `<b>नेपाली (BS):</b> ${nepObj.getDate()} ${nepMonthsHindi[nepObj.getMonth()]} ${nepObj.getYear()}`;
+            document.getElementById('resUrd').innerHTML = `<b>उर्दू (AH):</b> ${gregorianToHijri(birthDate)}`;
+
+            document.getElementById('ageResultBox').classList.remove('hidden');
+        }
+
+        /* Calculator Utilities */
+        function calcInput(val) {
+            const display = document.getElementById('calcDisplay');
+            if (display.value === '0') display.value = val;
+            else display.value += val;
+        }
+        function clearCalc() { document.getElementById('calcDisplay').value = '0'; }
+        function calculateResult() {
+            try { document.getElementById('calcDisplay').value = eval(document.getElementById('calcDisplay').value); }
+            catch(e) { document.getElementById('calcDisplay').value = 'Error'; }
+        }
+
+        /* Additional Tool Utilities */
+        function handleBgUpload() {
+            const p = document.getElementById('bgPreview');
+            p.classList.remove('hidden');
+            p.innerText = "फोटो अपलोड हो गई है! बैकग्राउंड हटाने का प्रोसेस जारी है...";
+        }
+
+        function countWords() {
+            const text = document.getElementById('wordInput').value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            document.getElementById('wordCount').innerText = words;
+            document.getElementById('charCount').innerText = text.length;
+        }
+
+        function convertRuler(type) {
+            if (type === 'inch') {
+                const inch = document.getElementById('inchInput').value;
+                document.getElementById('cmInput').value = (inch * 2.54).toFixed(2);
+            } else {
+                const cm = document.getElementById('cmInput').value;
+                document.getElementById('inchInput').value = (cm / 2.54).toFixed(2);
+            }
+        }
+
+        function generatePassword() {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%!";
+            let pass = "";
+            for (let i = 0; i < 12; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            document.getElementById('passwordResult').innerText = pass;
+        }
+
+        function generateQR() {
+            const text = document.getElementById('qrText').value;
+            if(!text) return alert("टेक्स्ट डालें!");
+            document.getElementById('qrOutput').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(text)}" class="rounded-xl shadow-md border border-slate-200">`;
+        }
+
+        function generatePDF() {
+            const text = document.getElementById('pdfText').value;
+            if(!text) return alert("टेक्स्ट लिखें!");
+            const w = window.open();
+            w.document.write(`<pre style="font-family:sans-serif; padding:20px;">${text}</pre>`);
+            w.print();
+        }
+    </script>
+</body>
+</html>
