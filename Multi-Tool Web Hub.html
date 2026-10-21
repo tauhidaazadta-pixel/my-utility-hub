@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="hi" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Tool Web Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jsPDF Library for PDF creation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- QRCodeJS Library for QR generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        /* 1 inch by 1 inch tile specifications (approx 96px x 96px) */
+        .inch-tile {
+            width: 96px;
+            height: 96px;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full text-slate-800 font-sans antialiased flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showDashboard()">
+                <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+                    <i class="fa-solid fa-cubes text-lg"></i>
+                </div>
+                <span class="font-bold text-xl text-slate-900 tracking-tight">UtilityHub</span>
+            </div>
+            <button id="back-to-dash-btn" onclick="showDashboard()" class="hidden text-sm font-medium text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 px-3 py-1.5 rounded-lg transition-all flex items-center space-x-2">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>मुख्य डैशबोर्ड (Dashboard)</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 flex flex-col">
+
+        <!-- DASHBOARD VIEW -->
+        <section id="dashboard-view" class="flex-1 flex flex-col">
+            <div class="text-center my-6 sm:my-8">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">वेब टूल बॉक्स (Web Utility Hub)</h1>
+                <p class="text-slate-500 mt-2 text-sm sm:text-base">किसी भी टूल का उपयोग करने के लिए उसके आइकॉन पर क्लिक करें</p>
+            </div>
+
+            <!-- Grid of 1x1 Inch Tool Icons -->
+            <div class="flex-1 flex items-center justify-center">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 justify-items-center my-auto py-4">
+
+                    <!-- Tool 1: Calculator -->
+                    <div onclick="openTool('calculator')" class="inch-tile bg-white border border-slate-200 hover:border-indigo-500 rounded-2xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col items-center justify-center p-2 group hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 group-hover:bg-amber-100 text-amber-600 flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-calculator text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-700 mt-2 text-center group-hover:text-indigo-600 truncate w-full">Calculator</span>
+                    </div>
+
+                    <!-- Tool 2: BG Remover -->
+                    <div onclick="openTool('bg-remover')" class="inch-tile bg-white border border-slate-200 hover:border-indigo-500 rounded-2xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col items-center justify-center p-2 group hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 group-hover:bg-rose-100 text-rose-600 flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-image text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-700 mt-2 text-center group-hover:text-indigo-600 truncate w-full">BG Remover</span>
+                    </div>
+
+                    <!-- Tool 3: PDF Converter -->
+                    <div onclick="openTool('pdf-converter')" class="inch-tile bg-white border border-slate-200 hover:border-indigo-500 rounded-2xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col items-center justify-center p-2 group hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 group-hover:bg-emerald-100 text-emerald-600 flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-file-pdf text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-700 mt-2 text-center group-hover:text-indigo-600 truncate w-full">PDF Tool</span>
+                    </div>
+
+                    <!-- Tool 4: QR Code Generator -->
+                    <div onclick="openTool('qr-generator')" class="inch-tile bg-white border border-slate-200 hover:border-indigo-500 rounded-2xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col items-center justify-center p-2 group hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 group-hover:bg-indigo-100 text-indigo-600 flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-qrcode text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-700 mt-2 text-center group-hover:text-indigo-600 truncate w-full">QR Code</span>
+                    </div>
+
+                    <!-- Tool 5: Word Counter -->
+                    <div onclick="openTool('word-counter')" class="inch-tile bg-white border border-slate-200 hover:border-indigo-500 rounded-2xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col items-center justify-center p-2 group hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 group-hover:bg-sky-100 text-sky-600 flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-font text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-700 mt-2 text-center group-hover:text-indigo-600 truncate w-full">Word Counter</span>
+                    </div>
+
+                    <!-- Tool 6: Unit Converter -->
+                    <div onclick="openTool('unit-converter')" class="inch-tile bg-white border border-slate-200 hover:border-indigo-500 rounded-2xl shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col items-center justify-center p-2 group hover:-translate-y-1">
+                        <div class="w-10 h-10 rounded-xl bg-violet-50 group-hover:bg-violet-100 text-violet-600 flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-arrows-rotate text-xl"></i>
+                        </div>
+                        <span class="text-[11px] font-semibold text-slate-700 mt-2 text-center group-hover:text-indigo-600 truncate w-full">Converter</span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TOOL VIEWS SECTION CONTAINER -->
+        <section id="tools-container" class="hidden flex-1 flex flex-col justify-center max-w-2xl mx-auto w-full py-4">
+            
+            <!-- TOOL 1: CALCULATOR -->
+            <div id="tool-calculator" class="tool-card hidden bg-white border border-slate-200 rounded-3xl p-6 shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-calculator text-amber-500"></i> स्मार्ट कैलकुलेटर
+                    </h2>
+                </div>
+                <div class="bg-slate-900 rounded-2xl p-4 mb-4 shadow-inner text-right">
+                    <div id="calc-history" class="text-xs text-slate-400 h-4 overflow-hidden mb-1"></div>
+                    <div id="calc-display" class="text-3xl font-mono text-white tracking-wider truncate">0</div>
+                </div>
+                <div class="grid grid-cols-4 gap-2.5">
+                    <button onclick="calcClear()" class="p-3 bg-rose-100 text-rose-600 hover:bg-rose-200 font-bold rounded-xl transition">AC</button>
+                    <button onclick="calcDelete()" class="p-3 bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold rounded-xl transition"><i class="fa-solid fa-backspace"></i></button>
+                    <button onclick="calcInput('%')" class="p-3 bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold rounded-xl transition">%</button>
+                    <button onclick="calcInput('/')" class="p-3 bg-indigo-100 text-indigo-600 hover:bg-indigo-200 font-bold rounded-xl transition">÷</button>
+
+                    <button onclick="calcInput('7')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">7</button>
+                    <button onclick="calcInput('8')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">8</button>
+                    <button onclick="calcInput('9')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">9</button>
+                    <button onclick="calcInput('*')" class="p-3 bg-indigo-100 text-indigo-600 hover:bg-indigo-200 font-bold rounded-xl transition">×</button>
+
+                    <button onclick="calcInput('4')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">4</button>
+                    <button onclick="calcInput('5')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">5</button>
+                    <button onclick="calcInput('6')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">6</button>
+                    <button onclick="calcInput('-')" class="p-3 bg-indigo-100 text-indigo-600 hover:bg-indigo-200 font-bold rounded-xl transition">-</button>
+
+                    <button onclick="calcInput('1')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">1</button>
+                    <button onclick="calcInput('2')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">2</button>
+                    <button onclick="calcInput('3')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">3</button>
+                    <button onclick="calcInput('+')" class="p-3 bg-indigo-100 text-indigo-600 hover:bg-indigo-200 font-bold rounded-xl transition">+</button>
+
+                    <button onclick="calcInput('0')" class="p-3 col-span-2 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">0</button>
+                    <button onclick="calcInput('.')" class="p-3 bg-slate-50 hover:bg-slate-100 text-slate-800 font-bold rounded-xl transition">.</button>
+                    <button onclick="calcEquals()" class="p-3 bg-indigo-600 text-white hover:bg-indigo-700 font-bold rounded-xl transition">=</button>
+                </div>
+            </div>
+
+            <!-- TOOL 2: BACKGROUND REMOVER -->
+            <div id="tool-bg-remover" class="tool-card hidden bg-white border border-slate-200 rounded-3xl p-6 shadow-xl">
+                <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-image text-rose-500"></i> इमेज बैकग्राउंड रिमूवर
+                </h2>
+                <div class="space-y-4">
+                    <input type="file" id="bg-upload" accept="image/*" class="hidden" onchange="handleBgUpload(event)">
+                    <label for="bg-upload" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-2xl p-6 text-center block cursor-pointer bg-slate-50 hover:bg-indigo-50/50 transition">
+                        <i class="fa-solid fa-cloud-arrow-up text-3xl text-indigo-500 mb-2"></i>
+                        <p class="text-sm font-semibold text-slate-700">फोटो अपलोड करें</p>
+                        <p class="text-xs text-slate-400 mt-1">PNG, JPG समर्थित</p>
+                    </label>
+
+                    <div id="bg-editor-area" class="hidden space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-500 mb-1">मूल छवि (Original):</p>
+                                <img id="bg-orig-img" class="w-full h-48 object-contain rounded-xl border border-slate-200 bg-slate-100">
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold text-slate-500 mb-1">प्रोसेस्ड छवि (Result):</p>
+                                <canvas id="bg-canvas" class="w-full h-48 object-contain rounded-xl border border-slate-200 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:8px_8px]"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <label class="block text-xs font-medium text-slate-700 mb-1">कलर थ्रेशोल्ड/सहनशीलता (Sensitivity): <span id="bg-thresh-val">30</span></label>
+                            <input type="range" id="bg-threshold" min="5" max="120" value="30" class="w-full accent-indigo-600" oninput="processBgRemove()">
+                            <p class="text-[11px] text-slate-500 mt-1">सफेद/हल्के बैकग्राउंड को हटाने के लिए एडजस्ट करें</p>
+                        </div>
+
+                        <button onclick="downloadBgResult()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-download"></i> पारदर्शी PNG डाउनलोड करें
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 3: PDF TOOL -->
+            <div id="tool-pdf-converter" class="tool-card hidden bg-white border border-slate-200 rounded-3xl p-6 shadow-xl">
+                <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-file-pdf text-emerald-500"></i> PDF कन्वर्टर टूल
+                </h2>
+                
+                <!-- Tabs -->
+                <div class="flex border-b border-slate-200 mb-4">
+                    <button id="pdf-tab-img" onclick="switchPdfTab('img')" class="px-4 py-2 text-sm font-semibold text-indigo-600 border-b-2 border-indigo-600">इमेज टू PDF</button>
+                    <button id="pdf-tab-txt" onclick="switchPdfTab('txt')" class="px-4 py-2 text-sm font-semibold text-slate-500 border-b-2 border-transparent">टेक्स्ट टू PDF</button>
+                </div>
+
+                <!-- Image to PDF -->
+                <div id="pdf-panel-img" class="space-y-4">
+                    <input type="file" id="pdf-img-upload" accept="image/*" class="hidden" onchange="handlePdfImgUpload(event)">
+                    <label for="pdf-img-upload" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-2xl p-6 text-center block cursor-pointer bg-slate-50 hover:bg-indigo-50/50 transition">
+                        <i class="fa-solid fa-file-image text-3xl text-emerald-500 mb-2"></i>
+                        <p class="text-sm font-semibold text-slate-700">इमेज चुनें (JPG / PNG)</p>
+                    </label>
+                    <div id="pdf-img-preview-container" class="hidden text-center">
+                        <img id="pdf-img-preview" class="max-h-40 mx-auto rounded-xl border border-slate-200 mb-3">
+                        <button onclick="convertImgToPdf()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition">
+                            PDF जनरेट और डाउनलोड करें
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Text to PDF -->
+                <div id="pdf-panel-txt" class="space-y-4 hidden">
+                    <textarea id="pdf-txt-input" rows="5" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm" placeholder="अपना टेक्स्ट यहाँ लिखें..."></textarea>
+                    <button onclick="convertTxtToPdf()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition">
+                        PDF सेव करें
+                    </button>
+                </div>
+            </div>
+
+            <!-- TOOL 4: QR CODE GENERATOR -->
+            <div id="tool-qr-generator" class="tool-card hidden bg-white border border-slate-200 rounded-3xl p-6 shadow-xl">
+                <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-qrcode text-indigo-500"></i> QR कोड जनरेटर
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">URL या टेक्स्ट दर्ज करें:</label>
+                        <input type="text" id="qr-input" placeholder="https://example.com" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm">
+                    </div>
+                    <button onclick="generateQRCode()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition">
+                        QR कोड बनाएं
+                    </button>
+                    <div id="qr-output-container" class="hidden flex flex-col items-center justify-center p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                        <div id="qr-box" class="p-2 bg-white rounded-xl shadow-sm"></div>
+                        <p class="text-xs text-slate-400 mt-2">QR कोड तैयार है!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 5: WORD COUNTER -->
+            <div id="tool-word-counter" class="tool-card hidden bg-white border border-slate-200 rounded-3xl p-6 shadow-xl">
+                <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-font text-sky-500"></i> वर्ड काउंटर (Word Counter)
+                </h2>
+                <div class="space-y-4">
+                    <textarea id="word-input" rows="6" oninput="updateWordCount()" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm" placeholder="यहाँ पेस्ट या टाइप करें..."></textarea>
+                    
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span id="count-words" class="block text-2xl font-extrabold text-indigo-600">0</span>
+                            <span class="text-xs text-slate-500">शब्द (Words)</span>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span id="count-chars" class="block text-2xl font-extrabold text-indigo-600">0</span>
+                            <span class="text-xs text-slate-500">अक्षर (Chars)</span>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span id="count-paras" class="block text-2xl font-extrabold text-indigo-600">0</span>
+                            <span class="text-xs text-slate-500">पैराग्राफ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 6: UNIT CONVERTER -->
+            <div id="tool-unit-converter" class="tool-card hidden bg-white border border-slate-200 rounded-3xl p-6 shadow-xl">
+                <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-arrows-rotate text-violet-500"></i> यूनिट कन्वर्टर (मापन)
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">इंच से सेंटीमीटर (Inch to CM)</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="unit-inch" placeholder="Inches" oninput="convertInchToCm()" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 text-sm">
+                            <span class="text-slate-400">=</span>
+                            <input type="number" id="unit-cm" placeholder="CM" oninput="convertCmToInch()" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 text-sm">
+                        </div>
+                    </div>
+                    <hr class="border-slate-100">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">KG से Pound (lbs)</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="unit-kg" placeholder="KG" oninput="convertKgToLbs()" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 text-sm">
+                            <span class="text-slate-400">=</span>
+                            <input type="number" id="unit-lbs" placeholder="Lbs" oninput="convertLbsToKg()" class="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 text-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+        <p>GitHub Pages के लिए 100% मुफ़्त और सुरक्षित क्लाइंट-साइड वेब टूल संग्रह</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // NAVIGATION HANDLERS
+        function showDashboard() {
+            document.getElementById('dashboard-view').classList.remove('hidden');
+            document.getElementById('tools-container').classList.add('hidden');
+            document.getElementById('back-to-dash-btn').classList.add('hidden');
+            
+            // Hide all tool cards
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach(card => card.classList.add('hidden'));
+        }
+
+        function openTool(toolId) {
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('tools-container').classList.remove('hidden');
+            document.getElementById('back-to-dash-btn').classList.remove('hidden');
+
+            const target = document.getElementById(`tool-${toolId}`);
+            if (target) {
+                target.classList.remove('hidden');
+            }
+        }
+
+        // TOOL 1: CALCULATOR LOGIC
+        let calcVal = "0";
+        function calcUpdateDisplay() {
+            document.getElementById('calc-display').innerText = calcVal;
+        }
+        function calcInput(char) {
+            if (calcVal === "0" && char !== ".") {
+                calcVal = char;
+            } else {
+                calcVal += char;
+            }
+            calcUpdateDisplay();
+        }
+        function calcClear() {
+            calcVal = "0";
+            document.getElementById('calc-history').innerText = "";
+            calcUpdateDisplay();
+        }
+        function calcDelete() {
+            calcVal = calcVal.slice(0, -1);
+            if (calcVal === "") calcVal = "0";
+            calcUpdateDisplay();
+        }
+        function calcEquals() {
+            try {
+                document.getElementById('calc-history').innerText = calcVal;
+                calcVal = eval(calcVal.replace(/×/g, '*').replace(/÷/g, '/')).toString();
+            } catch (e) {
+                calcVal = "Error";
+            }
+            calcUpdateDisplay();
+        }
+
+        // TOOL 2: BG REMOVER LOGIC
+        let uploadedBgImg = null;
+
+        function handleBgUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                uploadedBgImg = new Image();
+                uploadedBgImg.onload = function() {
+                    document.getElementById('bg-orig-img').src = event.target.result;
+                    document.getElementById('bg-editor-area').classList.remove('hidden');
+                    processBgRemove();
+                };
+                uploadedBgImg.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function processBgRemove() {
+            if (!uploadedBgImg) return;
+            const threshold = parseInt(document.getElementById('bg-threshold').value);
+            document.getElementById('bg-thresh-val').innerText = threshold;
+
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = uploadedBgImg.width;
+            canvas.height = uploadedBgImg.height;
+
+            ctx.drawImage(uploadedBgImg, 0, 0);
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imgData.data;
+
+            // Simple sample background color from top-left pixel
+            const bgR = data[0], bgG = data[1], bgB = data[2];
+
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+
+                // Calculate color distance
+                const diff = Math.sqrt((r - bgR) ** 2 + (g - bgG) ** 2 + (b - bgB) ** 2);
+                if (diff < threshold) {
+                    data[i + 3] = 0; // Set alpha to 0 (Transparent)
+                }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+        }
+
+        function downloadBgResult() {
+            const canvas = document.getElementById('bg-canvas');
+            const link = document.createElement('a');
+            link.download = 'bg-removed.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // TOOL 3: PDF CONVERTER LOGIC
+        let loadedPdfImg = null;
+
+        function switchPdfTab(tab) {
+            if (tab === 'img') {
+                document.getElementById('pdf-panel-img').classList.remove('hidden');
+                document.getElementById('pdf-panel-txt').classList.add('hidden');
+                document.getElementById('pdf-tab-img').className = "px-4 py-2 text-sm font-semibold text-indigo-600 border-b-2 border-indigo-600";
+                document.getElementById('pdf-tab-txt').className = "px-4 py-2 text-sm font-semibold text-slate-500 border-b-2 border-transparent";
+            } else {
+                document.getElementById('pdf-panel-txt').classList.remove('hidden');
+                document.getElementById('pdf-panel-img').classList.add('hidden');
+                document.getElementById('pdf-tab-txt').className = "px-4 py-2 text-sm font-semibold text-indigo-600 border-b-2 border-indigo-600";
+                document.getElementById('pdf-tab-img').className = "px-4 py-2 text-sm font-semibold text-slate-500 border-b-2 border-transparent";
+            }
+        }
+
+        function handlePdfImgUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                loadedPdfImg = evt.target.result;
+                document.getElementById('pdf-img-preview').src = loadedPdfImg;
+                document.getElementById('pdf-img-preview-container').classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function convertImgToPdf() {
+            if (!loadedPdfImg) return;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.addImage(loadedPdfImg, 'JPEG', 15, 15, 180, 160);
+            doc.save('document.pdf');
+        }
+
+        function convertTxtToPdf() {
+            const text = document.getElementById('pdf-txt-input').value;
+            if (!text) return;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text(text, 10, 10);
+            doc.save('text-document.pdf');
+        }
+
+        // TOOL 4: QR CODE GENERATOR LOGIC
+        let qrObj = null;
+        function generateQRCode() {
+            const val = document.getElementById('qr-input').value.trim();
+            if (!val) return;
+
+            const box = document.getElementById('qr-box');
+            box.innerHTML = '';
+
+            qrObj = new QRCode(box, {
+                text: val,
+                width: 128,
+                height: 128
+            });
+
+            document.getElementById('qr-output-container').classList.remove('hidden');
+        }
+
+        // TOOL 5: WORD COUNTER LOGIC
+        function updateWordCount() {
+            const text = document.getElementById('word-input').value;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+            const paras = text.trim() ? text.split(/\n+/).filter(p => p.length > 0).length : 0;
+
+            document.getElementById('count-words').innerText = words;
+            document.getElementById('count-chars').innerText = chars;
+            document.getElementById('count-paras').innerText = paras;
+        }
+
+        // TOOL 6: UNIT CONVERTER LOGIC
+        function convertInchToCm() {
+            const inch = parseFloat(document.getElementById('unit-inch').value) || 0;
+            document.getElementById('unit-cm').value = (inch * 2.54).toFixed(2);
+        }
+        function convertCmToInch() {
+            const cm = parseFloat(document.getElementById('unit-cm').value) || 0;
+            document.getElementById('unit-inch').value = (cm / 2.54).toFixed(2);
+        }
+        function convertKgToLbs() {
+            const kg = parseFloat(document.getElementById('unit-kg').value) || 0;
+            document.getElementById('unit-lbs').value = (kg * 2.20462).toFixed(2);
+        }
+        function convertLbsToKg() {
+            const lbs = parseFloat(document.getElementById('unit-lbs').value) || 0;
+            document.getElementById('unit-kg').value = (lbs / 2.20462).toFixed(2);
+        }
+    </script>
+</body>
+</html>
