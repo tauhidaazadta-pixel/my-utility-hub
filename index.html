@@ -1,261 +1,296 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Utility Hub - All in One Tools</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <style>
-    .tile-btn {
-      width: 96px;
-      height: 96px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    .tile-btn:hover {
-      transform: translateY(-2px);
-    }
-  </style>
-</head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
-
-  <header class="bg-indigo-600 text-white py-4 shadow-md">
-    <div class="max-w-4xl mx-auto px-4 flex justify-between items-center">
-      <h1 class="text-xl font-bold cursor-pointer" onclick="showDashboard()">🛠️ Utility Hub</h1>
-      <span class="text-xs bg-indigo-700 px-2 py-1 rounded">Web Tools</span>
-    </div>
-  </header>
-
-  <main class="max-w-4xl mx-auto p-4">
-
-    <!-- Dashboard View -->
-    <div id="dashboardView">
-      <p class="text-gray-600 mb-6 text-sm">अपनी पसंद के टूल पर क्लिक करके इस्तेमाल करें:</p>
-      
-      <!-- 1 Inch Tile Grid -->
-      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 justify-items-center">
-        
-        <!-- Calculator Tile -->
-        <div onclick="openTool('calculator')" class="tile-btn bg-white shadow-sm hover:shadow-md border border-slate-200">
-          <span class="text-2xl mb-1">🧮</span>
-          <span class="text-xs font-semibold text-slate-700">कैलकुलेटर</span>
-        </div>
-
-        <!-- BG Remover Tile -->
-        <div onclick="openTool('bgRemover')" class="tile-btn bg-white shadow-sm hover:shadow-md border border-slate-200">
-          <span class="text-2xl mb-1">🖼️</span>
-          <span class="text-xs font-semibold text-slate-700 text-center leading-tight">बैकग्राउंड<br>रिमूवर</span>
-        </div>
-
-        <!-- PDF Converter Tile -->
-        <div onclick="openTool('pdfConverter')" class="tile-btn bg-white shadow-sm hover:shadow-md border border-slate-200">
-          <span class="text-2xl mb-1">📄</span>
-          <span class="text-xs font-semibold text-slate-700">PDF मेकर</span>
-        </div>
-
-        <!-- QR Code Tile -->
-        <div onclick="openTool('qrGenerator')" class="tile-btn bg-white shadow-sm hover:shadow-md border border-slate-200">
-          <span class="text-2xl mb-1">📱</span>
-          <span class="text-xs font-semibold text-slate-700">QR कोड</span>
-        </div>
-
-        <!-- Word Counter Tile -->
-        <div onclick="openTool('wordCounter')" class="tile-btn bg-white shadow-sm hover:shadow-md border border-slate-200">
-          <span class="text-2xl mb-1">📝</span>
-          <span class="text-xs font-semibold text-slate-700">वर्ड काउन्टर</span>
-        </div>
-
-        <!-- Unit Converter Tile -->
-        <div onclick="openTool('unitConverter')" class="tile-btn bg-white shadow-sm hover:shadow-md border border-slate-200">
-          <span class="text-2xl mb-1">📏</span>
-          <span class="text-xs font-semibold text-slate-700">इंच/CM</span>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Active Tool Container -->
-    <div id="toolContainer" class="hidden">
-      <button onclick="showDashboard()" class="mb-4 text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
-        ← होम पर वापस जाएं
-      </button>
-
-      <!-- Calculator View -->
-      <div id="calculatorTool" class="tool-card hidden bg-white p-6 rounded-xl shadow border border-slate-200 max-w-xs mx-auto">
-        <h2 class="text-lg font-bold mb-4 text-center">कैलकुलेटर</h2>
-        <input type="text" id="calcDisplay" readonly class="w-full text-right text-2xl p-3 border rounded mb-4 bg-slate-50">
-        <div class="grid grid-cols-4 gap-2">
-          <button onclick="clearCalc()" class="p-3 bg-red-100 text-red-600 rounded font-bold">C</button>
-          <button onclick="pressCalc('/')" class="p-3 bg-slate-100 rounded font-bold">÷</button>
-          <button onclick="pressCalc('*')" class="p-3 bg-slate-100 rounded font-bold">×</button>
-          <button onclick="pressCalc('-')" class="p-3 bg-slate-100 rounded font-bold">-</button>
-          
-          <button onclick="pressCalc('7')" class="p-3 bg-slate-50 rounded font-semibold">7</button>
-          <button onclick="pressCalc('8')" class="p-3 bg-slate-50 rounded font-semibold">8</button>
-          <button onclick="pressCalc('9')" class="p-3 bg-slate-50 rounded font-semibold">9</button>
-          <button onclick="pressCalc('+')" class="p-3 bg-slate-100 rounded font-bold">+</button>
-          
-          <button onclick="pressCalc('4')" class="p-3 bg-slate-50 rounded font-semibold">4</button>
-          <button onclick="pressCalc('5')" class="p-3 bg-slate-50 rounded font-semibold">5</button>
-          <button onclick="pressCalc('6')" class="p-3 bg-slate-50 rounded font-semibold">6</button>
-          <button onclick="evalCalc()" class="p-3 bg-indigo-600 text-white rounded font-bold row-span-2">=</button>
-          
-          <button onclick="pressCalc('1')" class="p-3 bg-slate-50 rounded font-semibold">1</button>
-          <button onclick="pressCalc('2')" class="p-3 bg-slate-50 rounded font-semibold">2</button>
-          <button onclick="pressCalc('3')" class="p-3 bg-slate-50 rounded font-semibold">3</button>
-          
-          <button onclick="pressCalc('0')" class="p-3 bg-slate-50 rounded font-semibold col-span-2">0</button>
-          <button onclick="pressCalc('.')" class="p-3 bg-slate-50 rounded font-semibold">.</button>
-        </div>
-      </div>
-
-      <!-- BG Remover Tool -->
-      <div id="bgRemoverTool" class="tool-card hidden bg-white p-6 rounded-xl shadow border border-slate-200 max-w-md mx-auto">
-        <h2 class="text-lg font-bold mb-2">इमेज बैकग्राउंड रिमूवर (White BG)</h2>
-        <p class="text-xs text-gray-500 mb-4">सफ़ेद बैकग्राउंड वाली फोटो अपलोड करें, यह उसे ट्रांसपेरेंट PNG बना देगा।</p>
-        <input type="file" id="bgInput" accept="image/*" class="mb-4 block w-full text-sm">
-        <canvas id="bgCanvas" class="hidden max-w-full border rounded mb-4"></canvas>
-        <a id="bgDownload" class="hidden bg-emerald-600 text-white text-center py-2 px-4 rounded font-semibold block">PNG डाउनलोड करें</a>
-      </div>
-
-      <!-- PDF Converter Tool -->
-      <div id="pdfConverterTool" class="tool-card hidden bg-white p-6 rounded-xl shadow border border-slate-200 max-w-md mx-auto">
-        <h2 class="text-lg font-bold mb-2">इमेज को PDF में बदलें</h2>
-        <input type="file" id="pdfImgInput" accept="image/*" class="mb-4 block w-full text-sm">
-        <button onclick="generatePDF()" class="bg-indigo-600 text-white py-2 px-4 rounded font-semibold w-full">PDF बनाएं और डाउनलोड करें</button>
-      </div>
-
-      <!-- QR Generator Tool -->
-      <div id="qrGeneratorTool" class="tool-card hidden bg-white p-6 rounded-xl shadow border border-slate-200 max-w-md mx-auto text-center">
-        <h2 class="text-lg font-bold mb-2">QR कोड जनरेटर</h2>
-        <input type="text" id="qrText" placeholder="वेबसाइट लिंक या टेक्स्ट दर्ज करें" class="w-full p-2 border rounded mb-4">
-        <button onclick="makeQR()" class="bg-indigo-600 text-white py-2 px-4 rounded font-semibold w-full mb-4">QR कोड बनाएं</button>
-        <div id="qrcode" class="flex justify-center"></div>
-      </div>
-
-      <!-- Word Counter Tool -->
-      <div id="wordCounterTool" class="tool-card hidden bg-white p-6 rounded-xl shadow border border-slate-200 max-w-md mx-auto">
-        <h2 class="text-lg font-bold mb-2">वर्ड और कैरेक्टर काउन्टर</h2>
-        <textarea id="textInput" oninput="countText()" rows="5" placeholder="यहाँ टाइप करें..." class="w-full p-2 border rounded mb-4"></textarea>
-        <div class="flex justify-between text-sm font-semibold">
-          <span>शब्द (Words): <strong id="wordCount">0</strong></span>
-          <span>अक्षर (Characters): <strong id="charCount">0</strong></span>
-        </div>
-      </div>
-
-      <!-- Unit Converter Tool -->
-      <div id="unitConverterTool" class="tool-card hidden bg-white p-6 rounded-xl shadow border border-slate-200 max-w-md mx-auto">
-        <h2 class="text-lg font-bold mb-2">इंच से सेन्टीमीटर (CM) कनवर्टर</h2>
-        <div class="space-y-3">
-          <div>
-            <label class="text-xs font-semibold">इंच (Inches):</label>
-            <input type="number" id="inchInput" oninput="convertInch()" placeholder="0" class="w-full p-2 border rounded">
-          </div>
-          <div>
-            <label class="text-xs font-semibold">सेन्टीमीटर (CM):</label>
-            <input type="number" id="cmInput" oninput="convertCm()" placeholder="0" class="w-full p-2 border rounded">
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </main>
-
-  <script>
-    function openTool(toolId) {
-      document.getElementById('dashboardView').classList.add('hidden');
-      document.getElementById('toolContainer').classList.remove('hidden');
-      
-      const cards = document.querySelectorAll('.tool-card');
-      cards.forEach(card => card.classList.add('hidden'));
-      
-      document.getElementById(toolId + 'Tool').classList.remove('hidden');
-    }
-
-    function showDashboard() {
-      document.getElementById('toolContainer').classList.add('hidden');
-      document.getElementById('dashboardView').classList.remove('hidden');
-    }
-
-    // Calculator Logic
-    let calcVal = '';
-    function pressCalc(v) { calcVal += v; document.getElementById('calcDisplay').value = calcVal; }
-    function clearCalc() { calcVal = ''; document.getElementById('calcDisplay').value = ''; }
-    function evalCalc() {
-      try { calcVal = eval(calcVal).toString(); document.getElementById('calcDisplay').value = calcVal; }
-      catch(e) { document.getElementById('calcDisplay').value = 'Error'; calcVal = ''; }
-    }
-
-    // Background Remover (White removal)
-    document.getElementById('bgInput')?.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if(!file) return;
-      const img = new Image();
-      img.src = URL.createObjectURL(file);
-      img.onload = () => {
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width; canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imgData.data;
-        for(let i = 0; i < data.length; i += 4) {
-          if(data[i] > 220 && data[i+1] > 220 && data[i+2] > 220) data[i+3] = 0;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility Hub - Multi Calendar Converter</title>
+    <!-- Nepali Calendar JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@2.0.1/dist/nepali-date-converter.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
         }
-        ctx.putImageData(imgData, 0, 0);
-        canvas.classList.remove('hidden');
-        const dl = document.getElementById('bgDownload');
-        dl.href = canvas.toDataURL('image/png');
-        dl.classList.remove('hidden');
-      }
-    });
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .today-banner {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .today-banner h3 {
+            margin: 0 0 8px 0;
+            color: #0d47a1;
+            font-size: 1rem;
+        }
+        .today-date-text {
+            font-weight: bold;
+            color: #1565c0;
+            font-size: 0.95rem;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+            color: #333;
+        }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+        }
+        .action-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .action-btn:hover {
+            background-color: #0056b3;
+        }
+        .result-box {
+            margin-top: 18px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+        }
+        .result-item {
+            margin: 8px 0;
+            font-size: 0.95rem;
+            color: #212529;
+        }
+    </style>
+</head>
+<body>
 
-    // PDF Generator
-    function generatePDF() {
-      const input = document.getElementById('pdfImgInput');
-      if(!input.files[0]) return alert('कृपया फोटो चुनें');
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.addImage(e.target.result, 'JPEG', 10, 10, 180, 160);
-        doc.save('document.pdf');
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
+    <header>🛠️ Utility Hub - मल्टी कैलेंडर कन्वर्टर</header>
 
-    // QR Generator
-    function makeQR() {
-      const text = document.getElementById('qrText').value;
-      const qrDiv = document.getElementById('qrcode');
-      qrDiv.innerHTML = '';
-      if(text) new QRCode(qrDiv, text);
-    }
+    <div class="container">
+        
+        <!-- आज की तारीख (Today's Date Banner) -->
+        <div class="today-banner">
+            <h3>📅 आज की तारीख (Today's Date)</h3>
+            <div class="today-date-text" id="todayEnglish">English (AD): लोड हो रहा है...</div>
+            <div class="today-date-text" id="todayNepali">नेपाली (BS): लोड हो रहा है...</div>
+        </div>
 
-    // Word Counter
-    function countText() {
-      const txt = document.getElementById('textInput').value.trim();
-      document.getElementById('wordCount').innerText = txt ? txt.split(/\s+/).length : 0;
-      document.getElementById('charCount').innerText = txt.length;
-    }
+        <!-- डेट एंड एज कन्वर्टर कार्ड -->
+        <div class="card">
+            <h2>🎂 मल्टी-डेट कन्वर्टर एवं एज कैलकुलेटर</h2>
+            
+            <label for="calendarType">आप किस कैलेंडर में तारीख दर्ज कर रहे हैं?</label>
+            <select id="calendarType" onchange="toggleInputs()">
+                <option value="AD">इंग्लिश / हिंदी (AD - ईस्वी)</option>
+                <option value="BS">नेपाली (BS - विक्रम संवत)</option>
+                <option value="AH">उर्दू / इस्लामिक (AH - हिजरी)</option>
+            </select>
 
-    // Unit Converter
-    function convertInch() {
-      const inc = document.getElementById('inchInput').value;
-      document.getElementById('cmInput').value = inc ? (inc * 2.54).toFixed(2) : '';
-    }
-    function convertCm() {
-      const cm = document.getElementById('cmInput').value;
-      document.getElementById('inchInput').value = cm ? (cm / 2.54).toFixed(2) : '';
-    }
-  </script>
+            <!-- 1. इंग्लिश इनपुट -->
+            <div id="input-AD">
+                <label for="adDate">तारीख चुनें (AD):</label>
+                <input type="date" id="adDate">
+            </div>
+
+            <!-- 2. नेपाली इनपुट -->
+            <div id="input-BS" style="display: none;">
+                <label>नेपाली तारीख दर्ज करें (साल / महीना / दिन):</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="number" id="bsYear" placeholder="2081" min="2000" max="2090">
+                    <input type="number" id="bsMonth" placeholder="महीना (1-12)" min="1" max="12">
+                    <input type="number" id="bsDay" placeholder="दिन (1-32)" min="1" max="32">
+                </div>
+            </div>
+
+            <!-- 3. उर्दू इनपुट -->
+            <div id="input-AH" style="display: none;">
+                <label>उर्दू/हिजरी तारीख दर्ज करें (साल / महीना / दिन):</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="number" id="ahYear" placeholder="1446" min="1300" max="1500">
+                    <input type="number" id="ahMonth" placeholder="महीना (1-12)" min="1" max="12">
+                    <input type="number" id="ahDay" placeholder="दिन (1-30)" min="1" max="30">
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="processConversion()">कन्वर्ट करें और उम्र पता करें</button>
+
+            <!-- रिजल्ट सेक्शन -->
+            <div class="result-box" id="resultContainer" style="display: none;">
+                <div class="result-item" id="ageResult"></div>
+                <hr>
+                <div class="result-item" id="convResult1"></div>
+                <div class="result-item" id="convResult2"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // पेज लोड होने पर आज की तारीख सेट करना
+        window.onload = function() {
+            setTodayDates();
+        };
+
+        function setTodayDates() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+
+            // आज की इंग्लिश तारीख
+            document.getElementById('todayEnglish').innerText = `English (AD): ${year}-${month}-${day}`;
+            document.getElementById('adDate').value = `${year}-${month}-${day}`;
+
+            // आज की नेपाली तारीख
+            try {
+                const nepDate = new NepaliDate(today);
+                const nepMonthsHindi = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"];
+                document.getElementById('todayNepali').innerText = `नेपाली (BS): ${nepDate.getYear()} ${nepMonthsHindi[nepDate.getMonth()]} ${nepDate.getDate()} गते`;
+            } catch(e) {
+                document.getElementById('todayNepali').innerText = `नेपाली (BS): ऑटो-कैलकुलेशन अनुपलब्ध`;
+            }
+        }
+
+        function toggleInputs() {
+            const type = document.getElementById('calendarType').value;
+            document.getElementById('input-AD').style.display = (type === 'AD') ? 'block' : 'none';
+            document.getElementById('input-BS').style.display = (type === 'BS') ? 'block' : 'none';
+            document.getElementById('input-AH').style.display = (type === 'AH') ? 'block' : 'none';
+            document.getElementById('resultContainer').style.display = 'none';
+        }
+
+        // हिजरी (उर्दू) से AD का अनुमानित कैलकुलेटर
+        function hijriToGregorian(hYear, hMonth, hDay) {
+            const jd = Math.floor((11 * hYear + 3) / 30) + 354 * hYear + 30 * hMonth - Math.floor((hMonth - 1) / 2) + hDay + 1948440 - 385;
+            let l = jd + 68569;
+            let n = Math.floor((4 * l) / 146097);
+            l = l - Math.floor((146097 * n + 3) / 4);
+            let i = Math.floor((4000 * (l + 1)) / 1461001);
+            l = l - Math.floor((1461 * i) / 4) + 31;
+            let j = Math.floor((80 * l) / 2447);
+            let day = l - Math.floor((2447 * j) / 80);
+            l = Math.floor(j / 11);
+            let month = j + 2 - 12 * l;
+            let year = 100 * (n - 49) + i + l;
+            return new Date(year, month - 1, day);
+        }
+
+        // AD से हिजरी (उर्दू) का अनुमानित कैलकुलेटर
+        function gregorianToHijri(gDate) {
+            const day = gDate.getDate();
+            const month = gDate.getMonth() + 1;
+            const year = gDate.getFullYear();
+            
+            let m = month;
+            let y = year;
+            if (m < 3) {
+                y -= 1;
+                m += 12;
+            }
+
+            let a = Math.floor(y / 100);
+            let b = 2 - a + Math.floor(a / 4);
+            let jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + day + b - 1524.5;
+
+            let z = jd - 1948440 + 10632;
+            let n = Math.floor((z - 1) / 10631);
+            z = z - 10631 * n + 354;
+            let j = Math.floor((10985 - z) / 5316) * Math.floor((50 * z) / 17719) + Math.floor(z / 5670) * Math.floor((43 * z) / 15238);
+            z = z - Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) - Math.floor(j / 16) * Math.floor((15238 * j) / 43) + 29;
+            
+            let hMonth = Math.floor((24 * z) / 709);
+            let hDay = z - Math.floor((709 * hMonth) / 24);
+            let hYear = 30 * n + j - 30;
+
+            const urduMonths = ["मुहर्रम", "सफ़र", "रबी उल-अव्वल", "रबी अल-थानी", "जुमादा अल-अव्वल", "जुमादा अल-थानी", "रजब", "शबान", "रमजान", "शव्वाल", "जुल क़ादा", "जुल हिज्जा"];
+            return `${hDay} ${urduMonths[hMonth - 1]} ${hYear} (AH)`;
+        }
+
+        function processConversion() {
+            const calendarType = document.getElementById('calendarType').value;
+            let adDateObj = null;
+
+            if (calendarType === 'AD') {
+                const val = document.getElementById('adDate').value;
+                if (!val) { alert("कृपया तारीख चुनें!"); return; }
+                adDateObj = new Date(val);
+            } else if (calendarType === 'BS') {
+                const y = parseInt(document.getElementById('bsYear').value);
+                const m = parseInt(document.getElementById('bsMonth').value) - 1;
+                const d = parseInt(document.getElementById('bsDay').value);
+                if (!y || isNaN(m) || !d) { alert("कृपया नेपाली तारीख पूरी भरें!"); return; }
+                try {
+                    const nep = new NepaliDate(y, m, d);
+                    adDateObj = nep.toJsDate();
+                } catch(e) {
+                    alert("अमान्य नेपाली तारीख!"); return;
+                }
+            } else if (calendarType === 'AH') {
+                const y = parseInt(document.getElementById('ahYear').value);
+                const m = parseInt(document.getElementById('ahMonth').value);
+                const d = parseInt(document.getElementById('ahDay').value);
+                if (!y || !m || !d) { alert("कृपया उर्दू तारीख पूरी भरें!"); return; }
+                adDateObj = hijriToGregorian(y, m, d);
+            }
+
+            // उम्र कैलकुलेशन
+            const today = new Date();
+            let age = today.getFullYear() - adDateObj.getFullYear();
+            const mDiff = today.getMonth() - adDateObj.getMonth();
+            if (mDiff < 0 || (mDiff === 0 && today.getDate() < adDateObj.getDate())) {
+                age--;
+            }
+
+            // आउटपुट तैयार करना
+            const nepMonthsHindi = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"];
+            const nepDateObj = new NepaliDate(adDateObj);
+            const nepStr = `${nepDateObj.getYear()} ${nepMonthsHindi[nepDateObj.getMonth()]} ${nepDateObj.getDate()} गते (BS)`;
+            const hijriStr = gregorianToHijri(adDateObj);
+            const adStr = `${adDateObj.getFullYear()}-${String(adDateObj.getMonth()+1).padStart(2,'0')}-${String(adDateObj.getDate()).padStart(2,'0')} (AD/ईस्वी)`;
+
+            document.getElementById('ageResult').innerHTML = `<b>कुल उम्र:</b> ${age} वर्ष`;
+
+            if (calendarType === 'AD') {
+                document.getElementById('convResult1').innerHTML = `<b>नेपाली (BS):</b> ${nepStr}`;
+                document.getElementById('convResult2').innerHTML = `<b>उर्दू (AH):</b> ${hijriStr}`;
+            } else if (calendarType === 'BS') {
+                document.getElementById('convResult1').innerHTML = `<b>इंग्लिश/हिंदी (AD):</b> ${adStr}`;
+                document.getElementById('convResult2').innerHTML = `<b>उर्दू (AH):</b> ${hijriStr}`;
+            } else if (calendarType === 'AH') {
+                document.getElementById('convResult1').innerHTML = `<b>इंग्लिश/हिंदी (AD):</b> ${adStr}`;
+                document.getElementById('convResult2').innerHTML = `<b>नेपाली (BS):</b> ${nepStr}`;
+            }
+
+            document.getElementById('resultContainer').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
