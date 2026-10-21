@@ -330,8 +330,8 @@
   © Utility Hub • Web Tools Collection
 </footer>
 
-<!-- Nepali Date Converter Library -->
-<script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@2.0.1/dist/nepali-date-converter.umd.min.js"></script>
+<!-- ✅ सही नेपाली डेट कन्वर्टर लाइब्रेरी (UMD बिल्ड) -->
+<script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.umd.js"></script>
 
 <script>
   /* ==========================================
@@ -347,6 +347,21 @@
   const pad2 = n => (n < 10 ? '0' : '') + n;
   const isoOf = d => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
   const noon = (y, m, d) => new Date(y, m, d, 12, 0, 0, 0);
+
+  /* ==========================================
+     ✅ नेपाली डेट कन्वर्टर हेल्पर (सही ग्लोबल वेरिएबल)
+     ========================================== */
+  function getNepaliClass() {
+    // UMD बिल्ड में क्लास window.NepaliDate.default में होती है
+    if (window.NepaliDate && window.NepaliDate.default) {
+      return window.NepaliDate.default;
+    }
+    // फॉलबैक (अगर किसी वजह से सीधे एक्सपोर्ट हो)
+    if (window.NepaliDateConverter) {
+      return window.NepaliDateConverter;
+    }
+    return null;
+  }
 
   /* ==========================================
      HIJRI (ISLAMIC) CALENDAR logic
@@ -391,7 +406,7 @@
   }
 
   function bsBreakdown(date) {
-    const C = window.NepaliDateConverter || window.NepaliDate;
+    const C = getNepaliClass();
     if (!C) return null;
     try {
       const nd = new C(date);
@@ -468,7 +483,6 @@
     const adInput = document.getElementById('adDate');
     if (adInput && !adInput.value) adInput.value = isoOf(now);
 
-    // Populate Dropdowns
     const bsSel = document.getElementById('bsMonth');
     const ahSel = document.getElementById('ahMonth');
     if (bsSel && bsSel.options.length === 0) {
@@ -518,19 +532,17 @@
         const m = parseInt(document.getElementById('bsMonth').value, 10);
         const d = parseInt(document.getElementById('bsDay').value, 10);
         if (!y || !m || !d) throw new Error('कृपया नेपाली तिथि भरें।');
-        const C = window.NepaliDateConverter || window.NepaliDate;
+        const C = getNepaliClass();
         if (!C) throw new Error('नेपाली कैलेंडर लाइब्रेरी लोड नहीं हुई।');
         const nd = new C(y, m - 1, d);
         const js = nd.toJsDate();
         date = noon(js.getFullYear(), js.getMonth(), js.getDate());
       } 
       else {
-        // (AH Fallback to AD search)
         const y = parseInt(document.getElementById('ahYear').value, 10);
         const m = parseInt(document.getElementById('ahMonth').value, 10);
         const d = parseInt(document.getElementById('ahDay').value, 10);
         if (!y || !m || !d) throw new Error('कृपया हिजरी तिथि भरें।');
-        // Simple approx search for Hijri
         const estDays = (y - 1) * 354.367 + (m - 1) * 29.53 + (d - 1);
         let base = new Date(Date.UTC(622, 6, 19) + estDays * 86400000);
         let found = null;
@@ -549,7 +561,6 @@
       return;
     }
 
-    // Calculate Age
     const today = new Date();
     const todayNoon = noon(today.getFullYear(), today.getMonth(), today.getDate());
     
@@ -567,7 +578,6 @@
         </div>`;
     }
 
-    // Render Output
     out.innerHTML = ageHTML + 
                     dateCardHTML('अंग्रेज़ी (AD)', 'ENGLISH', adBreakdown(date)) +
                     dateCardHTML('नेपाली (BS)', 'NEPALI', bsBreakdown(date)) +
@@ -580,18 +590,14 @@
   function generatePassword() {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*";
     let pass = "";
-    // Guarantee at least 1 uppercase, 1 lowercase, 1 number, 1 special
     pass += "ABCDEFGHJKLMNPQRSTUVWXYZ"[Math.floor(Math.random() * 24)];
     pass += "abcdefghijkmnopqrstuvwxyz"[Math.floor(Math.random() * 24)];
     pass += "23456789"[Math.floor(Math.random() * 8)];
     pass += "!@#$%^&*"[Math.floor(Math.random() * 8)];
-    
     for (let i = 4; i < 10; i++) {
       pass += chars[Math.floor(Math.random() * chars.length)];
     }
-    // Shuffle
     pass = pass.split('').sort(() => 0.5 - Math.random()).join('');
-    
     document.getElementById('passBox').textContent = pass;
   }
 
@@ -624,7 +630,6 @@
     if (k === '=') {
       if (!calcExpr) return;
       try {
-        // Safe evaluation
         const res = Function('"use strict"; return (' + calcExpr + ')')();
         if (!isFinite(res)) throw new Error('Math Error');
         calcExpr = String(Math.round(res * 1e10) / 1e10);
