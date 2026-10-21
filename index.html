@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🛠️ Utility Hub - All Tools</title>
+<title>🛠️ Utility Hub - 24 Tools</title>
 <style>
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;height:100%;}
@@ -150,34 +150,24 @@
   .card .emoji{font-size:28px;}
   .card .title{font-size:11px;font-weight:700;color:#243b53;text-align:center;line-height:1.2;}
 
-  /* ---------- RESULT CARDS ---------- */
+  /* ---------- RESULT CARDS (Date/Age) ---------- */
   .date-card{padding:14px;margin-bottom:12px;background:#fff;border-radius:12px;border:1px solid #e0e0e0;}
   .dc-head{font-size:13px;font-weight:800;color:#007bff;margin-bottom:12px;display:flex;justify-content:space-between;}
   .dc-sub{color:#888;font-size:11px;}
   .dc-body{display:flex;align-items:center;gap:14px;}
-  .dc-num{
-    font-size:36px;font-weight:800;color:#0b3d91;
-    background:#eef4ff;border-radius:10px;padding:10px 14px;line-height:1;
-  }
+  .dc-num{font-size:36px;font-weight:800;color:#0b3d91;background:#eef4ff;border-radius:10px;padding:10px 14px;line-height:1;}
   .dc-info{flex:1;}
   .dc-day{font-size:18px;font-weight:800;color:#1f2d3d;margin-bottom:4px;}
   .dc-line{font-size:14px;color:#555;line-height:1.6;}
   .dc-line b{color:#1f2d3d;}
-
-  .age-card{
-    background:linear-gradient(135deg,#007bff,#00a2ff);
-    color:#fff;border:none;padding:16px;border-radius:12px;margin-bottom:12px;
-    box-shadow:0 4px 12px rgba(0,123,255,.3);
-  }
+  .age-card{background:linear-gradient(135deg,#007bff,#00a2ff);color:#fff;border:none;padding:16px;border-radius:12px;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,123,255,.3);}
   .age-title{font-size:14px;font-weight:600;margin-bottom:8px;}
   .age-big{font-size:20px;font-weight:700;}
   .age-big b{font-size:26px;}
   .age-sub{font-size:13px;margin-top:8px;opacity:.9;}
 
   /* ---------- FOOTER ---------- */
-  .footer {
-    text-align: center; color: #888; font-size: 14px; padding: 20px 0; margin-top: auto;
-  }
+  .footer {text-align: center; color: #888; font-size: 14px; padding: 20px 0; margin-top: auto;}
 </style>
 </head>
 <body>
@@ -190,17 +180,16 @@
 </header>
 
 <main class="container">
-  <!-- ================= DASHBOARD (16 TOOLS) ================= -->
+  <!-- ================= DASHBOARD (24 TOOLS) ================= -->
   <section id="view-dashboard" class="view active">
     <div class="grid">
+      <!-- Original 16 -->
       <button class="card" onclick="showView('date')"><span class="emoji">📅</span><span class="title">आज की तारीख</span></button>
       <button class="card" onclick="showView('age')"><span class="emoji">🎂</span><span class="title">एज कन्वर्टर</span></button>
       <button class="card" onclick="showView('pass')"><span class="emoji">🔒</span><span class="title">पासवर्ड</span></button>
       <button class="card" onclick="showView('calc')"><span class="emoji">🧮</span><span class="title">कैलकुलेटर</span></button>
       <button class="card" onclick="showView('weight')"><span class="emoji">⚖️</span><span class="title">वजन कन्वर्टर</span></button>
       <button class="card" onclick="showView('qr')"><span class="emoji">📱</span><span class="title">QR कोड</span></button>
-      
-      <!-- New Tools -->
       <button class="card" onclick="showView('word')"><span class="emoji">📝</span><span class="title">वर्ड काउंटर</span></button>
       <button class="card" onclick="showView('temp')"><span class="emoji">🌡️</span><span class="title">तापमान</span></button>
       <button class="card" onclick="showView('length')"><span class="emoji">📏</span><span class="title">लम्बाई</span></button>
@@ -211,6 +200,16 @@
       <button class="card" onclick="showView('color')"><span class="emoji">🎨</span><span class="title">कलर पिकर</span></button>
       <button class="card" onclick="showView('notes')"><span class="emoji">💾</span><span class="title">क्विक नोट्स</span></button>
       <button class="card" onclick="showView('random')"><span class="emoji">🔢</span><span class="title">रैंडम नंबर</span></button>
+      
+      <!-- New 8 Tools -->
+      <button class="card" onclick="showView('interest')"><span class="emoji">🏦</span><span class="title">ब्याज कैलकुलेटर</span></button>
+      <button class="card" onclick="showView('worldtime')"><span class="emoji">🌍</span><span class="title">विश्व समय</span></button>
+      <button class="card" onclick="showView('base64')"><span class="emoji">🔐</span><span class="title">Base64</span></button>
+      <button class="card" onclick="showView('tip')"><span class="emoji">🍽️</span><span class="title">बिल स्प्लिटर</span></button>
+      <button class="card" onclick="showView('days')"><span class="emoji">📆</span><span class="title">दिन गणना</span></button>
+      <button class="card" onclick="showView('area')"><span class="emoji">📐</span><span class="title">क्षेत्रफल</span></button>
+      <button class="card" onclick="showView('device')"><span class="emoji">📱</span><span class="title">डिवाइस जानकारी</span></button>
+      <button class="card" onclick="showView('dice')"><span class="emoji">🎲</span><span class="title">पासा / सिक्का</span></button>
     </div>
   </section>
 
@@ -343,10 +342,8 @@
     <div class="panel">
       <label class="lbl">सेल्सियस (°C):</label>
       <input type="number" id="tempC" class="input" oninput="convertTemp('C')" placeholder="0">
-      
       <label class="lbl" style="margin-top:12px;">फारेनहाइट (°F):</label>
       <input type="number" id="tempF" class="input" oninput="convertTemp('F')" placeholder="32">
-      
       <label class="lbl" style="margin-top:12px;">केल्विन (K):</label>
       <input type="number" id="tempK" class="input" oninput="convertTemp('K')" placeholder="273.15">
     </div>
@@ -393,12 +390,9 @@
     <div class="panel">
       <label class="lbl">लम्बाई (cm में):</label>
       <input type="number" id="bmiHeight" class="input" placeholder="जैसे: 170">
-      
       <label class="lbl" style="margin-top:12px;">वजन (kg में):</label>
       <input type="number" id="bmiWeight" class="input" placeholder="जैसे: 65">
-      
       <button class="primary-btn" onclick="calcBMI()">BMI निकालें</button>
-      
       <div class="res-box" id="bmiResultBox" style="display:none;">
         आपका BMI: <span id="bmiResult">0</span> <br>
         <span id="bmiStatus" style="font-size:16px;"></span>
@@ -433,7 +427,7 @@
         <button class="primary-btn" style="margin-top:0; background:#6c757d;" onclick="changeCase('UPPER')">UPPERCASE</button>
         <button class="primary-btn" style="margin-top:0; background:#6c757d;" onclick="changeCase('LOWER')">lowercase</button>
       </div>
-      <button class="primary-btn" style="background:#6c757d;" onclick="changeCase('TITLE')">Title Case (हर शब्द बड़ा)</button>
+      <button class="primary-btn" style="background:#6c757d;" onclick="changeCase('TITLE')">Title Case</button>
       <button class="primary-btn" onclick="copyCaseText()">कॉपी करें</button>
     </div>
   </section>
@@ -469,7 +463,7 @@
     <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
     <h2 class="view-title">💾 क्विक नोट्स</h2>
     <div class="panel">
-      <p style="font-size:13px; color:#666; margin-top:0;">यहाँ लिखा टेक्स्ट अपने आप सेव हो जाता है। ब्राउज़र बंद करने पर भी नहीं जाएगा।</p>
+      <p style="font-size:13px; color:#666; margin-top:0;">यहाँ लिखा टेक्स्ट अपने आप सेव हो जाता है।</p>
       <textarea id="quickNotes" class="input" rows="8" placeholder="अपने ज़रूरी नोट्स यहाँ लिखें..."></textarea>
     </div>
   </section>
@@ -493,10 +487,178 @@
       <div class="res-box-dark" style="font-size:36px;" id="randResult">0</div>
     </div>
   </section>
+
+  <!-- ================= 17. INTEREST CALCULATOR ================= -->
+  <section id="view-interest" class="view">
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
+    <h2 class="view-title">🏦 ब्याज कैलकुलेटर</h2>
+    <div class="panel">
+      <label class="lbl">मूलधन (Principal ₹):</label>
+      <input type="number" id="intP" class="input" placeholder="जैसे: 10000">
+      
+      <div class="two" style="margin-top:12px;">
+        <div>
+          <label class="lbl">ब्याज दर (%):</label>
+          <input type="number" id="intR" class="input" placeholder="जैसे: 10">
+        </div>
+        <div>
+          <label class="lbl">समय (वर्ष):</label>
+          <input type="number" id="intT" class="input" placeholder="जैसे: 2">
+        </div>
+      </div>
+
+      <label class="lbl" style="margin-top:12px;">ब्याज का प्रकार:</label>
+      <select id="intType" class="input">
+        <option value="SI">साधारण ब्याज (Simple Interest)</option>
+        <option value="CI">चक्रवृद्धि ब्याज (Compound Interest)</option>
+      </select>
+
+      <button class="primary-btn" onclick="calcInterest()">ब्याज निकालें</button>
+      
+      <div class="res-box-dark" id="intResultBox" style="display:none; text-align:left; font-size:16px; font-weight:normal;">
+        मूलधन: <b id="resP">0</b><br>
+        कुल ब्याज: <b id="resI" style="color:#d9534f;">0</b><br>
+        कुल राशि: <b id="resTotal">0</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 18. WORLD TIME ================= -->
+  <section id="view-worldtime" class="view">
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
+    <h2 class="view-title">🌍 विश्व समय (World Time)</h2>
+    <div class="panel">
+      <p style="font-size:13px; color:#666; margin-top:0;">चुनिंदा देशों का वर्तमान समय</p>
+      <div id="worldClocks" style="font-size:16px; line-height:2.5;"></div>
+    </div>
+  </section>
+
+  <!-- ================= 19. BASE64 ================= -->
+  <section id="view-base64" class="view">
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
+    <h2 class="view-title">🔐 Base64 एनकोडर / डिकोडर</h2>
+    <div class="panel">
+      <label class="lbl">टेक्स्ट डालें:</label>
+      <textarea id="b64Input" class="input" rows="4" placeholder="यहाँ टेक्स्ट लिखें..."></textarea>
+      <div class="two" style="margin-top:12px;">
+        <button class="primary-btn" style="margin-top:0;" onclick="b64Encode()">एनकोड करें</button>
+        <button class="primary-btn" style="margin-top:0; background:#6c757d;" onclick="b64Decode()">डिकोड करें</button>
+      </div>
+      <div class="res-box-dark" id="b64Result" style="word-break:break-all; font-family:monospace;">परिणाम यहाँ आएगा</div>
+    </div>
+  </section>
+
+  <!-- ================= 20. TIP SPLITTER ================= -->
+  <section id="view-tip" class="view">
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
+    <h2 class="view-title">🍽️ बिल स्प्लिटर और टिप</h2>
+    <div class="panel">
+      <label class="lbl">कुल बिल (₹):</label>
+      <input type="number" id="billAmount" class="input" placeholder="जैसे: 1000">
+      
+      <div class="two" style="margin-top:12px;">
+        <div>
+          <label class="lbl">टिप (%):</label>
+          <input type="number" id="tipPercent" class="input" value="10">
+        </div>
+        <div>
+          <label class="lbl">कितने लोग:</label>
+          <input type="number" id="splitPeople" class="input" value="2">
+        </div>
+      </div>
+      <button class="primary-btn" onclick="calcTip()">कैलकुलेट करें</button>
+      
+      <div class="res-box" id="tipResultBox" style="display:none; text-align:left; font-size:16px;">
+        कुल टिप: <b id="resTip">0</b><br>
+        कुल भुगतान (बिल + टिप): <b id="resGrandTotal">0</b><br>
+        <span style="color:#d9534f; font-size:18px; margin-top:8px; display:block;">प्रति व्यक्ति: <b id="resPerPerson">0</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 21. DAYS CALCULATOR ================= -->
+  <section id="view-days" class="view">
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
+    <h2 class="view-title">📆 दिनों की गणना</h2>
+    <div class="panel">
+      <label class="lbl">पहली तारीख:</label>
+      <input type="date" id="date1" class="input">
+      
+      <label class="lbl" style="margin-top:12px;">दूसरी तारीख:</label>
+      <input type="date" id="date2" class="input">
+      
+      <button class="primary-btn" onclick="calcDays()">अंतर निकालें</button>
+      
+      <div class="res-box-dark" id="daysResultBox" style="display:none; font-size:16px; font-weight:normal;">
+        कुल दिन: <b id="resDays" style="font-size:24px; color:#d9534f;"></b><br>
+        सप्ताह: <b id="resWeeks"></b> <br>
+        महीने: <b id="resMonths"></b> <br>
+        वर्ष: <b id="resYears"></b>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 22. AREA CALCULATOR ================= -->
+  <section id="view-area" class="view">
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
+    <h2 class="view-title">📐 क्षेत्रफल कैलकुलेटर</h2>
+    <div class="panel">
+      <label class="lbl">आकृति चुनें:</label>
+      <select id="areaShape" class="input" onchange="toggleAreaInputs()">
+        <option value="rect">आयत (Rectangle)</option>
+        <option value="circle">वृत्त (Circle)</option>
+        <option value="tri">त्रिभुज (Triangle)</option>
+      </select>
+
+      <div id="areaRect" class="two" style="margin-top:12px;">
+        <div><label class="lbl">लम्बाई (L):</label><input type="number" id="areaL" class="input"></div>
+        <div><label class="lbl">चौड़ाई (W):</label><input type="number" id="areaW" class="input"></div>
+      </div>
+
+      <div id="areaCircle" class="input-group" style="display:none;">
+        <label class="lbl">त्रिज्या (Radius):</label>
+        <input type="number" id="areaR" class="input">
+      </div>
+
+      <div id="areaTri" class="two" style="display:none; margin-top:12px;">
+        <div><label class="lbl">आधार (Base):</label><input type="number" id="areaB" class="input"></div>
+        <div><label class="lbl">ऊँचाई (Height):</label><input type="number" id="areaH" class="input"></div>
+      </div>
+
+      <button class="primary-btn" onclick="calcArea()">क्षेत्रफल निकालें</button>
+      <div class="res-box" id="areaResultBox" style="display:none;">
+        क्षेत्रफल: <span id="resArea">0</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 23. DEVICE INFO ================= -->
+  <section id="view-device" class="view">
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
+    <h2 class="view-title">📱 डिवाइस जानकारी</h2>
+    <div class="panel">
+      <div id="deviceInfo" style="font-size:15px; line-height:2;"></div>
+    </div>
+  </section>
+
+  <!-- ================= 24. DICE / COIN ================= -->
+  <section id="view-dice" class="view">
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
+    <h2 class="view-title">🎲 पासा / सिक्का</h2>
+    <div class="panel" style="text-align:center;">
+      <div class="two">
+        <button class="primary-btn" style="margin-top:0;" onclick="rollDice()">पासा फेंकें 🎲</button>
+        <button class="primary-btn" style="margin-top:0; background:#f0ad4e;" onclick="flipCoin()">सिक्का उछालें 🪙</button>
+      </div>
+      <div class="res-box-dark" style="font-size:48px; margin-top:24px; padding:30px;" id="diceResult">
+        -
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="footer">
-  © Utility Hub • 16 Web Tools Collection
+  © Utility Hub • 24 Web Tools Collection
 </footer>
 
 <!-- नेपाली डेट कन्वर्टर लाइब्रेरी -->
@@ -504,7 +666,7 @@
 
 <script>
   /* ==========================================
-     NAVIGATION
+     NAVIGATION & COMMON
      ========================================== */
   function showView(id) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -517,11 +679,10 @@
     if (id === 'age') initAgeDefaults();
     if (id === 'notes') loadNotes();
     if (id === 'color') updateColor(document.getElementById('colorPicker').value);
+    if (id === 'worldtime') initWorldClocks();
+    if (id === 'device') initDeviceInfo();
   }
 
-  /* ==========================================
-     COMMON HELPERS
-     ========================================== */
   const pad2 = n => (n < 10 ? '0' : '') + n;
   const isoOf = d => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
   const noon = (y, m, d) => new Date(y, m, d, 12, 0, 0, 0);
@@ -533,19 +694,15 @@
   const UR_MONTHS = ['मुहर्रम','सफ़र','रबी उल अव्वल','रबी उस सानी','जुमादा अल-अव्वल','जुमादा अस-सानी','रजब','शाबान','रमज़ान','शव्वाल','ज़िलक़ाद','ज़िलहिज्जा'];
 
   /* ==========================================
-     TOOL 1 & 2: DATE & AGE (From previous code)
+     1 & 2. DATE & AGE
      ========================================== */
   function getNepaliClass() {
     if (window.NepaliDate && window.NepaliDate.default) return window.NepaliDate.default;
     if (window.NepaliDateConverter) return window.NepaliDateConverter;
     return null;
   }
-
   let hijriFmt = null;
-  try {
-    hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura', { day: 'numeric', month: 'numeric', year: 'numeric' });
-  } catch (e) { try { hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic', { day: 'numeric', month: 'numeric', year: 'numeric' }); } catch (e2) {} }
-
+  try { hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura', { day: 'numeric', month: 'numeric', year: 'numeric' }); } catch (e) { try { hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic', { day: 'numeric', month: 'numeric', year: 'numeric' }); } catch (e2) {} }
   function hijriParts(date) {
     if (!hijriFmt) return null;
     try {
@@ -559,46 +716,24 @@
       return (y && m && d) ? { year: y, month: m, day: d } : null;
     } catch (e) { return null; }
   }
-
-  function adBreakdown(date) {
-    return { dayName: EN_DAYS[date.getDay()], date: date.getDate(), monthName: EN_MONTHS[date.getMonth()], monthNum: date.getMonth() + 1, year: date.getFullYear() };
-  }
-
+  function adBreakdown(date) { return { dayName: EN_DAYS[date.getDay()], date: date.getDate(), monthName: EN_MONTHS[date.getMonth()], monthNum: date.getMonth() + 1, year: date.getFullYear() }; }
   function bsBreakdown(date) {
     const C = getNepaliClass(); if (!C) return null;
-    try {
-      const nd = new C(date); const mIdx = nd.getMonth();
-      return { dayName: NP_DAYS[date.getDay()], date: nd.getDate(), monthName: NP_MONTHS[mIdx] || ('महीना ' + (mIdx + 1)), monthNum: mIdx + 1, year: nd.getYear() };
-    } catch (e) { return null; }
+    try { const nd = new C(date); const mIdx = nd.getMonth(); return { dayName: NP_DAYS[date.getDay()], date: nd.getDate(), monthName: NP_MONTHS[mIdx] || ('महीना ' + (mIdx + 1)), monthNum: mIdx + 1, year: nd.getYear() }; } catch (e) { return null; }
   }
-
   function ahBreakdown(date) {
     const p = hijriParts(date); if (!p) return null;
     return { dayName: UR_DAYS[date.getDay()], date: p.day, monthName: UR_MONTHS[p.month - 1] || ('महीना ' + p.month), monthNum: p.month, year: p.year };
   }
-
   function dateCardHTML(title, subtitle, b) {
     if (!b) return `<div class="date-card"><div class="dc-head">${title}</div><div class="err">यह कैलेंडर उपलब्ध नहीं है।</div></div>`;
-    return `
-      <div class="date-card">
-        <div class="dc-head"><span>${title}</span><span class="dc-sub">${subtitle}</span></div>
-        <div class="dc-body">
-          <div class="dc-num">${b.date}</div>
-          <div class="dc-info">
-            <div class="dc-day">${b.dayName}</div>
-            <div class="dc-line">महीना: <b>${b.monthName}</b> (${pad2(b.monthNum)})</div>
-            <div class="dc-line">वर्ष: <b>${b.year}</b></div>
-          </div>
-        </div>
-      </div>`;
+    return `<div class="date-card"><div class="dc-head"><span>${title}</span><span class="dc-sub">${subtitle}</span></div><div class="dc-body"><div class="dc-num">${b.date}</div><div class="dc-info"><div class="dc-day">${b.dayName}</div><div class="dc-line">महीना: <b>${b.monthName}</b> (${pad2(b.monthNum)})</div><div class="dc-line">वर्ष: <b>${b.year}</b></div></div></div></div>`;
   }
-
   function renderToday() {
     const box = document.getElementById('todayContent'); if (!box) return;
     const now = new Date();
     box.innerHTML = dateCardHTML('अंग्रेज़ी (AD)', 'ENGLISH', adBreakdown(now)) + dateCardHTML('नेपाली (BS)', 'NEPALI', bsBreakdown(now)) + dateCardHTML('उर्दू / हिजरी (AH)', 'HIJRI', ahBreakdown(now));
   }
-
   function initAgeDefaults() {
     const adInput = document.getElementById('adDate'); if (adInput && !adInput.value) adInput.value = isoOf(new Date());
     const bsSel = document.getElementById('bsMonth'); const ahSel = document.getElementById('ahMonth');
@@ -607,32 +742,24 @@
       UR_MONTHS.forEach((m, i) => ahSel.add(new Option(`${i+1} - ${m}`, i+1)));
     }
   }
-
   function toggleCalendarInputs() {
     const type = document.getElementById('calType').value;
     document.getElementById('adInputs').style.display = type === 'AD' ? 'block' : 'none';
     document.getElementById('bsInputs').style.display = type === 'BS' ? 'block' : 'none';
     document.getElementById('ahInputs').style.display = type === 'AH' ? 'block' : 'none';
   }
-
   function calcAge(from, to) {
     let y = to.getFullYear() - from.getFullYear(); let m = to.getMonth() - from.getMonth(); let d = to.getDate() - from.getDate();
     if (d < 0) { m--; d += new Date(to.getFullYear(), to.getMonth(), 0).getDate(); }
     if (m < 0) { y--; m += 12; }
     return { y, m, d };
   }
-
   function calculateAgeAndConvert() {
     const out = document.getElementById('ageResult'); const type = document.getElementById('calType').value; let date = null;
     try {
-      if (type === 'AD') {
-        const v = document.getElementById('adDate').value; if (!v) throw new Error('कृपया जन्म तिथि चुनें।');
-        const p = v.split('-'); date = noon(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
-      } else if (type === 'BS') {
-        const y = parseInt(document.getElementById('bsYear').value, 10); const m = parseInt(document.getElementById('bsMonth').value, 10); const d = parseInt(document.getElementById('bsDay').value, 10);
-        const C = getNepaliClass(); if (!C) throw new Error('नेपाली कैलेंडर लाइब्रेरी लोड नहीं हुई।');
-        const nd = new C(y, m - 1, d); const js = nd.toJsDate(); date = noon(js.getFullYear(), js.getMonth(), js.getDate());
-      } else {
+      if (type === 'AD') { const v = document.getElementById('adDate').value; if (!v) throw new Error('कृपया जन्म तिथि चुनें।'); const p = v.split('-'); date = noon(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10)); }
+      else if (type === 'BS') { const y = parseInt(document.getElementById('bsYear').value, 10); const m = parseInt(document.getElementById('bsMonth').value, 10); const d = parseInt(document.getElementById('bsDay').value, 10); const C = getNepaliClass(); if (!C) throw new Error('नेपाली कैलेंडर लोड नहीं हुआ।'); const nd = new C(y, m - 1, d); const js = nd.toJsDate(); date = noon(js.getFullYear(), js.getMonth(), js.getDate()); }
+      else {
         const y = parseInt(document.getElementById('ahYear').value, 10); const m = parseInt(document.getElementById('ahMonth').value, 10); const d = parseInt(document.getElementById('ahDay').value, 10);
         const estDays = (y - 1) * 354.367 + (m - 1) * 29.53 + (d - 1); let base = new Date(Date.UTC(622, 6, 19) + estDays * 86400000); let found = null;
         for (let i = -15; i <= 15; i++) { let cand = new Date(base.getFullYear(), base.getMonth(), base.getDate() + i, 12, 0, 0); let p = hijriParts(cand); if (p && p.year === y && p.month === m && p.day === d) { found = cand; break; } }
@@ -640,7 +767,6 @@
       }
       if (!date || isNaN(date.getTime())) throw new Error('अमान्य तिथि!');
     } catch (err) { out.innerHTML = `<div class="panel"><div class="err">त्रुटि: ${err.message}</div></div>`; return; }
-
     const todayNoon = noon(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     let ageHTML = '';
     if (date.getTime() > todayNoon.getTime()) {
@@ -653,7 +779,7 @@
   }
 
   /* ==========================================
-     TOOL 3: PASSWORD
+     3. PASSWORD
      ========================================== */
   function generatePassword() {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*";
@@ -669,7 +795,7 @@
   }
 
   /* ==========================================
-     TOOL 4: CALCULATOR
+     4. CALCULATOR
      ========================================== */
   let calcExpr = ''; let calcDone = false;
   function calcPress(k) {
@@ -677,11 +803,8 @@
     if (k === 'C') { calcExpr = ''; calcDone = false; display.textContent = '0'; return; }
     if (k === '=') {
       if (!calcExpr) return;
-      try {
-        const res = Function('"use strict"; return (' + calcExpr + ')')();
-        if (!isFinite(res)) throw new Error('Math Error');
-        calcExpr = String(Math.round(res * 1e10) / 1e10); display.textContent = calcExpr; calcDone = true;
-      } catch (e) { display.textContent = 'Error'; calcExpr = ''; calcDone = true; }
+      try { const res = Function('"use strict"; return (' + calcExpr + ')')(); if (!isFinite(res)) throw new Error('Math Error'); calcExpr = String(Math.round(res * 1e10) / 1e10); display.textContent = calcExpr; calcDone = true; }
+      catch (e) { display.textContent = 'Error'; calcExpr = ''; calcDone = true; }
       return;
     }
     if (calcDone) { if (/[0-9.]/.test(k)) calcExpr = ''; calcDone = false; }
@@ -690,7 +813,7 @@
   }
 
   /* ==========================================
-     TOOL 5: WEIGHT
+     5. WEIGHT
      ========================================== */
   function convertWeight() {
     const kg = parseFloat(document.getElementById('kgInput').value);
@@ -698,7 +821,7 @@
   }
 
   /* ==========================================
-     TOOL 6: QR
+     6. QR
      ========================================== */
   function makeQR() {
     const text = document.getElementById('qrText').value.trim(); const box = document.getElementById('qrBox');
@@ -707,52 +830,31 @@
   }
 
   /* ==========================================
-     TOOL 7: WORD COUNTER
+     7. WORD COUNTER
      ========================================== */
   function updateWC() {
     const text = document.getElementById('wcText').value;
-    const chars = text.length;
-    const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-    document.getElementById('wcWords').textContent = words;
-    document.getElementById('wcChars').textContent = chars;
+    document.getElementById('wcWords').textContent = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    document.getElementById('wcChars').textContent = text.length;
   }
 
   /* ==========================================
-     TOOL 8: TEMPERATURE
+     8. TEMPERATURE
      ========================================== */
   function convertTemp(src) {
     let c = 0, f = 0, k = 0;
-    if (src === 'C') {
-      c = parseFloat(document.getElementById('tempC').value);
-      if (isNaN(c)) return;
-      f = (c * 9/5) + 32; k = c + 273.15;
-      document.getElementById('tempF').value = f.toFixed(2);
-      document.getElementById('tempK').value = k.toFixed(2);
-    } else if (src === 'F') {
-      f = parseFloat(document.getElementById('tempF').value);
-      if (isNaN(f)) return;
-      c = (f - 32) * 5/9; k = c + 273.15;
-      document.getElementById('tempC').value = c.toFixed(2);
-      document.getElementById('tempK').value = k.toFixed(2);
-    } else {
-      k = parseFloat(document.getElementById('tempK').value);
-      if (isNaN(k)) return;
-      c = k - 273.15; f = (c * 9/5) + 32;
-      document.getElementById('tempC').value = c.toFixed(2);
-      document.getElementById('tempF').value = f.toFixed(2);
-    }
+    if (src === 'C') { c = parseFloat(document.getElementById('tempC').value); if (isNaN(c)) return; f = (c * 9/5) + 32; k = c + 273.15; document.getElementById('tempF').value = f.toFixed(2); document.getElementById('tempK').value = k.toFixed(2); }
+    else if (src === 'F') { f = parseFloat(document.getElementById('tempF').value); if (isNaN(f)) return; c = (f - 32) * 5/9; k = c + 273.15; document.getElementById('tempC').value = c.toFixed(2); document.getElementById('tempK').value = k.toFixed(2); }
+    else { k = parseFloat(document.getElementById('tempK').value); if (isNaN(k)) return; c = k - 273.15; f = (c * 9/5) + 32; document.getElementById('tempC').value = c.toFixed(2); document.getElementById('tempF').value = f.toFixed(2); }
   }
 
   /* ==========================================
-     TOOL 9: LENGTH
+     9. LENGTH
      ========================================== */
   function convertLength() {
     const val = parseFloat(document.getElementById('lenVal').value);
     const unit = document.getElementById('lenUnit').value;
-    if (isNaN(val)) {
-      ['lenM', 'lenCm', 'lenKm', 'lenIn', 'lenFt'].forEach(id => document.getElementById(id).textContent = '0');
-      return;
-    }
+    if (isNaN(val)) { ['lenM', 'lenCm', 'lenKm', 'lenIn', 'lenFt'].forEach(id => document.getElementById(id).textContent = '0'); return; }
     const inMeters = { 'm': 1, 'cm': 0.01, 'km': 1000, 'in': 0.0254, 'ft': 0.3048 };
     const meters = val * inMeters[unit];
     document.getElementById('lenM').textContent = meters.toFixed(4);
@@ -763,7 +865,7 @@
   }
 
   /* ==========================================
-     TOOL 10: BMI
+     10. BMI
      ========================================== */
   function calcBMI() {
     const h = parseFloat(document.getElementById('bmiHeight').value) / 100;
@@ -775,35 +877,30 @@
     else if (bmi < 25) status = "सामान्य (Normal) - 🟢";
     else if (bmi < 30) status = "अधिक वजन (Overweight) - 🟠";
     else status = "मोटापा (Obese) - 🔴";
-    
     document.getElementById('bmiResult').textContent = bmi.toFixed(2);
     document.getElementById('bmiStatus').textContent = status;
     document.getElementById('bmiResultBox').style.display = 'block';
   }
 
   /* ==========================================
-     TOOL 11: PERCENTAGE
+     11. PERCENTAGE
      ========================================== */
   function calcPercent() {
     const x = parseFloat(document.getElementById('pctX').value);
     const y = parseFloat(document.getElementById('pctY').value);
     if (isNaN(x) || isNaN(y)) return alert("कृपया दोनों नंबर भरें।");
-    const res = (x / 100) * y;
-    document.getElementById('pctResult').textContent = res;
+    document.getElementById('pctResult').textContent = (x / 100) * y;
     document.getElementById('pctResultBox').style.display = 'block';
   }
 
   /* ==========================================
-     TOOL 12: TEXT CASE
+     12. TEXT CASE
      ========================================== */
   function changeCase(type) {
-    const el = document.getElementById('caseText');
-    let text = el.value;
+    const el = document.getElementById('caseText'); let text = el.value;
     if (type === 'UPPER') el.value = text.toUpperCase();
     else if (type === 'LOWER') el.value = text.toLowerCase();
-    else if (type === 'TITLE') {
-      el.value = text.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
-    }
+    else if (type === 'TITLE') el.value = text.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
   }
   function copyCaseText() {
     const text = document.getElementById('caseText').value;
@@ -812,29 +909,17 @@
   }
 
   /* ==========================================
-     TOOL 13: STOPWATCH
+     13. STOPWATCH
      ========================================== */
   let swTimer = null; let swStartTime = 0; let swElapsed = 0;
   function swStartStop() {
     const btn = document.getElementById('swStartBtn');
-    if (swTimer) {
-      clearInterval(swTimer); swTimer = null;
-      swElapsed += Date.now() - swStartTime;
-      btn.textContent = 'फिर से शुरू करें';
-      btn.style.background = '#007bff';
-    } else {
-      swStartTime = Date.now();
-      swTimer = setInterval(swUpdate, 10);
-      btn.textContent = 'पॉज़ करें';
-      btn.style.background = '#f0ad4e';
-    }
+    if (swTimer) { clearInterval(swTimer); swTimer = null; swElapsed += Date.now() - swStartTime; btn.textContent = 'फिर से शुरू करें'; btn.style.background = '#007bff'; }
+    else { swStartTime = Date.now(); swTimer = setInterval(swUpdate, 10); btn.textContent = 'पॉज़ करें'; btn.style.background = '#f0ad4e'; }
   }
   function swUpdate() {
     let diff = swElapsed + (Date.now() - swStartTime);
-    let ms = Math.floor((diff % 1000) / 10);
-    let s = Math.floor((diff / 1000) % 60);
-    let m = Math.floor((diff / (1000 * 60)) % 60);
-    let h = Math.floor((diff / (1000 * 60 * 60)));
+    let ms = Math.floor((diff % 1000) / 10); let s = Math.floor((diff / 1000) % 60); let m = Math.floor((diff / (1000 * 60)) % 60); let h = Math.floor((diff / (1000 * 60 * 60)));
     document.getElementById('swDisplay').textContent = `${pad2(h)}:${pad2(m)}:${pad2(s)}.${pad2(ms)}`;
   }
   function swReset() {
@@ -845,7 +930,7 @@
   }
 
   /* ==========================================
-     TOOL 14: COLOR PICKER
+     14. COLOR PICKER
      ========================================== */
   function updateColor(hex) {
     document.getElementById('colorHex').textContent = hex.toUpperCase();
@@ -854,7 +939,7 @@
   }
 
   /* ==========================================
-     TOOL 15: QUICK NOTES (LocalStorage)
+     15. QUICK NOTES
      ========================================== */
   function loadNotes() {
     const saved = localStorage.getItem('utility_hub_notes');
@@ -865,14 +950,202 @@
   });
 
   /* ==========================================
-     TOOL 16: RANDOM NUMBER
+     16. RANDOM NUMBER
      ========================================== */
   function genRandom() {
     const min = parseInt(document.getElementById('randMin').value) || 1;
     const max = parseInt(document.getElementById('randMax').value) || 100;
     if (min >= max) return alert("Max, Min से बड़ा होना चाहिए!");
-    const res = Math.floor(Math.random() * (max - min + 1)) + min;
-    document.getElementById('randResult').textContent = res;
+    document.getElementById('randResult').textContent = Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  /* ==========================================
+     17. INTEREST CALCULATOR
+     ========================================== */
+  function calcInterest() {
+    const p = parseFloat(document.getElementById('intP').value);
+    const r = parseFloat(document.getElementById('intR').value);
+    const t = parseFloat(document.getElementById('intT').value);
+    const type = document.getElementById('intType').value;
+    if (isNaN(p) || isNaN(r) || isNaN(t)) return alert("कृपया सभी फील्ड भरें।");
+    
+    let interest = 0;
+    if (type === 'SI') {
+      interest = (p * r * t) / 100;
+    } else {
+      interest = p * Math.pow((1 + r/100), t) - p;
+    }
+    const total = p + interest;
+    
+    document.getElementById('resP').textContent = '₹ ' + p.toLocaleString('en-IN', {maximumFractionDigits: 2});
+    document.getElementById('resI').textContent = '₹ ' + interest.toLocaleString('en-IN', {maximumFractionDigits: 2});
+    document.getElementById('resTotal').textContent = '₹ ' + total.toLocaleString('en-IN', {maximumFractionDigits: 2});
+    document.getElementById('intResultBox').style.display = 'block';
+  }
+
+  /* ==========================================
+     18. WORLD TIME
+     ========================================== */
+  let worldTimeInterval = null;
+  function initWorldClocks() {
+    const cities = [
+      { name: 'भारत (India)', tz: 'Asia/Kolkata' },
+      { name: 'नेपाल (Nepal)', tz: 'Asia/Kathmandu' },
+      { name: 'दुबई (Dubai)', tz: 'Asia/Dubai' },
+      { name: 'लंदन (London)', tz: 'Europe/London' },
+      { name: 'न्यूयॉर्क (New York)', tz: 'America/New_York' },
+      { name: 'टोक्यो (Tokyo)', tz: 'Asia/Tokyo' }
+    ];
+    
+    function updateClocks() {
+      let html = '';
+      cities.forEach(c => {
+        const time = new Date().toLocaleTimeString('en-US', { timeZone: c.tz, hour: '2-digit', minute:'2-digit', second:'2-digit' });
+        html += `<div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:5px 0;">
+          <span>${c.name}</span>
+          <b style="color:#007bff;">${time}</b>
+        </div>`;
+      });
+      document.getElementById('worldClocks').innerHTML = html;
+    }
+    updateClocks();
+    if (worldTimeInterval) clearInterval(worldTimeInterval);
+    worldTimeInterval = setInterval(updateClocks, 1000);
+  }
+
+  /* ==========================================
+     19. BASE64
+     ========================================== */
+  function b64Encode() {
+    const text = document.getElementById('b64Input').value;
+    try {
+      const encoded = btoa(unescape(encodeURIComponent(text)));
+      document.getElementById('b64Result').textContent = encoded;
+    } catch (e) { document.getElementById('b64Result').textContent = "एनकोड करने में त्रुटि"; }
+  }
+  function b64Decode() {
+    const text = document.getElementById('b64Input').value;
+    try {
+      const decoded = decodeURIComponent(escape(atob(text)));
+      document.getElementById('b64Result').textContent = decoded;
+    } catch (e) { document.getElementById('b64Result').textContent = "अमान्य Base64 स्ट्रिंग!"; }
+  }
+
+  /* ==========================================
+     20. TIP SPLITTER
+     ========================================== */
+  function calcTip() {
+    const bill = parseFloat(document.getElementById('billAmount').value);
+    const tipP = parseFloat(document.getElementById('tipPercent').value) || 0;
+    const people = parseInt(document.getElementById('splitPeople').value) || 1;
+    
+    if (isNaN(bill)) return alert("कृपया बिल की राशि भरें।");
+    
+    const tipAmount = bill * (tipP / 100);
+    const total = bill + tipAmount;
+    const perPerson = total / people;
+    
+    document.getElementById('resTip').textContent = '₹ ' + tipAmount.toFixed(2);
+    document.getElementById('resGrandTotal').textContent = '₹ ' + total.toFixed(2);
+    document.getElementById('resPerPerson').textContent = '₹ ' + perPerson.toFixed(2);
+    document.getElementById('tipResultBox').style.display = 'block';
+  }
+
+  /* ==========================================
+     21. DAYS CALCULATOR
+     ========================================== */
+  function calcDays() {
+    const d1 = document.getElementById('date1').value;
+    const d2 = document.getElementById('date2').value;
+    if (!d1 || !d2) return alert("कृपया दोनों तारीखें चुनें।");
+    
+    const date1 = new Date(d1); const date2 = new Date(d2);
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    document.getElementById('resDays').textContent = diffDays + " दिन";
+    document.getElementById('resWeeks').textContent = (diffDays / 7).toFixed(1) + " सप्ताह";
+    document.getElementById('resMonths').textContent = (diffDays / 30.44).toFixed(1) + " महीने";
+    document.getElementById('resYears').textContent = (diffDays / 365.25).toFixed(1) + " वर्ष";
+    document.getElementById('daysResultBox').style.display = 'block';
+  }
+
+  /* ==========================================
+     22. AREA CALCULATOR
+     ========================================== */
+  function toggleAreaInputs() {
+    const shape = document.getElementById('areaShape').value;
+    document.getElementById('areaRect').style.display = shape === 'rect' ? 'grid' : 'none';
+    document.getElementById('areaCircle').style.display = shape === 'circle' ? 'block' : 'none';
+    document.getElementById('areaTri').style.display = shape === 'tri' ? 'grid' : 'none';
+    document.getElementById('areaResultBox').style.display = 'none';
+  }
+  function calcArea() {
+    const shape = document.getElementById('areaShape').value;
+    let area = 0;
+    if (shape === 'rect') {
+      const l = parseFloat(document.getElementById('areaL').value);
+      const w = parseFloat(document.getElementById('areaW').value);
+      if (isNaN(l) || isNaN(w)) return alert("लम्बाई और चौड़ाई भरें।");
+      area = l * w;
+    } else if (shape === 'circle') {
+      const r = parseFloat(document.getElementById('areaR').value);
+      if (isNaN(r)) return alert("त्रिज्या भरें।");
+      area = Math.PI * r * r;
+    } else {
+      const b = parseFloat(document.getElementById('areaB').value);
+      const h = parseFloat(document.getElementById('areaH').value);
+      if (isNaN(b) || isNaN(h)) return alert("आधार और ऊँचाई भरें।");
+      area = 0.5 * b * h;
+    }
+    document.getElementById('resArea').textContent = area.toFixed(2) + " वर्ग इकाई";
+    document.getElementById('areaResultBox').style.display = 'block';
+  }
+
+  /* ==========================================
+     23. DEVICE INFO
+     ========================================== */
+  function initDeviceInfo() {
+    const w = window.screen.width;
+    const h = window.screen.height;
+    const iw = window.innerWidth;
+    const ih = window.innerHeight;
+    const ratio = window.devicePixelRatio || 1;
+    const ua = navigator.userAgent;
+    let os = "Unknown";
+    if (ua.indexOf("Android") !== -1) os = "Android";
+    else if (ua.indexOf("iPhone") !== -1 || ua.indexOf("iPad") !== -1) os = "iOS";
+    else if (ua.indexOf("Windows") !== -1) os = "Windows";
+    else if (ua.indexOf("Mac") !== -1) os = "MacOS";
+    else if (ua.indexOf("Linux") !== -1) os = "Linux";
+
+    let lang = navigator.language || "Unknown";
+    
+    document.getElementById('deviceInfo').innerHTML = `
+      <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:8px 0;"><span>स्क्रीन रिज़ॉल्यूशन:</span> <b>${w} x ${h}</b></div>
+      <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:8px 0;"><span>ब्राउज़र विंडो:</span> <b>${iw} x ${ih}</b></div>
+      <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:8px 0;"><span>पिक्सेल अनुपात:</span> <b>${ratio}</b></div>
+      <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:8px 0;"><span>ऑपरेटिंग सिस्टम:</span> <b>${os}</b></div>
+      <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:8px 0;"><span>भाषा:</span> <b>${lang}</b></div>
+      <div style="margin-top:10px; font-size:12px; color:#888; word-break:break-all;">User Agent: ${ua}</div>
+    `;
+  }
+
+  /* ==========================================
+     24. DICE / COIN
+     ========================================== */
+  function rollDice() {
+    const num = Math.floor(Math.random() * 6) + 1;
+    const diceEmojis = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+    document.getElementById('diceResult').innerHTML = `${diceEmojis[num-1]}<br><span style="font-size:24px; margin-top:10px; display:block;">${num}</span>`;
+  }
+  function flipCoin() {
+    const num = Math.floor(Math.random() * 2);
+    if (num === 0) {
+      document.getElementById('diceResult').innerHTML = `🪙<br><span style="font-size:24px; margin-top:10px; display:block;">हेड्स (Heads)</span>`;
+    } else {
+      document.getElementById('diceResult').innerHTML = `🪙<br><span style="font-size:24px; margin-top:10px; display:block;">टेल्स (Tails)</span>`;
+    }
   }
 
   /* ==========================================
