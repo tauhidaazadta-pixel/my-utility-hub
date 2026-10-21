@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#007bff">
 <title>🛠️ Utility Hub</title>
 <style>
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-  html,body{margin:0;padding:0;}
+  html,body{margin:0;padding:0;height:100%;}
   body{
     background:#f4f6f9;
     color:#1f2d3d;
-    font-family:'Segoe UI','Noto Sans Devanagari',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
-    min-height:100vh;
-    padding-bottom:50px;
+    font-family:'Segoe UI','Noto Sans Devanagari',system-ui,-apple-system,sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 
   /* ---------- HEADER ---------- */
@@ -23,7 +23,7 @@
     position:sticky;
     top:0;
     z-index:50;
-    box-shadow:0 2px 12px rgba(0,123,255,.35);
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
   }
   .header-inner{
     max-width:600px;
@@ -32,29 +32,92 @@
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:10px;
   }
-  .brand{font-size:19px;font-weight:700;letter-spacing:.3px;white-space:nowrap;}
+  .brand{font-size:19px;font-weight:700;letter-spacing:.3px;}
   .badge{
-    background:rgba(255,255,255,.18);
+    background:rgba(255,255,255,.2);
     color:#fff;
-    border:1px solid rgba(255,255,255,.65);
-    padding:6px 13px;
+    border:none;
+    padding:6px 14px;
     border-radius:20px;
-    font-size:12px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  .container{max-width:600px;margin:0 auto;padding:16px;flex:1;width:100%;}
+  .view{display:none;}
+  .view.active{display:block;animation:fade .2s ease;}
+  @keyframes fade{from{opacity:0;}to{opacity:1;}}
+
+  /* ---------- COMMON UI ---------- */
+  .back-btn{
+    background:#6c757d;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:8px 16px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+    margin-bottom:16px;
+  }
+  .back-btn:hover{background:#5a6268;}
+
+  .view-title{
+    font-size:22px;
+    font-weight:800;
+    margin:0 0 16px;
+    color:#1a1a1a;
+  }
+  
+  .panel{
+    background:#fff;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:16px;
+    border:1px solid #e0e0e0;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+  }
+  
+  .lbl{display:block;font-size:15px;font-weight:600;color:#333;margin:0 0 8px;}
+  
+  .input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+    font-family:inherit;
+    background:#f9f9f9;
+    color:#1f2d3d;
+    outline:none;
+  }
+  .input:focus{border-color:#007bff;background:#fff;}
+
+  .input-group{margin-top:16px;}
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+  .primary-btn{
+    width:100%;
+    background:#007bff;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:14px;
+    font-size:16px;
     font-weight:700;
     cursor:pointer;
     font-family:inherit;
+    margin-top:18px;
     transition:background .2s;
-    white-space:nowrap;
   }
-  .badge:hover{background:rgba(255,255,255,.34);}
-
-  /* ---------- LAYOUT ---------- */
-  .container{max-width:600px;margin:0 auto;padding:16px;}
-  .view{display:none;}
-  .view.active{display:block;animation:fade .25s ease;}
-  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .primary-btn:hover{background:#0069d9;}
+  
+  .err{color:#d9534f;font-size:15px;font-weight:700;text-align:center;}
 
   /* ---------- DASHBOARD GRID ---------- */
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
@@ -70,248 +133,43 @@
     gap:8px;
     padding:8px;
     cursor:pointer;
-    font-family:inherit;
-    width:100%;
     box-shadow:0 2px 8px rgba(16,42,74,.07);
-    transition:transform .15s,box-shadow .15s;
   }
-  .card:hover{box-shadow:0 6px 16px rgba(16,42,74,.13);}
   .card:active{transform:scale(.95);}
-  .card .emoji{font-size:32px;line-height:1;}
-  .card .title{
-    font-size:11.5px;
-    font-weight:700;
-    color:#243b53;
-    text-align:center;
-    line-height:1.3;
-  }
-  .hint{
-    text-align:center;
-    font-size:12.5px;
-    color:#8496ab;
-    margin:16px 0 0;
-  }
+  .card .emoji{font-size:32px;}
+  .card .title{font-size:12px;font-weight:700;color:#243b53;text-align:center;line-height:1.3;}
 
-  /* ---------- COMMON UI ---------- */
-  .back-btn{
-    width:100%;
-    background:#007bff;
-    color:#fff;
-    border:none;
-    border-radius:12px;
-    padding:12px 16px;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    font-family:inherit;
-    margin-bottom:14px;
-    box-shadow:0 3px 10px rgba(0,123,255,.3);
-    transition:background .2s;
-  }
-  .back-btn:hover{background:#0069d9;}
-  .back-btn:active{transform:scale(.98);}
-
-  .view-title{
-    font-size:18px;
-    font-weight:800;
-    margin:0 0 14px;
-    color:#0b3d91;
-  }
-  .panel{
-    background:#fff;
-    border-radius:16px;
-    padding:16px;
-    margin-bottom:14px;
-    border:1px solid #e8eef6;
-    box-shadow:0 2px 10px rgba(16,42,74,.07);
-  }
-  .muted{font-size:13px;color:#6b7c93;margin:0 0 12px;line-height:1.55;}
-  .lbl{display:block;font-size:13px;font-weight:700;color:#4a5b6e;margin:0 0 6px;}
-  .input{
-    width:100%;
-    padding:11px 12px;
-    border:1px solid #cfd9e6;
-    border-radius:10px;
-    font-size:15px;
-    font-family:inherit;
-    background:#fff;
-    color:#1f2d3d;
-    outline:none;
-    transition:border-color .2s,box-shadow .2s;
-  }
-  .input:focus{border-color:#007bff;box-shadow:0 0 0 3px rgba(0,123,255,.15);}
-  .input-group{margin-top:12px;}
-  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
-
-  .primary-btn{
-    width:100%;
-    background:#007bff;
-    color:#fff;
-    border:none;
-    border-radius:10px;
-    padding:13px;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    font-family:inherit;
-    margin-top:14px;
-    transition:background .2s;
-  }
-  .primary-btn:hover{background:#0069d9;}
-  .primary-btn:active{transform:scale(.99);}
-  a.primary-btn{display:block;text-align:center;text-decoration:none;}
-  .secondary-btn{
-    width:100%;
-    background:#eaf2ff;
-    color:#0069d9;
-    border:1px solid #b9d6ff;
-    border-radius:10px;
-    padding:12px;
-    font-size:14px;
-    font-weight:700;
-    cursor:pointer;
-    font-family:inherit;
-    margin-top:10px;
-    transition:background .2s;
-  }
-  .secondary-btn:hover{background:#dbe9ff;}
-  .err{color:#d9534f;font-size:14px;font-weight:700;}
-
-  /* ---------- DATE CARDS ---------- */
-  .date-card{padding:14px 16px;}
-  .dc-head{
-    font-size:12.5px;
-    font-weight:800;
-    color:#007bff;
-    letter-spacing:.4px;
-    margin-bottom:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:8px;
-  }
-  .dc-sub{font-weight:600;color:#9aaabd;font-size:10.5px;letter-spacing:.5px;}
+  /* ---------- RESULT CARDS ---------- */
+  .date-card{padding:14px;margin-bottom:12px;background:#fff;border-radius:12px;border:1px solid #e0e0e0;}
+  .dc-head{font-size:13px;font-weight:800;color:#007bff;margin-bottom:12px;display:flex;justify-content:space-between;}
+  .dc-sub{color:#888;font-size:11px;}
   .dc-body{display:flex;align-items:center;gap:14px;}
   .dc-num{
-    font-size:38px;
-    font-weight:800;
-    color:#0b3d91;
-    line-height:1;
-    min-width:64px;
-    text-align:center;
-    background:#eef4ff;
-    border-radius:12px;
-    padding:10px 4px;
-    flex-shrink:0;
+    font-size:36px;font-weight:800;color:#0b3d91;
+    background:#eef4ff;border-radius:10px;padding:10px 14px;line-height:1;
   }
-  .dc-info{flex:1;min-width:0;}
-  .dc-day{font-size:17px;font-weight:800;color:#1f2d3d;margin-bottom:5px;word-break:break-word;}
-  .dc-line{font-size:13px;color:#5b6b7d;line-height:1.7;}
+  .dc-info{flex:1;}
+  .dc-day{font-size:18px;font-weight:800;color:#1f2d3d;margin-bottom:4px;}
+  .dc-line{font-size:14px;color:#555;line-height:1.6;}
   .dc-line b{color:#1f2d3d;}
 
-  /* ---------- AGE CARD ---------- */
   .age-card{
     background:linear-gradient(135deg,#007bff,#00a2ff);
-    color:#fff;
-    border:none;
-    box-shadow:0 6px 18px rgba(0,123,255,.32);
+    color:#fff;border:none;padding:16px;border-radius:12px;margin-bottom:12px;
+    box-shadow:0 4px 12px rgba(0,123,255,.3);
   }
-  .age-title{font-size:13px;font-weight:700;opacity:.95;margin-bottom:8px;letter-spacing:.3px;}
-  .age-big{font-size:18px;font-weight:700;line-height:1.6;}
-  .age-big b{font-size:24px;font-weight:800;}
-  .age-sub{font-size:12.5px;opacity:.92;margin-top:6px;}
+  .age-title{font-size:14px;font-weight:600;margin-bottom:8px;}
+  .age-big{font-size:20px;font-weight:700;}
+  .age-big b{font-size:26px;}
+  .age-sub{font-size:13px;margin-top:8px;opacity:.9;}
 
-  /* ---------- PASSWORD ---------- */
-  .pass-box{
-    background:#f1f5fb;
-    border:1px dashed #b9cde6;
-    border-radius:12px;
-    padding:18px 12px;
-    font-family:'Courier New',Consolas,monospace;
-    font-size:20px;
-    font-weight:700;
-    letter-spacing:1.2px;
-    text-align:center;
-    color:#0b3d91;
-    word-break:break-all;
-    min-height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  /* ---------- CALCULATOR ---------- */
-  .calc-display{
-    background:#0f172a;
-    color:#fff;
-    border-radius:12px;
-    padding:16px;
-    font-size:26px;
-    font-weight:700;
-    text-align:right;
-    min-height:66px;
-    overflow-x:auto;
-    white-space:nowrap;
-    margin-bottom:12px;
-    font-family:'Segoe UI',system-ui,sans-serif;
-  }
-  .calc-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-  .ck{
-    background:#f1f5fb;
-    border:1px solid #e0e8f3;
-    border-radius:12px;
-    padding:15px 0;
-    font-size:18px;
-    font-weight:700;
-    color:#1f2d3d;
-    cursor:pointer;
-    font-family:inherit;
-    transition:background .15s,transform .1s;
-  }
-  .ck:hover{background:#e7eef9;}
-  .ck:active{transform:scale(.94);}
-  .ck.op{background:#e3efff;color:#0069d9;}
-  .ck.fn{background:#ffe9e6;color:#d9534f;}
-  .ck.eq{background:#007bff;color:#fff;border-color:#007bff;}
-  .ck.eq:hover{background:#0069d9;}
-
-  /* ---------- WEIGHT ---------- */
-  .result-box{
-    background:#e9f7ef;
-    border:1px solid #b7e4c7;
-    border-radius:12px;
-    padding:16px;
-    text-align:center;
-    font-size:22px;
-    font-weight:800;
-    color:#1b7a43;
-    margin-top:14px;
-    word-break:break-word;
-  }
-  .result-sub{
-    text-align:center;
-    font-size:12.5px;
-    color:#5b6b7d;
-    margin-top:8px;
-    line-height:1.6;
-  }
-
-  /* ---------- QR ---------- */
-  .qr-box{
-    margin-top:14px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:40px;
-    text-align:center;
-  }
-  .qr-box img{
-    width:200px;
-    height:200px;
-    border:1px solid #e0e8f3;
-    border-radius:12px;
-    background:#fff;
-    padding:6px;
+  /* ---------- FOOTER ---------- */
+  .footer {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    padding: 20px 0;
+    margin-top: auto;
   }
 </style>
 </head>
@@ -320,290 +178,209 @@
 <header class="app-header">
   <div class="header-inner">
     <div class="brand">🛠️ Utility Hub</div>
-    <button class="badge" id="badgeBtn">Web Tools</button>
+    <button class="badge" onclick="showView('dashboard')">Web Tools</button>
   </div>
 </header>
 
 <main class="container">
-
   <!-- ================= DASHBOARD ================= -->
   <section id="view-dashboard" class="view active">
     <div class="grid">
-      <button class="card" data-tool="date">
-        <span class="emoji">📅</span>
-        <span class="title">आज की तारीख</span>
+      <button class="card" onclick="showView('date')">
+        <span class="emoji">📅</span><span class="title">आज की तारीख</span>
       </button>
-      <button class="card" data-tool="age">
-        <span class="emoji">🎂</span>
-        <span class="title">एज एवं कैलेंडर कन्वर्टर</span>
+      <button class="card" onclick="showView('age')">
+        <span class="emoji">🎂</span><span class="title">एज एवं कैलेंडर कन्वर्टर</span>
       </button>
-      <button class="card" data-tool="pass">
-        <span class="emoji">🔒</span>
-        <span class="title">पासवर्ड जनरेटर</span>
+      <button class="card" onclick="showView('pass')">
+        <span class="emoji">🔒</span><span class="title">पासवर्ड जनरेटर</span>
       </button>
-      <button class="card" data-tool="calc">
-        <span class="emoji">🧮</span>
-        <span class="title">कैलकुलेटर</span>
+      <button class="card" onclick="showView('calc')">
+        <span class="emoji">🧮</span><span class="title">कैलकुलेटर</span>
       </button>
-      <button class="card" data-tool="weight">
-        <span class="emoji">⚖️</span>
-        <span class="title">वजन कन्वर्टर</span>
+      <button class="card" onclick="showView('weight')">
+        <span class="emoji">⚖️</span><span class="title">वजन कन्वर्टर</span>
       </button>
-      <button class="card" data-tool="qr">
-        <span class="emoji">📱</span>
-        <span class="title">QR कोड जनरेटर</span>
+      <button class="card" onclick="showView('qr')">
+        <span class="emoji">📱</span><span class="title">QR कोड जनरेटर</span>
       </button>
     </div>
-    <p class="hint">किसी भी टूल पर टैप करें</p>
   </section>
 
   <!-- ================= TOOL 1 : TODAY'S DATE ================= -->
   <section id="view-date" class="view">
-    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
     <h2 class="view-title">📅 आज की तारीख</h2>
     <div id="todayContent"></div>
   </section>
 
-  <!-- ================= TOOL 2 : AGE & CALENDAR CONVERTER ================= -->
+  <!-- ================= TOOL 2 : AGE CONVERTER ================= -->
   <section id="view-age" class="view">
-    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
-    <h2 class="view-title">🎂 एज एवं कैलेंडर कन्वर्टर</h2>
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
+    <h2 class="view-title">🎂 एज कैलकुलेटर एवं कन्वर्टर</h2>
 
     <div class="panel">
-      <label class="lbl" for="calType">कैलेंडर प्रकार चुनें</label>
-      <select id="calType" class="input">
-        <option value="AD">अंग्रेज़ी (AD)</option>
+      <label class="lbl">कैलेंडर चुनें:</label>
+      <select id="calType" class="input" onchange="toggleCalendarInputs()">
+        <option value="AD">इंग्लिश / ईस्वी (AD)</option>
         <option value="BS">नेपाली (BS)</option>
         <option value="AH">उर्दू / हिजरी (AH)</option>
       </select>
 
       <div id="adInputs" class="input-group">
-        <label class="lbl" for="adDate">तारीख चुनें</label>
+        <label class="lbl">जन्म तिथि (AD):</label>
         <input type="date" id="adDate" class="input">
       </div>
 
       <div id="bsInputs" class="input-group" style="display:none;">
         <div class="three">
-          <div>
-            <label class="lbl" for="bsYear">वर्ष (BS)</label>
-            <input type="number" id="bsYear" class="input" value="2082" min="2000" max="2090">
-          </div>
-          <div>
-            <label class="lbl" for="bsMonth">महीना</label>
-            <select id="bsMonth" class="input"></select>
-          </div>
-          <div>
-            <label class="lbl" for="bsDay">गते</label>
-            <input type="number" id="bsDay" class="input" value="1" min="1" max="32">
-          </div>
+          <div><label class="lbl">वर्ष (BS)</label><input type="number" id="bsYear" class="input" value="2081"></div>
+          <div><label class="lbl">महीना</label><select id="bsMonth" class="input"></select></div>
+          <div><label class="lbl">गते</label><input type="number" id="bsDay" class="input" value="1"></div>
         </div>
       </div>
 
       <div id="ahInputs" class="input-group" style="display:none;">
         <div class="three">
-          <div>
-            <label class="lbl" for="ahYear">वर्ष (AH)</label>
-            <input type="number" id="ahYear" class="input" value="1447" min="1300" max="1500">
-          </div>
-          <div>
-            <label class="lbl" for="ahMonth">महीना</label>
-            <select id="ahMonth" class="input"></select>
-          </div>
-          <div>
-            <label class="lbl" for="ahDay">दिन</label>
-            <input type="number" id="ahDay" class="input" value="1" min="1" max="30">
-          </div>
+          <div><label class="lbl">वर्ष (AH)</label><input type="number" id="ahYear" class="input" value="1445"></div>
+          <div><label class="lbl">महीना</label><select id="ahMonth" class="input"></select></div>
+          <div><label class="lbl">दिन</label><input type="number" id="ahDay" class="input" value="1"></div>
         </div>
       </div>
 
-      <button class="primary-btn" id="convertBtn">कन्वर्ट करें</button>
+      <button class="primary-btn" onclick="calculateAgeAndConvert()">उम्र और डिटेल देखें</button>
     </div>
 
+    <!-- Result Output -->
     <div id="ageResult"></div>
   </section>
 
   <!-- ================= TOOL 3 : PASSWORD ================= -->
   <section id="view-pass" class="view">
-    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
     <h2 class="view-title">🔒 पासवर्ड जनरेटर</h2>
     <div class="panel">
-      <p class="muted">10 अक्षरों का सुरक्षित पासवर्ड — बड़े अक्षर, छोटे अक्षर, अंक और विशेष चिह्न शामिल हैं।</p>
-      <div class="pass-box" id="passBox">—</div>
-      <button class="primary-btn" id="genPassBtn">🔒 नया पासवर्ड बनाएं</button>
-      <button class="secondary-btn" id="copyPassBtn">📋 कॉपी करें</button>
+      <div id="passBox" style="background:#f1f5fb; border:1px dashed #b9cde6; border-radius:8px; padding:16px; font-family:monospace; font-size:20px; text-align:center; font-weight:bold; color:#0b3d91; word-break:break-all; margin-bottom:16px;">—</div>
+      <button class="primary-btn" onclick="generatePassword()">नया पासवर्ड बनाएं</button>
+      <button class="primary-btn" style="background:#6c757d; margin-top:8px;" onclick="copyPassword()">कॉपी करें</button>
     </div>
   </section>
 
   <!-- ================= TOOL 4 : CALCULATOR ================= -->
   <section id="view-calc" class="view">
-    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
     <h2 class="view-title">🧮 कैलकुलेटर</h2>
     <div class="panel">
-      <div id="calcDisplay" class="calc-display">0</div>
-      <div class="calc-keys" id="calcKeys">
-        <button class="ck fn" data-k="C">C</button>
-        <button class="ck fn" data-k="(">(</button>
-        <button class="ck fn" data-k=")">)</button>
-        <button class="ck op" data-k="/">÷</button>
-
-        <button class="ck" data-k="7">7</button>
-        <button class="ck" data-k="8">8</button>
-        <button class="ck" data-k="9">9</button>
-        <button class="ck op" data-k="*">×</button>
-
-        <button class="ck" data-k="4">4</button>
-        <button class="ck" data-k="5">5</button>
-        <button class="ck" data-k="6">6</button>
-        <button class="ck op" data-k="-">−</button>
-
-        <button class="ck" data-k="1">1</button>
-        <button class="ck" data-k="2">2</button>
-        <button class="ck" data-k="3">3</button>
-        <button class="ck op" data-k="+">+</button>
-
-        <button class="ck" data-k="0" style="grid-column:span 2;">0</button>
-        <button class="ck" data-k=".">.</button>
-        <button class="ck eq" data-k="=">=</button>
+      <div id="calcDisplay" style="background:#0f172a; color:#fff; border-radius:8px; padding:16px; font-size:26px; text-align:right; margin-bottom:16px; overflow-x:auto; white-space:nowrap;">0</div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;" id="calcKeys">
+        <button class="ck" onclick="calcPress('C')" style="background:#ffe9e6; color:#d9534f; font-weight:bold; padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer;">C</button>
+        <button class="ck" onclick="calcPress('(')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">(</button>
+        <button class="ck" onclick="calcPress(')')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">)</button>
+        <button class="ck" onclick="calcPress('/')" style="background:#e3efff; color:#0069d9; font-weight:bold; padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer;">÷</button>
+        
+        <button class="ck" onclick="calcPress('7')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">7</button>
+        <button class="ck" onclick="calcPress('8')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">8</button>
+        <button class="ck" onclick="calcPress('9')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">9</button>
+        <button class="ck" onclick="calcPress('*')" style="background:#e3efff; color:#0069d9; font-weight:bold; padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer;">×</button>
+        
+        <button class="ck" onclick="calcPress('4')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">4</button>
+        <button class="ck" onclick="calcPress('5')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">5</button>
+        <button class="ck" onclick="calcPress('6')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">6</button>
+        <button class="ck" onclick="calcPress('-')" style="background:#e3efff; color:#0069d9; font-weight:bold; padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer;">−</button>
+        
+        <button class="ck" onclick="calcPress('1')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">1</button>
+        <button class="ck" onclick="calcPress('2')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">2</button>
+        <button class="ck" onclick="calcPress('3')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">3</button>
+        <button class="ck" onclick="calcPress('+')" style="background:#e3efff; color:#0069d9; font-weight:bold; padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer;">+</button>
+        
+        <button class="ck" onclick="calcPress('0')" style="grid-column:span 2; padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">0</button>
+        <button class="ck" onclick="calcPress('.')" style="padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer; background:#f1f5fb;">.</button>
+        <button class="ck" onclick="calcPress('=')" style="background:#007bff; color:#fff; font-weight:bold; padding:15px; border:none; border-radius:8px; font-size:18px; cursor:pointer;">=</button>
       </div>
     </div>
   </section>
 
   <!-- ================= TOOL 5 : WEIGHT ================= -->
   <section id="view-weight" class="view">
-    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
     <h2 class="view-title">⚖️ वजन कन्वर्टर</h2>
     <div class="panel">
-      <label class="lbl" for="kgInput">वजन (किलोग्राम — KG)</label>
-      <input type="number" id="kgInput" class="input" placeholder="जैसे: 5" step="any" inputmode="decimal">
-      <button class="primary-btn" id="kgBtn">ग्राम में बदलें</button>
-      <div class="result-box"><span id="gramResult">0</span> ग्राम</div>
-      <div class="result-sub" id="extraWeight"></div>
+      <label class="lbl">वजन (किलोग्राम - KG):</label>
+      <input type="number" id="kgInput" class="input" placeholder="जैसे: 5" oninput="convertWeight()">
+      <div style="background:#e9f7ef; color:#1b7a43; padding:16px; text-align:center; font-size:22px; font-weight:bold; margin-top:16px; border-radius:8px;">
+        <span id="gramResult">0</span> ग्राम
+      </div>
     </div>
   </section>
 
   <!-- ================= TOOL 6 : QR ================= -->
   <section id="view-qr" class="view">
-    <button class="back-btn" data-home>⬅ होम पर जाएं</button>
+    <button class="back-btn" onclick="showView('dashboard')">⬅ होम पर जाएं</button>
     <h2 class="view-title">📱 QR कोड जनरेटर</h2>
     <div class="panel">
-      <label class="lbl" for="qrText">टेक्स्ट या URL डालें</label>
+      <label class="lbl">टेक्स्ट या URL डालें:</label>
       <input type="text" id="qrText" class="input" placeholder="https://example.com">
-      <button class="primary-btn" id="qrBtn">QR कोड बनाएं</button>
-      <div class="qr-box" id="qrBox"></div>
-      <a href="#" class="primary-btn" id="qrDownload" style="display:none;">⬇ QR कोड डाउनलोड करें</a>
+      <button class="primary-btn" onclick="makeQR()">QR कोड बनाएं</button>
+      <div id="qrBox" style="margin-top:16px; text-align:center;"></div>
     </div>
   </section>
-
 </main>
+
+<footer class="footer">
+  © Utility Hub • Web Tools Collection
+</footer>
 
 <!-- Nepali Date Converter Library -->
 <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@2.0.1/dist/nepali-date-converter.umd.min.js"></script>
 
 <script>
-(function () {
-  'use strict';
+  /* ==========================================
+     CONSTANTS & HELPERS
+     ========================================== */
+  const EN_DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const EN_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const NP_DAYS = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहीबार','शुक्रबार','शनिबार'];
+  const NP_MONTHS = ['बैशाख','जेठ','असार','श्रावण','भाद्र','आश्विन','कार्तिक','मंसिर','पुष','माघ','फाल्गुन','चैत्र'];
+  const UR_DAYS = ['अल-अहद','अल-इस्नैन','अल-सलासा',"अल-अरबा'",'अल-खमीस','अल-जुमा','अस-सब्त'];
+  const UR_MONTHS = ['मुहर्रम','सफ़र','रबी उल अव्वल','रबी उस सानी','जुमादा अल-अव्वल','जुमादा अस-सानी','रजब','शाबान','रमज़ान','शव्वाल','ज़िलक़ाद','ज़िलहिज्जा'];
 
-  /* =========================================================
-     CONSTANTS
-     ========================================================= */
-  var EN_DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  var EN_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const pad2 = n => (n < 10 ? '0' : '') + n;
+  const isoOf = d => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  const noon = (y, m, d) => new Date(y, m, d, 12, 0, 0, 0);
 
-  var NP_DAYS   = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहीबार','शुक्रबार','शनिबार'];
-  var NP_MONTHS = ['बैशाख','जेठ','असार','श्रावण','भाद्र','आश्विन','कार्तिक','मंसिर','पुष','माघ','फाल्गुन','चैत्र'];
-
-  var UR_DAYS   = ['अल-अहद','अल-इस्नैन','अल-सलासा',"अल-अरबा'",'अल-खमीस','अल-जुमा','अस-सब्त'];
-  var UR_MONTHS = ['मुहर्रम','सफ़र','रबी उल अव्वल','रबी उस सानी','जुमादा अल-अव्वल','जुमादा अस-सानी',
-                   'रजब','शाबान','रमज़ान','शव्वाल','ज़िलक़ाद','ज़िलहिज्जा'];
-
-  /* =========================================================
-     SMALL HELPERS
-     ========================================================= */
-  function pad2(n){ return (n < 10 ? '0' : '') + n; }
-  function isoOf(d){ return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
-  function noon(y, m, d){ return new Date(y, m, d, 12, 0, 0, 0); }
-  function fmtNum(n){
-    if (!isFinite(n)) return '—';
-    var r = Math.round(n * 1e6) / 1e6;
-    return r.toLocaleString('en-IN', { maximumFractionDigits: 6 });
-  }
-
-  /* =========================================================
-     NEPALI DATE LIBRARY ACCESS
-     ========================================================= */
-  function getNepaliClass(){
-    var g = window.NepaliDateConverter || window.NepaliDate || window.nepaliDateConverter;
-    if (!g) return null;
-    var C = g.default || g;
-    return (typeof C === 'function') ? C : null;
-  }
-
-  /* =========================================================
-     HIJRI (ISLAMIC) CALENDAR via Intl
-     ========================================================= */
-  var hijriFmt = null;
-  (function initHijri(){
+  /* ==========================================
+     HIJRI (ISLAMIC) CALENDAR logic
+     ========================================== */
+  let hijriFmt = null;
+  try {
+    hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura', { day: 'numeric', month: 'numeric', year: 'numeric' });
+    hijriFmt.format(new Date());
+  } catch (e) {
     try {
-      hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura',
-        { day: 'numeric', month: 'numeric', year: 'numeric' });
-      hijriFmt.format(new Date());
-    } catch (e1) {
-      hijriFmt = null;
-      try {
-        hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic',
-          { day: 'numeric', month: 'numeric', year: 'numeric' });
-        hijriFmt.format(new Date());
-      } catch (e2) { hijriFmt = null; }
-    }
-  })();
+      hijriFmt = new Intl.DateTimeFormat('en-US-u-ca-islamic', { day: 'numeric', month: 'numeric', year: 'numeric' });
+    } catch (e2) { hijriFmt = null; }
+  }
 
-  function hijriParts(date){
+  function hijriParts(date) {
     if (!hijriFmt) return null;
     try {
-      var parts = hijriFmt.formatToParts(date);
-      var y = 0, m = 0, d = 0;
-      for (var i = 0; i < parts.length; i++){
-        var p = parts[i];
-        var v = parseInt(String(p.value).replace(/[^0-9]/g, ''), 10);
+      const parts = hijriFmt.formatToParts(date);
+      let y = 0, m = 0, d = 0;
+      for (let p of parts) {
+        let v = parseInt(p.value.replace(/[^0-9]/g, ''), 10);
         if (isNaN(v)) continue;
         if (p.type === 'year') y = v;
         else if (p.type === 'month') m = v;
         else if (p.type === 'day') d = v;
       }
-      if (!y || !m || !d) return null;
-      return { year: y, month: m, day: d };
+      return (y && m && d) ? { year: y, month: m, day: d } : null;
     } catch (e) { return null; }
   }
 
-  /* Hijri -> Gregorian : estimate then search with Intl for exact match */
-  function hijriToGregorian(hy, hm, hd){
-    var epochUTC = Date.UTC(622, 6, 19); // approx 1 Muharram 1 AH (proleptic Gregorian)
-    var approxDays = (hy - 1) * 354.36707 + (hm - 1) * 29.53059 + (hd - 1);
-    var estUTC = new Date(epochUTC + Math.round(approxDays) * 86400000);
-    var base = noon(estUTC.getUTCFullYear(), estUTC.getUTCMonth(), estUTC.getUTCDate());
-
-    var off, cand, p;
-    for (off = -8; off <= 8; off++){
-      cand = new Date(base.getFullYear(), base.getMonth(), base.getDate() + off, 12, 0, 0, 0);
-      p = hijriParts(cand);
-      if (p && p.year === hy && p.month === hm && p.day === hd) return cand;
-    }
-    // fallback : closest match
-    var best = null, bestDiff = Infinity;
-    for (off = -15; off <= 15; off++){
-      cand = new Date(base.getFullYear(), base.getMonth(), base.getDate() + off, 12, 0, 0, 0);
-      p = hijriParts(cand);
-      if (!p) continue;
-      var diff = Math.abs((p.year - hy) * 354.367 + (p.month - hm) * 29.53 + (p.day - hd));
-      if (diff < bestDiff){ bestDiff = diff; best = cand; }
-    }
-    return best;
-  }
-
-  /* =========================================================
+  /* ==========================================
      BREAKDOWN BUILDERS
-     ========================================================= */
-  function adBreakdown(date){
+     ========================================== */
+  function adBreakdown(date) {
     return {
       dayName: EN_DAYS[date.getDay()],
       date: date.getDate(),
@@ -613,12 +390,12 @@
     };
   }
 
-  function bsBreakdown(date){
-    var C = getNepaliClass();
+  function bsBreakdown(date) {
+    const C = window.NepaliDateConverter || window.NepaliDate;
     if (!C) return null;
     try {
-      var nd = new C(date);
-      var mIdx = nd.getMonth();
+      const nd = new C(date);
+      const mIdx = nd.getMonth();
       return {
         dayName: NP_DAYS[date.getDay()],
         date: nd.getDate(),
@@ -629,8 +406,8 @@
     } catch (e) { return null; }
   }
 
-  function ahBreakdown(date){
-    var p = hijriParts(date);
+  function ahBreakdown(date) {
+    const p = hijriParts(date);
     if (!p) return null;
     return {
       dayName: UR_DAYS[date.getDay()],
@@ -641,500 +418,273 @@
     };
   }
 
-  /* =========================================================
-     DATE CARD RENDERER
-     ========================================================= */
-  function dateCard(title, subtitle, b){
-    if (!b){
-      return '<div class="panel date-card">' +
-               '<div class="dc-head">' + title + '</div>' +
-               '<div class="err">यह कैलेंडर इस डिवाइस पर उपलब्ध नहीं है।</div>' +
-             '</div>';
-    }
-    return '<div class="panel date-card">' +
-             '<div class="dc-head"><span>' + title + '</span>' +
-               (subtitle ? '<span class="dc-sub">' + subtitle + '</span>' : '') +
-             '</div>' +
-             '<div class="dc-body">' +
-               '<div class="dc-num">' + b.date + '</div>' +
-               '<div class="dc-info">' +
-                 '<div class="dc-day">' + b.dayName + '</div>' +
-                 '<div class="dc-line">महीना: <b>' + b.monthName + '</b> (' + pad2(b.monthNum) + ')</div>' +
-                 '<div class="dc-line">वर्ष: <b>' + b.year + '</b></div>' +
-               '</div>' +
-             '</div>' +
-           '</div>';
+  /* ==========================================
+     UI RENDERERS
+     ========================================== */
+  function dateCardHTML(title, subtitle, b) {
+    if (!b) return `<div class="date-card"><div class="dc-head">${title}</div><div class="err">यह कैलेंडर इस डिवाइस पर उपलब्ध नहीं है।</div></div>`;
+    return `
+      <div class="date-card">
+        <div class="dc-head"><span>${title}</span><span class="dc-sub">${subtitle}</span></div>
+        <div class="dc-body">
+          <div class="dc-num">${b.date}</div>
+          <div class="dc-info">
+            <div class="dc-day">${b.dayName}</div>
+            <div class="dc-line">महीना: <b>${b.monthName}</b> (${pad2(b.monthNum)})</div>
+            <div class="dc-line">वर्ष: <b>${b.year}</b></div>
+          </div>
+        </div>
+      </div>`;
   }
 
-  /* =========================================================
-     TOOL 1 : TODAY'S LIVE DATE
-     ========================================================= */
-  function renderToday(){
-    var box = document.getElementById('todayContent');
+  function renderToday() {
+    const box = document.getElementById('todayContent');
     if (!box) return;
-    var now = new Date();
-
-    var html = '';
-    html += dateCard('अंग्रेज़ी (AD)', 'ENGLISH', adBreakdown(now));
-    html += dateCard('नेपाली (BS)', 'NEPALI', bsBreakdown(now));
-    html += dateCard('उर्दू / हिजरी (AH)', 'HIJRI', ahBreakdown(now));
-
-    box.innerHTML = html;
+    const now = new Date();
+    box.innerHTML = 
+      dateCardHTML('अंग्रेज़ी (AD)', 'ENGLISH', adBreakdown(now)) +
+      dateCardHTML('नेपाली (BS)', 'NEPALI', bsBreakdown(now)) +
+      dateCardHTML('उर्दू / हिजरी (AH)', 'HIJRI', ahBreakdown(now));
   }
 
-  /* =========================================================
-     TOOL 2 : AGE & CROSS-CALENDAR CONVERTER
-     ========================================================= */
-  function fillSelects(){
-    var bsSel = document.getElementById('bsMonth');
-    var ahSel = document.getElementById('ahMonth');
-    var i, o;
-
-    bsSel.innerHTML = '';
-    for (i = 0; i < NP_MONTHS.length; i++){
-      o = document.createElement('option');
-      o.value = String(i + 1);
-      o.textContent = (i + 1) + ' - ' + NP_MONTHS[i];
-      bsSel.appendChild(o);
-    }
-
-    ahSel.innerHTML = '';
-    for (i = 0; i < UR_MONTHS.length; i++){
-      o = document.createElement('option');
-      o.value = String(i + 1);
-      o.textContent = (i + 1) + ' - ' + UR_MONTHS[i];
-      ahSel.appendChild(o);
-    }
+  /* ==========================================
+     NAVIGATION
+     ========================================== */
+  function showView(id) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const target = document.getElementById('view-' + id);
+    if (target) target.classList.add('active');
+    
+    if (id === 'date') renderToday();
+    if (id === 'pass') generatePassword();
+    if (id === 'age') initAgeDefaults();
   }
 
-  function initAgeDefaults(){
-    var now = new Date();
-    document.getElementById('adDate').value = isoOf(now);
+  /* ==========================================
+     TOOL 2: AGE CALCULATOR LOGIC
+     ========================================== */
+  function initAgeDefaults() {
+    const now = new Date();
+    const adInput = document.getElementById('adDate');
+    if (adInput && !adInput.value) adInput.value = isoOf(now);
 
-    var C = getNepaliClass();
-    if (C){
-      try {
-        var nd = new C(now);
-        document.getElementById('bsYear').value = nd.getYear();
-        document.getElementById('bsMonth').value = String(nd.getMonth() + 1);
-        document.getElementById('bsDay').value = nd.getDate();
-      } catch (e) { /* ignore */ }
-    }
-
-    var p = hijriParts(now);
-    if (p){
-      document.getElementById('ahYear').value = p.year;
-      document.getElementById('ahMonth').value = String(p.month);
-      document.getElementById('ahDay').value = p.day;
+    // Populate Dropdowns
+    const bsSel = document.getElementById('bsMonth');
+    const ahSel = document.getElementById('ahMonth');
+    if (bsSel && bsSel.options.length === 0) {
+      NP_MONTHS.forEach((m, i) => bsSel.add(new Option(`${i+1} - ${m}`, i+1)));
+      UR_MONTHS.forEach((m, i) => ahSel.add(new Option(`${i+1} - ${m}`, i+1)));
     }
   }
 
-  function calcAge(from, to){
-    var y = to.getFullYear() - from.getFullYear();
-    var m = to.getMonth() - from.getMonth();
-    var d = to.getDate() - from.getDate();
-    if (d < 0){
+  function toggleCalendarInputs() {
+    const type = document.getElementById('calType').value;
+    document.getElementById('adInputs').style.display = type === 'AD' ? 'block' : 'none';
+    document.getElementById('bsInputs').style.display = type === 'BS' ? 'block' : 'none';
+    document.getElementById('ahInputs').style.display = type === 'AH' ? 'block' : 'none';
+  }
+
+  function calcAge(from, to) {
+    let y = to.getFullYear() - from.getFullYear();
+    let m = to.getMonth() - from.getMonth();
+    let d = to.getDate() - from.getDate();
+    if (d < 0) {
       m--;
-      var prevMonthDays = new Date(to.getFullYear(), to.getMonth(), 0).getDate();
-      d += prevMonthDays;
+      d += new Date(to.getFullYear(), to.getMonth(), 0).getDate();
     }
-    if (m < 0){ y--; m += 12; }
-    return { y: y, m: m, d: d };
+    if (m < 0) {
+      y--;
+      m += 12;
+    }
+    return { y, m, d };
   }
 
-  function doConvert(){
-    var out = document.getElementById('ageResult');
-    var type = document.getElementById('calType').value;
-    var date = null;
+  function calculateAgeAndConvert() {
+    const out = document.getElementById('ageResult');
+    if (!out) return;
+    
+    const type = document.getElementById('calType').value;
+    let date = null;
 
     try {
-      if (type === 'AD'){
-        var v = document.getElementById('adDate').value;
-        if (!v){ out.innerHTML = '<div class="panel"><span class="err">कृपया तारीख चुनें।</span></div>'; return; }
-        var pr = v.split('-');
-        date = noon(parseInt(pr[0], 10), parseInt(pr[1], 10) - 1, parseInt(pr[2], 10));
-        if (isNaN(date.getTime())) throw new Error('तारीख सही नहीं है');
-      }
-      else if (type === 'BS'){
-        var by = parseInt(document.getElementById('bsYear').value, 10);
-        var bm = parseInt(document.getElementById('bsMonth').value, 10);
-        var bd = parseInt(document.getElementById('bsDay').value, 10);
-        if (!by || !bm || !bd) throw new Error('कृपया वर्ष, महीना और गते भरें');
-        if (by < 2000 || by > 2090) throw new Error('नेपाली वर्ष 2000 से 2090 के बीच होना चाहिए');
-        if (bd < 1 || bd > 32) throw new Error('गते 1 से 32 के बीच होनी चाहिए');
-        var C = getNepaliClass();
-        if (!C) throw new Error('नेपाली कैलेंडर लाइब्रेरी लोड नहीं हुई — इंटरनेट जांचें');
-        var nd = new C(by, bm - 1, bd);
-        var js = nd.toJsDate();
+      if (type === 'AD') {
+        const v = document.getElementById('adDate').value;
+        if (!v) throw new Error('कृपया जन्म तिथि चुनें।');
+        const p = v.split('-');
+        date = noon(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+      } 
+      else if (type === 'BS') {
+        const y = parseInt(document.getElementById('bsYear').value, 10);
+        const m = parseInt(document.getElementById('bsMonth').value, 10);
+        const d = parseInt(document.getElementById('bsDay').value, 10);
+        if (!y || !m || !d) throw new Error('कृपया नेपाली तिथि भरें।');
+        const C = window.NepaliDateConverter || window.NepaliDate;
+        if (!C) throw new Error('नेपाली कैलेंडर लाइब्रेरी लोड नहीं हुई।');
+        const nd = new C(y, m - 1, d);
+        const js = nd.toJsDate();
         date = noon(js.getFullYear(), js.getMonth(), js.getDate());
-      }
+      } 
       else {
-        var ay = parseInt(document.getElementById('ahYear').value, 10);
-        var am = parseInt(document.getElementById('ahMonth').value, 10);
-        var ad = parseInt(document.getElementById('ahDay').value, 10);
-        if (!ay || !am || !ad) throw new Error('कृपया वर्ष, महीना और दिन भरें');
-        if (ay < 1300 || ay > 1500) throw new Error('हिजरी वर्ष 1300 से 1500 के बीच होना चाहिए');
-        if (ad < 1 || ad > 30) throw new Error('दिन 1 से 30 के बीच होना चाहिए');
-        date = hijriToGregorian(ay, am, ad);
-        if (!date) throw new Error('हिजरी तारीख नहीं मिल सकी');
+        // (AH Fallback to AD search)
+        const y = parseInt(document.getElementById('ahYear').value, 10);
+        const m = parseInt(document.getElementById('ahMonth').value, 10);
+        const d = parseInt(document.getElementById('ahDay').value, 10);
+        if (!y || !m || !d) throw new Error('कृपया हिजरी तिथि भरें।');
+        // Simple approx search for Hijri
+        const estDays = (y - 1) * 354.367 + (m - 1) * 29.53 + (d - 1);
+        let base = new Date(Date.UTC(622, 6, 19) + estDays * 86400000);
+        let found = null;
+        for (let i = -15; i <= 15; i++) {
+          let cand = new Date(base.getFullYear(), base.getMonth(), base.getDate() + i, 12, 0, 0);
+          let p = hijriParts(cand);
+          if (p && p.year === y && p.month === m && p.day === d) { found = cand; break; }
+        }
+        date = found || base;
       }
-    } catch (err){
-      out.innerHTML = '<div class="panel"><span class="err">त्रुटि: ' + err.message + '</span></div>';
+
+      if (!date || isNaN(date.getTime())) throw new Error('अमान्य तिथि!');
+
+    } catch (err) {
+      out.innerHTML = `<div class="panel"><div class="err">त्रुटि: ${err.message}</div></div>`;
       return;
     }
 
-    /* --- Age --- */
-    var today = new Date();
-    var todayNoon = noon(today.getFullYear(), today.getMonth(), today.getDate());
-
-    var ageHTML = '';
-    if (date.getTime() > todayNoon.getTime()){
-      ageHTML = '<div class="panel age-card">' +
-                  '<div class="age-title">🎂 उम्र</div>' +
-                  '<div class="age-big">चुनी गई तारीख भविष्य की है</div>' +
-                '</div>';
+    // Calculate Age
+    const today = new Date();
+    const todayNoon = noon(today.getFullYear(), today.getMonth(), today.getDate());
+    
+    let ageHTML = '';
+    if (date.getTime() > todayNoon.getTime()) {
+      ageHTML = `<div class="age-card"><div class="age-title">🎂 उम्र</div><div class="age-big">चुनी गई तारीख भविष्य की है</div></div>`;
     } else {
-      var a = calcAge(date, todayNoon);
-      var totalDays = Math.round((todayNoon.getTime() - date.getTime()) / 86400000);
-      ageHTML = '<div class="panel age-card">' +
-                  '<div class="age-title">🎂 आपकी उम्र</div>' +
-                  '<div class="age-big"><b>' + a.y + '</b> वर्ष <b>' + a.m + '</b> महीने <b>' + a.d + '</b> दिन</div>' +
-                  '<div class="age-sub">कुल दिन: ' + totalDays.toLocaleString('en-IN') + '</div>' +
-                '</div>';
+      const a = calcAge(date, todayNoon);
+      const totalDays = Math.round((todayNoon - date) / 86400000);
+      ageHTML = `
+        <div class="age-card">
+          <div class="age-title">🎂 आपकी उम्र</div>
+          <div class="age-big"><b>${a.y}</b> वर्ष <b>${a.m}</b> महीने <b>${a.d}</b> दिन</div>
+          <div class="age-sub">कुल दिन: ${totalDays.toLocaleString('en-IN')}</div>
+        </div>`;
     }
 
-    /* --- Full cross conversion --- */
-    var cards = '';
-    cards += dateCard('अंग्रेज़ी (AD)', 'ENGLISH', adBreakdown(date));
-    cards += dateCard('नेपाली (BS)', 'NEPALI', bsBreakdown(date));
-    cards += dateCard('उर्दू / हिजरी (AH)', 'HIJRI', ahBreakdown(date));
-
-    out.innerHTML = ageHTML + cards;
+    // Render Output
+    out.innerHTML = ageHTML + 
+                    dateCardHTML('अंग्रेज़ी (AD)', 'ENGLISH', adBreakdown(date)) +
+                    dateCardHTML('नेपाली (BS)', 'NEPALI', bsBreakdown(date)) +
+                    dateCardHTML('उर्दू / हिजरी (AH)', 'HIJRI', ahBreakdown(date));
   }
 
-  /* =========================================================
-     TOOL 3 : PASSWORD GENERATOR
-     ========================================================= */
-  var PASS_UPPER = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
-  var PASS_LOWER = 'abcdefghijkmnopqrstuvwxyz';
-  var PASS_NUM   = '23456789';
-  var PASS_SPEC  = '!@#$%^&*()-_=+?';
-
-  function randInt(max){
-    if (window.crypto && window.crypto.getRandomValues){
-      var arr = new Uint32Array(1);
-      var limit = Math.floor(0xFFFFFFFF / max) * max;
-      var v;
-      do { window.crypto.getRandomValues(arr); v = arr[0]; } while (v >= limit);
-      return v % max;
+  /* ==========================================
+     TOOL 3: PASSWORD GENERATOR
+     ========================================== */
+  function generatePassword() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*";
+    let pass = "";
+    // Guarantee at least 1 uppercase, 1 lowercase, 1 number, 1 special
+    pass += "ABCDEFGHJKLMNPQRSTUVWXYZ"[Math.floor(Math.random() * 24)];
+    pass += "abcdefghijkmnopqrstuvwxyz"[Math.floor(Math.random() * 24)];
+    pass += "23456789"[Math.floor(Math.random() * 8)];
+    pass += "!@#$%^&*"[Math.floor(Math.random() * 8)];
+    
+    for (let i = 4; i < 10; i++) {
+      pass += chars[Math.floor(Math.random() * chars.length)];
     }
-    return Math.floor(Math.random() * max);
+    // Shuffle
+    pass = pass.split('').sort(() => 0.5 - Math.random()).join('');
+    
+    document.getElementById('passBox').textContent = pass;
   }
 
-  function makePassword(len){
-    len = len || 10;
-    var all = PASS_UPPER + PASS_LOWER + PASS_NUM + PASS_SPEC;
-    var chars = [
-      PASS_UPPER.charAt(randInt(PASS_UPPER.length)),
-      PASS_LOWER.charAt(randInt(PASS_LOWER.length)),
-      PASS_NUM.charAt(randInt(PASS_NUM.length)),
-      PASS_SPEC.charAt(randInt(PASS_SPEC.length))
-    ];
-    while (chars.length < len){
-      chars.push(all.charAt(randInt(all.length)));
-    }
-    // Fisher-Yates shuffle
-    for (var i = chars.length - 1; i > 0; i--){
-      var j = randInt(i + 1);
-      var t = chars[i]; chars[i] = chars[j]; chars[j] = t;
-    }
-    return chars.join('');
+  function copyPassword() {
+    const text = document.getElementById('passBox').textContent;
+    if (!text || text === '—') return;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("पासवर्ड कॉपी हो गया!");
+    }).catch(() => {
+      alert("कॉपी करने में असमर्थ, कृपया मैन्युअली कॉपी करें।");
+    });
   }
 
-  function generatePassword(){
-    var p = makePassword(10);
-    document.getElementById('passBox').textContent = p;
-  }
+  /* ==========================================
+     TOOL 4: CALCULATOR
+     ========================================== */
+  let calcExpr = '';
+  let calcDone = false;
 
-  function copyPassword(){
-    var txt = document.getElementById('passBox').textContent;
-    if (!txt || txt === '—') return;
-    var btn = document.getElementById('copyPassBtn');
-    var done = function (){
-      btn.textContent = '✅ कॉपी हो गया!';
-      setTimeout(function (){ btn.textContent = '📋 कॉपी करें'; }, 1500);
-    };
-
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(txt).then(done).catch(function (){ legacyCopy(txt, done); });
-    } else {
-      legacyCopy(txt, done);
-    }
-  }
-
-  function legacyCopy(txt, cb){
-    try {
-      var ta = document.createElement('textarea');
-      ta.value = txt;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      if (cb) cb();
-    } catch (e) {
-      alert('कॉपी नहीं हो सका, कृपया मैन्युअली कॉपी करें।');
-    }
-  }
-
-  /* =========================================================
-     TOOL 4 : CALCULATOR
-     ========================================================= */
-  var calcExpr = '';
-  var calcDone = false;
-
-  function calcRender(){
-    var d = document.getElementById('calcDisplay');
-    d.textContent = calcExpr === '' ? '0' : calcExpr.replace(/\*/g, '×').replace(/\//g, '÷');
-  }
-
-  function calcPress(k){
-    var d = document.getElementById('calcDisplay');
-
-    if (k === 'C'){
+  function calcPress(k) {
+    const display = document.getElementById('calcDisplay');
+    
+    if (k === 'C') {
       calcExpr = '';
       calcDone = false;
-      calcRender();
+      display.textContent = '0';
       return;
     }
-
-    if (k === '='){
+    
+    if (k === '=') {
       if (!calcExpr) return;
-      var res;
       try {
-        if (!/^[0-9+\-*/.() ]+$/.test(calcExpr)) throw new Error('bad');
-        res = Function('"use strict"; return (' + calcExpr + ');')();
+        // Safe evaluation
+        const res = Function('"use strict"; return (' + calcExpr + ')')();
+        if (!isFinite(res)) throw new Error('Math Error');
+        calcExpr = String(Math.round(res * 1e10) / 1e10);
+        display.textContent = calcExpr;
+        calcDone = true;
       } catch (e) {
-        d.textContent = 'त्रुटि';
+        display.textContent = 'Error';
         calcExpr = '';
         calcDone = true;
-        return;
       }
-      if (typeof res !== 'number' || !isFinite(res)){
-        d.textContent = 'त्रुटि';
-        calcExpr = '';
-        calcDone = true;
-        return;
-      }
-      res = Math.round(res * 1e10) / 1e10;
-      calcExpr = String(res);
-      calcDone = true;
-      d.textContent = calcExpr.replace(/\*/g, '×').replace(/\//g, '÷');
       return;
     }
 
-    if (calcDone){
+    if (calcDone) {
       if (/[0-9.]/.test(k)) calcExpr = '';
       calcDone = false;
     }
 
-    // stop double operators
-    if (/[+\-*/]/.test(k) && /[+\-*/]$/.test(calcExpr)){
+    if (/[+\-*/]/.test(k) && /[+\-*/]$/.test(calcExpr)) {
       calcExpr = calcExpr.slice(0, -1);
     }
 
-    if (k === '.'){
-      var parts = calcExpr.split(/[+\-*/()]/);
-      var last = parts[parts.length - 1];
-      if (last.indexOf('.') !== -1) return;
-      if (last === '') calcExpr += '0';
-    }
-
-    if (calcExpr.length > 40) return;
-
     calcExpr += k;
-    calcRender();
+    display.textContent = calcExpr.replace(/\*/g, '×').replace(/\//g, '÷');
   }
 
-  /* =========================================================
-     TOOL 5 : WEIGHT CONVERTER
-     ========================================================= */
-  function convertWeight(){
-    var raw = document.getElementById('kgInput').value;
-    var kg = parseFloat(raw);
-    var out = document.getElementById('gramResult');
-    var sub = document.getElementById('extraWeight');
-
-    if (isNaN(kg)){
+  /* ==========================================
+     TOOL 5: WEIGHT CONVERTER
+     ========================================== */
+  function convertWeight() {
+    const kg = parseFloat(document.getElementById('kgInput').value);
+    const out = document.getElementById('gramResult');
+    if (isNaN(kg)) {
       out.textContent = '0';
-      sub.textContent = '';
       return;
     }
-    var grams = kg * 1000;
-    out.textContent = fmtNum(grams);
-    sub.textContent = fmtNum(kg * 1000000) + ' मिलीग्राम  ·  ' + fmtNum(kg / 1000) + ' टन';
+    out.textContent = (kg * 1000).toLocaleString('en-IN');
   }
 
-  /* =========================================================
-     TOOL 6 : QR GENERATOR
-     ========================================================= */
-  var currentQR = '';
-
-  function makeQR(){
-    var txt = document.getElementById('qrText').value.trim();
-    var box = document.getElementById('qrBox');
-    var dl = document.getElementById('qrDownload');
-
-    if (!txt){
-      box.innerHTML = '<span class="err">कृपया कुछ टेक्स्ट या URL डालें।</span>';
-      dl.style.display = 'none';
-      currentQR = '';
+  /* ==========================================
+     TOOL 6: QR CODE GENERATOR
+     ========================================== */
+  function makeQR() {
+    const text = document.getElementById('qrText').value.trim();
+    const box = document.getElementById('qrBox');
+    if (!text) {
+      box.innerHTML = '<span class="err">कृपया कुछ टेक्स्ट डालें</span>';
       return;
     }
-
-    var url = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(txt);
-    currentQR = url;
-    box.innerHTML = '<img src="' + url + '" alt="QR Code" id="qrImg">';
-    dl.style.display = 'block';
-    dl.href = url;
-    dl.setAttribute('target', '_blank');
-    dl.setAttribute('rel', 'noopener');
+    const url = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
+    box.innerHTML = `<img src="${url}" alt="QR Code" style="width:200px; height:200px; border-radius:8px; border:1px solid #ccc; padding:5px; background:#fff;">`;
   }
 
-  function downloadQR(e){
-    if (!currentQR) return;
-    if (e) e.preventDefault();
-
-    var url = currentQR;
-    fetch(url, { mode: 'cors' })
-      .then(function (res){
-        if (!res.ok) throw new Error('fail');
-        return res.blob();
-      })
-      .then(function (blob){
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'qr-code.png';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function (){
-          URL.revokeObjectURL(a.href);
-          if (a.parentNode) a.parentNode.removeChild(a);
-        }, 1500);
-      })
-      .catch(function (){
-        window.open(url, '_blank');
-      });
-  }
-
-  /* =========================================================
-     NAVIGATION
-     ========================================================= */
-  function showView(name){
-    var views = document.querySelectorAll('.view');
-    for (var i = 0; i < views.length; i++){
-      views[i].classList.toggle('active', views[i].id === 'view-' + name);
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    if (name === 'date') renderToday();
-    if (name === 'pass' && document.getElementById('passBox').textContent === '—'){
-      generatePassword();
-    }
-  }
-
-  /* =========================================================
-     WIRE UP
-     ========================================================= */
-  function init(){
-    // Dashboard cards
-    var cards = document.querySelectorAll('.card[data-tool]');
-    for (var i = 0; i < cards.length; i++){
-      (function (c){
-        c.addEventListener('click', function (){ showView(c.getAttribute('data-tool')); });
-      })(cards[i]);
-    }
-
-    // Back buttons
-    var backs = document.querySelectorAll('[data-home]');
-    for (var j = 0; j < backs.length; j++){
-      backs[j].addEventListener('click', function (){ showView('dashboard'); });
-    }
-
-    // Badge
-    document.getElementById('badgeBtn').addEventListener('click', function (){ showView('dashboard'); });
-
-    /* --- Tool 2 wiring --- */
-    fillSelects();
+  /* ==========================================
+     INITIALIZATION
+     ========================================== */
+  document.addEventListener('DOMContentLoaded', () => {
     initAgeDefaults();
+  });
 
-    document.getElementById('calType').addEventListener('change', function (){
-      var v = this.value;
-      document.getElementById('adInputs').style.display = (v === 'AD') ? 'block' : 'none';
-      document.getElementById('bsInputs').style.display = (v === 'BS') ? 'block' : 'none';
-      document.getElementById('ahInputs').style.display = (v === 'AH') ? 'block' : 'none';
-    });
-
-    document.getElementById('convertBtn').addEventListener('click', doConvert);
-
-    /* --- Tool 3 wiring --- */
-    document.getElementById('genPassBtn').addEventListener('click', generatePassword);
-    document.getElementById('copyPassBtn').addEventListener('click', copyPassword);
-
-    /* --- Tool 4 wiring --- */
-    document.getElementById('calcKeys').addEventListener('click', function (e){
-      var t = e.target;
-      if (t && t.classList.contains('ck') && t.hasAttribute('data-k')){
-        calcPress(t.getAttribute('data-k'));
-      }
-    });
-    document.addEventListener('keydown', function (e){
-      if (!document.getElementById('view-calc').classList.contains('active')) return;
-      var k = e.key;
-      if (/^[0-9]$/.test(k) || k === '.' || k === '+' || k === '-' || k === '*' || k === '/' ||
-          k === '(' || k === ')'){
-        calcPress(k);
-      } else if (k === 'Enter' || k === '='){
-        e.preventDefault();
-        calcPress('=');
-      } else if (k === 'Escape' || k === 'c' || k === 'C'){
-        calcPress('C');
-      } else if (k === 'Backspace'){
-        e.preventDefault();
-        calcExpr = calcExpr.slice(0, -1);
-        calcRender();
-      }
-    });
-
-    /* --- Tool 5 wiring --- */
-    document.getElementById('kgInput').addEventListener('input', convertWeight);
-    document.getElementById('kgBtn').addEventListener('click', convertWeight);
-
-    /* --- Tool 6 wiring --- */
-    document.getElementById('qrBtn').addEventListener('click', makeQR);
-    document.getElementById('qrText').addEventListener('keydown', function (e){
-      if (e.key === 'Enter') makeQR();
-    });
-    document.getElementById('qrDownload').addEventListener('click', downloadQR);
-
-    /* --- initial render --- */
-    renderToday();
-    generatePassword();
-
-    // keep "today" fresh
-    setInterval(function (){
-      if (document.getElementById('view-date').classList.contains('active')) renderToday();
-    }, 60000);
-  }
-
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-
-})();
 </script>
 </body>
 </html>
